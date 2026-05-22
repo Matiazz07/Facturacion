@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facturación e Impuestos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Facturacion.css">
+</head>
+
+<body>
+    <nav class="barra-navegacion">
+        <ul>
+            <li><a href="#" id="btnInicio" class="item-enlace" onclick="mostrarSeccion('sec-inicio', this)">Inicio</a>
+            </li>
+            <li><a href="#" class="item-enlace" onclick="mostrarSeccion('sec-simulador', this)">Simulador</a></li>
+            <li><a href="#" class="item-enlace" onclick="mostrarSeccion('sec-tabla', this)">Tabla del IVA</a></li>
+            <li><a href="#" class="item-enlace" onclick="mostrarSeccion('sec-soporte', this)">Soporte</a></li>
+            <div id="indicadorNeon" class="indicador-neon"></div>
+        </ul>
+    </nav>
+
+    <main class="contenedor-contenido">
+        <section id="sec-inicio" class="seccion-pagina">
+            <header class="seccion-principal">
+                <div class="etiqueta-principal">Herramienta Financiera</div>
+                <h1>Gestión de Facturación <span class="texto-brillante">e Impuestos</span></h1>
+                <p>Domina los conceptos clave y simula tus comprobantes electrónicos con precisión y seguridad.</p>
+            </header>
+
+            <h2 class="subtitulo-seccion">Conceptos Clave</h2>
+            <div class="cuadricula-informacion">
+                <div class="tarjeta-cristal interactiva" onclick="abrirModalInformacion('iva')">
+                    <h3 class="titulo-tarjeta">¿Qué es el IVA?</h3>
+                    <p>El Impuesto al Valor Agregado grava el valor transferido a bienes y servicios. Clic para ver
+                        detalles legales.</p>
+                </div>
+
+                <div class="tarjeta-cristal interactiva" onclick="abrirModalInformacion('base')">
+                    <h3 class="titulo-tarjeta">Base Imponible</h3>
+                    <p>Es el monto exacto sobre el cual se calcula el porcentaje de impuesto a pagar. Clic para ampliar
+                        definición.</p>
+                </div>
+
+                <div class="tarjeta-cristal interactiva" onclick="abrirModalInformacion('agente')">
+                    <h3 class="titulo-tarjeta">Agente de Retención</h3>
+                    <p>Persona o empresa designada por la ley para retener parte del impuesto. Clic para conocer
+                        obligaciones.</p>
+                </div>
+            </div>
+
+            <h2 class="subtitulo-seccion">Tipos de Comprobantes</h2>
+            <div class="cuadricula-informacion">
+                <div class="tarjeta-cristal interactiva" onclick="abrirModalInformacion('comprobantes')">
+                    <h3 class="titulo-tarjeta">Comprobantes de Pago</h3>
+                    <p>Documentos que acreditan transferencias de bienes o servicios. Clic para ver clasificaciones.</p>
+                </div>
+
+                <div class="tarjeta-cristal interactiva" onclick="abrirModalInformacion('fisica')">
+                    <h3 class="titulo-tarjeta">Factura Física</h3>
+                    <p>Comprobante de pago tradicional emitido en formato de papel. Clic para ver requisitos de validez.
+                    </p>
+                </div>
+
+                <div class="tarjeta-cristal destaque-neon interactiva" onclick="abrirModalInformacion('electronica')">
+                    <h3 class="titulo-tarjeta">Factura Electrónica</h3>
+                    <p>Documento digital legalmente válido respaldado por el SRI. Clic para ver ventajas tecnológicas.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec-simulador" class="seccion-pagina">
+            <div class="tarjeta-cristal tarjeta-formulario">
+                <div class="cabecera-formulario">
+                    <h2>Módulos de Simulación</h2>
+                    <p>Selecciona de forma intuitiva el tipo de comprobante que deseas calcular.</p>
+                </div>
+
+                <div class="alternador-simuladores">
+                    <button type="button" id="btnModFactura" class="btn-alternador activo"
+                        onclick="mostrarModuloSimulador('formFactura', this)">Factura</button>
+                    <button type="button" id="btnModRetencion" class="btn-alternador"
+                        onclick="mostrarModuloSimulador('formRetencion', this)">Retención</button>
+                    <button type="button" id="btnModNota" class="btn-alternador"
+                        onclick="mostrarModuloSimulador('formNota', this)">Nota de Crédito</button>
+                </div>
+
+                <div id="formFactura" class="formulario-simulador activa-modulo">
+                    <div class="grupo-entrada">
+                        <label>Subtotal ($)</label>
+                        <input type="number" id="txtSubtotal" placeholder="Ej: 100.00" class="entrada-neon" step="0.01">
+                    </div>
+                    <div class="grupo-entrada">
+                        <label>Descuento (%)</label>
+                        <input type="number" id="txtDescuento" placeholder="Ej: 5" class="entrada-neon" step="0.1"
+                            min="0" max="100">
+                    </div>
+                    <div class="grupo-entrada">
+                        <label>Tarifa de IVA</label>
+                        <select id="selIva" class="entrada-neon">
+                            <option value="0.15">IVA 15% (Tarifa General)</option>
+                            <option value="0.0">IVA 0% (Bienes Exentos)</option>
+                        </select>
+                    </div>
+                    <button type="button" class="boton-primario" onclick="calcularFactura()">Calcular Factura</button>
+
+                    <div id="resultadoFactura" class="panel-resultado">
+                        <p>Subtotal Neto: $<span id="lblFacturaSubtotal">0.00</span></p>
+                        <p>Descuento Aplicado: $<span id="lblFacturaDescuento">0.00</span></p>
+                        <p>IVA Calculado: $<span id="lblFacturaIva">0.00</span></p>
+                        <h3>Total Factura: $<span id="lblFacturaTotal">0.00</span></h3>
+                    </div>
+                </div>
+
+                <div id="formRetencion" class="formulario-simulador">
+                    <div class="grupo-entrada">
+                        <label>Monto Base de Operación ($)</label>
+                        <input type="number" id="txtMontoBase" placeholder="Ej: 500.00" class="entrada-neon"
+                            step="0.01">
+                    </div>
+                    <div class="grupo-entrada">
+                        <label>Retención Impuesto a la Renta</label>
+                        <select id="selRenta" class="entrada-neon">
+                            <option value="0.0175">1.75% (Adquisición de Bienes)</option>
+                            <option value="0.0275">2.75% (Servicios Generales)</option>
+                            <option value="0.10">10.00% (Honorarios Profesionales)</option>
+                            <option value="0.0">0.00% (Sin Retención)</option>
+                        </select>
+                    </div>
+                    <div class="grupo-entrada">
+                        <label>Retención de IVA</label>
+                        <select id="selIvaRet" class="entrada-neon">
+                            <option value="0.30">30% (Bienes)</option>
+                            <option value="0.70">70% (Servicios)</option>
+                            <option value="1.00">100% (Honorarios / Arriendos)</option>
+                            <option value="0.0">0% (Sin Retención)</option>
+                        </select>
+                    </div>
+                    <button type="button" class="boton-primario" onclick="calcularRetencion()">Calcular
+                        Retenciones</button>
+
+                    <div id="resultadoRetencion" class="panel-resultado">
+                        <p>Retención de Renta: $<span id="lblRetencionRenta">0.00</span></p>
+                        <p>Retención de IVA: $<span id="lblRetencionIva">0.00</span></p>
+                        <h3>Total a Retener: $<span id="lblRetencionTotal">0.00</span></h3>
+                        <h4 style="margin-top: 10px; color: #cbd5e1;">Monto Neto a Pagar: $<span
+                                id="lblRetencionNeto">0.00</span></h4>
+                    </div>
+                </div>
+
+                <div id="formNota" class="formulario-simulador">
+                    <div class="grupo-entrada">
+                        <label>Valor Total Original de Factura ($)</label>
+                        <input type="number" id="txtValorOriginal" placeholder="Ej: 250.00" class="entrada-neon"
+                            step="0.01">
+                    </div>
+                    <div class="grupo-entrada">
+                        <label>Monto a Modificar o Anular ($)</label>
+                        <input type="number" id="txtValorModificar" placeholder="Ej: 50.00" class="entrada-neon"
+                            step="0.01">
+                    </div>
+                    <button type="button" class="boton-primario" onclick="calcularNota()">Aplicar Nota de
+                        Crédito</button>
+
+                    <div id="resultadoNota" class="panel-resultado">
+                        <p>Monto de Ajuste: $<span id="lblNotaAjuste">0.00</span></p>
+                        <h3>Nuevo Total Modificado: $<span id="lblNotaNuevoTotal">0.00</span></h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec-tabla" class="seccion-pagina">
+            <div class="tarjeta-cristal">
+                <div class="cabecera-formulario">
+                    <h2>Tabla referencial del IVA</h2>
+                    <p>Historial y porcentajes vigentes de impuestos aplicados a consumos locales.</p>
+                </div>
+                <p style="text-align: center; color: #a0aec0;">[Espacio reservado para la tabla dinámica de tarifas del
+                    IVA]</p>
+            </div>
+        </section>
+
+        <section id="sec-soporte" class="seccion-pagina">
+            <div class="tarjeta-cristal" style="text-align: center;">
+                <h2>Centro de Soporte Técnico</h2>
+                <p style="color: #a0aec0; margin-top: 15px;">¿Tienes dudas con tus cálculos? El equipo de
+                    <strong>Git-gajero</strong> está listo para ayudarte.
+                </p>
+            </div>
+        </section>
+
+        <section id="sec-login" class="seccion-pagina">
+            <div class="tarjeta-cristal tarjeta-formulario">
+                <div class="cabecera-formulario">
+                    <h2>Iniciar Sesión</h2>
+                    <p>Acceso exclusivo al sistema.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="modalInformacion" class="capa-modal">
+        <div class="caja-modal">
+            <h2 id="tituloModal" class="texto-brillante">Titulo</h2>
+            <div id="contenidoModal" class="cuerpo-modal">
+            </div>
+            <button type="button" class="boton-cerrar-modal" onclick="cerrarModalInformacion()">Entendido</button>
+        </div>
+    </div>
+
+    <script src="Facturacion.js"></script>
+</body>
+
+</html>
