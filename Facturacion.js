@@ -182,80 +182,83 @@ function calcularNota() {
     document.getElementById("resultadoNota").style.display = "block";
 }
 
-function renderizarProductos(lista) {
-    const ul = document.getElementById('listaProductos');
-    ul.innerHTML = '';
-    if (lista.length === 0) {
-        ul.innerHTML = '<li style="color:#475569;text-align:center;padding:20px;font-size:0.9rem;">Sin resultados</li>';
-        return;
+//Esta fución permitirá visualizar cada producto guardado dentro del arreglo
+function renderizarProductos(productos){
+    let lista = document.getElementById("listaProductos");
+    lista.innerHTML = "";
+    for(let i = 0; i < productos.length; i++){
+        let producto = productos[i];
+        let li = document.createElement("li");
+        li.className = "item-producto";
+        li.innerHTML = `<span class = "producto-icono">${producto.icono}</span>
+                        <div class = "producto-info">
+                            <div class = "producto-nombre">${producto.nombre}</div>
+                            <div class = "producto-categoria">${producto.categoria}</div>
+                        </div>`;
+
+        lista.appendChild(li);
     }
-    lista.forEach(p => {
-        const li = document.createElement('li');
-        li.className = 'item-producto' + (productoSeleccionado?.id === p.id ? ' seleccionado' : '');
-        li.onclick = () => seleccionarProducto(p);
-        li.innerHTML = `
-            <span class="producto-icono">${p.icono}</span>
-            <div class="producto-info">
-                <div class="producto-nombre">${p.nombre}</div>
-                <div class="producto-categoria">${p.categoria}</div>
-            </div>
-            <span class="badge-lista ${p.iva === 0 ? 'badge-0' : 'badge-15'}">${p.iva === 0 ? 'IVA 0%' : 'IVA 15%'}</span>
-        `;
-        ul.appendChild(li);
-    });
 }
 
-function filtrarProductos() {
-    const query = document.getElementById('txtBusquedaProducto').value.toLowerCase();
-    const filtrados = productos.filter(p =>
-        p.nombre.toLowerCase().includes(query) ||
-        p.categoria.toLowerCase().includes(query)
-    );
-    renderizarProductos(filtrados);
+//La siguiente función que es buscarProducto hará lo siguiente lo siguiente
+//lee lo que escribo
+//recorre todos los productos con un for
+//Guarda los que coincidan en un array (arreglo) nuevo
+//llamará a renderizarProductos en ese arreglo
+
+function buscarProducto(){
+    //toLowerCase convierte mayúsculas en minúsculas.
+    let buscar = document.getElementById("txtBusquedaProducto").value.toLowerCase();
+    let encontrados = [];
+
+    for(let i = 0; i < productos.length; i++){
+        let nombre = productos[i].nombre.toLowerCase();
+        let categoria = productos[i].categoria.toLowerCase();
+        //includes ve si tiene un textro contiene otro texto
+        if(nombre.includes(buscar) || categoria.includes(buscar)){
+            //el push agrega al arreglo
+            encontrados.push(productos[i]);
+        }
+    }
+    renderizarProductos(encontrados);
 }
 
-function seleccionarProducto(p) {
-    productoSeleccionado = p;
-    renderizarProductos(productos.filter(x =>
-        document.getElementById('txtBusquedaProducto').value === '' ? true :
-        x.nombre.toLowerCase().includes(document.getElementById('txtBusquedaProducto').value.toLowerCase())
-    ));
+function seleccionarProducto(producto){
+    //se guarda en la variable global
+    productoSeleccionado = producto;
+    renderizarProductos(productos);
+    //por si me olvido, el style me da acceso al css no al html, se puede poner tambien style.backgoundColor  ="red" por ejemplo
+    //vale con todos los elementos del css, creo.
+    //oculta el mensaje de seleccionar producto
+    document.getElementById("panelVacio").style.display = "none";
+    //muestra el panel con la información
+    document.getElementById("panelDetalle").style.display="flex"
 
-    document.getElementById('panelVacio').style.display   = 'none';
-    document.getElementById('panelDetalle').style.display = 'flex';
+    //llenamos los datos del producto
+    //textContent lo que hace es que cambia el texto que se ve dentro del elemento HTML
+    document.getElementById("detalleNombre").textContent = producto.nombre;
+    document.getElementById("detalleCategoria").textContent = producto.categoria;
+    document.getElementById("detalleDescripcion").textContent = producto.descripcion
 
-    const esExento = p.iva === 0;
-    const badge = document.getElementById('detalleBadge');
-    badge.textContent   = esExento ? 'IVA 0% — Exento' : 'IVA 15% — Tarifa General';
-    badge.className     = 'badge-iva ' + (esExento ? 'badge-0' : 'badge-15');
+    //El estado del impuesto, si aplica o no el IVA
 
-    document.getElementById('detalleNombre').textContent      = p.nombre;
-    document.getElementById('detalleCategoria').textContent   = p.categoria;
-    document.getElementById('detalleTarifa').textContent      = esExento ? '0%' : '15%';
-    document.getElementById('detalleBase').textContent        = p.base;
-    document.getElementById('detalleDescripcion').textContent = p.descripcion;
-    document.getElementById('simLabelIva').textContent        = `IVA (${esExento ? '0' : '15'}%)`;
+    let impuestoAplicado = document.getElementById("detalleBadge");
+    if(producto.iva === 0){
+        impuestoAplicado.textContent = "IVA = 0% - Exento";
+        impuestoAplicado.className = "badge-iva badge-0";
+        document.getElementById("detalleTarifa").textContent = "0%";
+        document.getElementById("simLabelIva").textContent = "IVA (0%)"
+    }else{
+        impuestoAplicado.textContent = "IVA = 15% - Tarifa General";
+        impuestoAplicado.className = "badge-iva badge-15";
+        document.getElementById("detalleTarifa").textContent = "15%";
+        document.getElementById("simLabelIva").textContent = "IVA (15%)"
+    }
 
-    document.getElementById('detallePrecio').value   = '';
-    document.getElementById('detalleCantidad').value = '1';
-    actualizarSimulacion(0, 1, p.iva);
+    //va a limpiar los inputs
+
+    document.getElementById("detallePrecio").value = "";
+    document.getElementById("detalleCantiadad").value = "1";
+
+    actualizarSimulación(0,1,producto.iva);
 }
-
-function simularDesdeDetalle() {
-    if (!productoSeleccionado) return;
-    const precio   = parseFloat(document.getElementById('detallePrecio').value)   || 0;
-    const cantidad = parseFloat(document.getElementById('detalleCantidad').value) || 1;
-    actualizarSimulacion(precio, cantidad, productoSeleccionado.iva);
-}
-
-function actualizarSimulacion(precio, cantidad, tasaIva) {
-    const subtotal = precio * cantidad;
-    const iva      = subtotal * tasaIva;
-    const total    = subtotal + iva;
-    document.getElementById('simSubtotal').textContent = '$' + subtotal.toFixed(2);
-    document.getElementById('simIva').textContent      = '$' + iva.toFixed(2);
-    document.getElementById('simTotal').textContent    = '$' + total.toFixed(2);
-}
-
-// Inicializar lista al cargar
-document.addEventListener('DOMContentLoaded', () => renderizarProductos(productos));
