@@ -27,13 +27,14 @@ let baseDatosConceptos = {
 };
 
 const productos = [
-    { id: 1, nombre: "Arroz ",       categoria: "Alimentos básicos",     icono: "🌾", iva: 0,    base: "Art. 55 LRTI - Bienes de primera necesidad",          descripcion: "Alimento de la canasta básica familiar ." },
-    { id: 2, nombre: "Pan",       categoria: "Alimentos básicos",     icono: "🌾", iva: 0,    base: "Art. 55 LRTI - Bienes de primera necesidad",          descripcion: "Alimento de la canasta básica familiar ." },
-    { id: 3, nombre: "Leche",       categoria: "Alimentos básicos",     icono: "🌾", iva: 0,    base: "Art. 55 LRTI - Bienes de primera necesidad",          descripcion: "Alimento de la canasta básica familiar ." },
-    { id: 4, nombre: "Ibuprofeno",             categoria: "Salud",                 icono: "💊", iva: 0,    base: "Art. 55 LRTI - Fármacos y medicamentos",              descripcion: "Medicamento de uso humano exento de IVA para garantizar el acceso a la salud." },
-    { id: 4, nombre: "Pareacetamol",             categoria: "Salud",                 icono: "💊", iva: 0,    base: "Art. 55 LRTI - Fármacos y medicamentos",              descripcion: "Medicamento de uso humano exento de IVA para garantizar el acceso a la salud." },
-    { id: 4, nombre: "levotiroxina",             categoria: "Salud",                 icono: "💊", iva: 0,    base: "Art. 55 LRTI - Fármacos y medicamentos",              descripcion: "Medicamento de uso humano exento de IVA para garantizar el acceso a la salud." },
-    { id: 5, nombre: "Servicios médicos",        categoria: "Salud",                 icono: "🏥", iva: 0,    base: "Art. 56 LRTI - Servicios de salud",                   descripcion: "Prestaciones médicas, odontológicas y de diagnóstico clínico están gravadas con tarifa 0% de IVA." }
+    { id: 1, nombre: "Arroz ",                   categoria: "Alimentos básicos",     icono: "🌾", iva: 0,    descripcion: "Alimento de la canasta básica familiar ." },
+    { id: 2, nombre: "Pan",                      categoria: "Alimentos básicos",     icono: "🌾", iva: 0,    descripcion: "Alimento de la canasta básica familiar ." },
+    { id: 3, nombre: "Leche",                    categoria: "Alimentos básicos",     icono: "🌾", iva: 0,    descripcion: "Alimento de la canasta básica familiar ." },
+    { id: 5, nombre: "Ibuprofeno",               categoria: "Salud",                 icono: "💊", iva: 0,    descripcion: "Medicamento de uso humano exento de IVA para garantizar el acceso a la salud." },
+    { id: 6, nombre: "Pareacetamol",             categoria: "Salud",                 icono: "💊", iva: 0,    descripcion: "Medicamento de uso humano exento de IVA para garantizar el acceso a la salud." },
+    { id: 7, nombre: "levotiroxina",             categoria: "Salud",                 icono: "💊", iva: 0,    descripcion: "Medicamento de uso humano exento de IVA para garantizar el acceso a la salud." },
+    { id: 8, nombre: "Servicios médicos",        categoria: "Salud",                 icono: "🏥", iva: 0,    descripcion: "Prestaciones médicas, odontológicas y de diagnóstico clínico están gravadas con tarifa 0% de IVA." },
+    { id: 9, nombre: "Atún y sardinas",          categoria: "Alimentos básicos",     icono: "🐟", iva: 0.15, descripcion: "Conservas de pescado para consumo humano." },
 ];
 
 let productoSeleccionado = null;
@@ -190,6 +191,9 @@ function renderizarProductos(productos){
         let producto = productos[i];
         let li = document.createElement("li");
         li.className = "item-producto";
+        li.onclick = function(){
+            seleccionarProducto(producto);
+        }
         li.innerHTML = `<span class = "producto-icono">${producto.icono}</span>
                         <div class = "producto-info">
                             <div class = "producto-nombre">${producto.nombre}</div>
@@ -260,5 +264,40 @@ function seleccionarProducto(producto){
     document.getElementById("detallePrecio").value = "";
     document.getElementById("detalleCantiadad").value = "1";
 
-    actualizarSimulación(0,1,producto.iva);
+    actualizarSimulacion(0,1,producto.iva);
 }
+
+//actualizarSimulacióm recibira tres datos y hará las matemáticas
+//Precio
+//Cantidad
+//tasa de IVA
+
+function actualizarSimulacion(precio,cantidad,tasaIva){
+    //multiplicamos para que nos de el subtotal
+    let subtotal = precio * cantidad;
+    let iva = subtotal*tasaIva;
+    let total = subtotal + iva;
+
+    document.getElementById("simSubtotal").textContent = '$' + subtotal.toFixed(2);
+    document.getElementById("simIva").textContent = '$' + iva.toFixed(2);
+    document.getElementById("simTotal").textContent = '$' + total.toFixed(2);
+}
+
+function simularDetallesDelProducto(){
+    if(seleccionarProducto == null){
+        return;
+    }
+    let precio = parseFloat(document.getElementById("detallePrecio").value);
+    let cantidad = parseFloat(document.getElementById("detalleCantidad").value);
+
+    if(isNaN(precio)){precio = 0;}
+    if(isNaN(cantidad)){cantidad = 1;}
+    
+    actualizarSimulacion()
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+    // Cuando la página termina de cargar, dibujamos todos los productos
+    renderizarProductos(productos);
+    }
+);
