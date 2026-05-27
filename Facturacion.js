@@ -262,7 +262,7 @@ function seleccionarProducto(producto){
     //va a limpiar los inputs
 
     document.getElementById("detallePrecio").value = "";
-    document.getElementById("detalleCantiadad").value = "1";
+    document.getElementById("detalleCantidad").value = "1";
 
     actualizarSimulacion(0,1,producto.iva);
 }
@@ -284,7 +284,7 @@ function actualizarSimulacion(precio,cantidad,tasaIva){
 }
 
 function simularDetallesDelProducto(){
-    if(seleccionarProducto == null){
+    if(productoSeleccionado == null){
         return;
     }
     let precio = parseFloat(document.getElementById("detallePrecio").value);
@@ -293,7 +293,7 @@ function simularDetallesDelProducto(){
     if(isNaN(precio)){precio = 0;}
     if(isNaN(cantidad)){cantidad = 1;}
     
-    actualizarSimulacion()
+    actualizarSimulacion(precio, cantidad, productoSeleccionado.iva)
 }
 
 document.addEventListener('DOMContentLoaded', function(){
