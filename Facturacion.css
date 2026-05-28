@@ -466,3 +466,208 @@ select.entrada-neon option {
     background: rgba(0, 240, 255, 0.1);
     transform: scale(1.02);
 }
+
+/* ── LAYOUT TABLA IVA ── */
+.layout-tabla-iva {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 25px;
+    align-items: start;
+}
+
+@media (max-width: 768px) {
+    .layout-tabla-iva {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ── TARJETA IZQUIERDA ── */
+.tarjeta-productos {
+    max-height: 75vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.lista-productos {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+    padding-right: 6px;
+    margin-top: 10px;
+    flex: 1;
+}
+
+.lista-productos::-webkit-scrollbar { width: 5px; }
+.lista-productos::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 10px; }
+.lista-productos::-webkit-scrollbar-thumb { background: rgba(0,240,255,0.25); border-radius: 10px; }
+
+.item-producto {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.item-producto:hover {
+    border-color: rgba(0,240,255,0.35);
+    background: rgba(0,240,255,0.04);
+    transform: translateX(4px);
+}
+
+.item-producto.seleccionado {
+    border-color: #00f0ff;
+    background: rgba(0,240,255,0.07);
+    box-shadow: 0 0 12px rgba(0,240,255,0.1);
+}
+
+.producto-icono {
+    font-size: 1.4rem;
+    width: 36px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.producto-info { flex: 1; }
+.producto-nombre {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #e2e8f0;
+    margin-bottom: 2px;
+}
+.producto-categoria {
+    font-size: 0.78rem;
+    color: #64748b;
+}
+
+.badge-lista {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.badge-15 {
+    background: rgba(0,240,255,0.12);
+    color: #00f0ff;
+    border: 1px solid rgba(0,240,255,0.25);
+}
+
+.badge-0 {
+    background: rgba(100,220,100,0.1);
+    color: #6ee7b7;
+    border: 1px solid rgba(110,231,183,0.25);
+}
+
+/* ── TARJETA DERECHA ── */
+.tarjeta-detalle-producto {
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-vacio {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 20px;
+    gap: 15px;
+}
+
+.icono-vacio { font-size: 3rem; opacity: 0.3; }
+
+.panel-vacio h3 { color: #475569; font-size: 1.2rem; }
+.panel-vacio p  { color: #334155; font-size: 0.9rem; max-width: 260px; }
+
+.panel-detalle { display: flex; flex-direction: column; gap: 18px; }
+
+.detalle-encabezado { display: flex; flex-direction: column; gap: 6px; }
+
+.badge-iva {
+    align-self: flex-start;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+.detalle-encabezado h2 { font-size: 1.6rem; font-weight: 700; }
+.detalle-categoria     { font-size: 0.88rem; color: #64748b; }
+
+.detalle-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.detalle-stat {
+    background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.stat-label { font-size: 0.75rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; }
+.stat-valor { font-size: 1.1rem; font-weight: 700; color: #00f0ff; }
+.stat-small { font-size: 0.85rem !important; color: #94a3b8 !important; }
+
+.separador-neon {
+    height: 1px;
+    background: linear-gradient(90deg, rgba(0,240,255,0.4), transparent);
+}
+
+.subtitulo-detalle {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #cbd5e1;
+    letter-spacing: 0.3px;
+}
+
+/* Mini simulador */
+.mini-resultado {
+    background: rgba(0,240,255,0.04);
+    border: 1px solid rgba(0,240,255,0.12);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mini-fila {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.92rem;
+    color: #94a3b8;
+}
+
+.mini-total {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 10px;
+    margin-top: 2px;
+    font-weight: 700;
+    font-size: 1.05rem !important;
+    color: #00f0ff !important;
+}
+
+.mini-total span { color: #00f0ff; }
+
+.texto-descripcion {
+    font-size: 0.9rem;
+    color: #64748b;
+    line-height: 1.7;
+}

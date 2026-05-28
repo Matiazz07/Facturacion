@@ -26,6 +26,19 @@ let baseDatosConceptos = {
     }
 };
 
+const productos = [
+    { id: 1, nombre: "Arroz ",                   categoria: "Alimentos básicos",     icono: "🌾", iva: 0,    descripcion: "Alimento de la canasta básica familiar ." },
+    { id: 2, nombre: "Pan",                      categoria: "Alimentos básicos",     icono: "🌾", iva: 0,    descripcion: "Alimento de la canasta básica familiar ." },
+    { id: 3, nombre: "Leche",                    categoria: "Alimentos básicos",     icono: "🌾", iva: 0,    descripcion: "Alimento de la canasta básica familiar ." },
+    { id: 5, nombre: "Ibuprofeno",               categoria: "Salud",                 icono: "💊", iva: 0,    descripcion: "Medicamento de uso humano exento de IVA para garantizar el acceso a la salud." },
+    { id: 6, nombre: "Pareacetamol",             categoria: "Salud",                 icono: "💊", iva: 0,    descripcion: "Medicamento de uso humano exento de IVA para garantizar el acceso a la salud." },
+    { id: 7, nombre: "levotiroxina",             categoria: "Salud",                 icono: "💊", iva: 0,    descripcion: "Medicamento de uso humano exento de IVA para garantizar el acceso a la salud." },
+    { id: 8, nombre: "Servicios médicos",        categoria: "Salud",                 icono: "🏥", iva: 0,    descripcion: "Prestaciones médicas, odontológicas y de diagnóstico clínico están gravadas con tarifa 0% de IVA." },
+    { id: 9, nombre: "Atún y sardinas",          categoria: "Alimentos básicos",     icono: "🐟", iva: 0.15, descripcion: "Conservas de pescado para consumo humano." },
+];
+
+let productoSeleccionado = null;
+
 function ocultarSecciones() {
     document.getElementById("sec-inicio").classList.remove("activa");
     document.getElementById("sec-simulador").classList.remove("activa");
@@ -169,6 +182,124 @@ function calcularNota() {
     document.getElementById("resultadoNota").style.display = "block";
 }
 
+//Esta fución permitirá visualizar cada producto guardado dentro del arreglo
+function renderizarProductos(productos){
+    let lista = document.getElementById("listaProductos");
+    lista.innerHTML = "";
+    for(let i = 0; i < productos.length; i++){
+        let producto = productos[i];
+        let li = document.createElement("li");
+        li.className = "item-producto";
+        li.onclick = function(){
+            seleccionarProducto(producto);
+        }
+        li.innerHTML = `<span class = "producto-icono">${producto.icono}</span>
+                        <div class = "producto-info">
+                            <div class = "producto-nombre">${producto.nombre}</div>
+                            <div class = "producto-categoria">${producto.categoria}</div>
+                        </div>`;
+
+        lista.appendChild(li);
+    }
+}
+
+//La siguiente función que es buscarProducto hará lo siguiente lo siguiente
+//lee lo que escribo
+//recorre todos los productos con un for
+//Guarda los que coincidan en un array (arreglo) nuevo
+//llamará a renderizarProductos en ese arreglo
+
+function buscarProducto(){
+    //toLowerCase convierte mayúsculas en minúsculas.
+    let buscar = document.getElementById("txtBusquedaProducto").value.toLowerCase();
+    let encontrados = [];
+
+    for(let i = 0; i < productos.length; i++){
+        let nombre = productos[i].nombre.toLowerCase();
+        let categoria = productos[i].categoria.toLowerCase();
+        //includes ve si tiene un textro contiene otro texto
+        if(nombre.includes(buscar) || categoria.includes(buscar)){
+            //el push agrega al arreglo
+            encontrados.push(productos[i]);
+        }
+    }
+    renderizarProductos(encontrados);
+}
+
+function seleccionarProducto(producto){
+    //se guarda en la variable global
+    productoSeleccionado = producto;
+    renderizarProductos(productos);
+    //por si me olvido, el style me da acceso al css no al html, se puede poner tambien style.backgoundColor  ="red" por ejemplo
+    //vale con todos los elementos del css, creo.
+    //oculta el mensaje de seleccionar producto
+    document.getElementById("panelVacio").style.display = "none";
+    //muestra el panel con la información
+    document.getElementById("panelDetalle").style.display="flex"
+
+    //llenamos los datos del producto
+    //textContent lo que hace es que cambia el texto que se ve dentro del elemento HTML
+    document.getElementById("detalleNombre").textContent = producto.nombre;
+    document.getElementById("detalleCategoria").textContent = producto.categoria;
+    document.getElementById("detalleDescripcion").textContent = producto.descripcion
+
+    //El estado del impuesto, si aplica o no el IVA
+
+    let impuestoAplicado = document.getElementById("detalleBadge");
+    if(producto.iva === 0){
+        impuestoAplicado.textContent = "IVA = 0% - Exento";
+        impuestoAplicado.className = "badge-iva badge-0";
+        document.getElementById("detalleTarifa").textContent = "0%";
+        document.getElementById("simLabelIva").textContent = "IVA (0%)"
+    }else{
+        impuestoAplicado.textContent = "IVA = 15% - Tarifa General";
+        impuestoAplicado.className = "badge-iva badge-15";
+        document.getElementById("detalleTarifa").textContent = "15%";
+        document.getElementById("simLabelIva").textContent = "IVA (15%)"
+    }
+
+    //va a limpiar los inputs
+
+    document.getElementById("detallePrecio").value = "";
+    document.getElementById("detalleCantidad").value = "1";
+
+    actualizarSimulacion(0,1,producto.iva);
+}
+
+//actualizarSimulacióm recibira tres datos y hará las matemáticas
+//Precio
+//Cantidad
+//tasa de IVA
+
+function actualizarSimulacion(precio,cantidad,tasaIva){
+    //multiplicamos para que nos de el subtotal
+    let subtotal = precio * cantidad;
+    let iva = subtotal*tasaIva;
+    let total = subtotal + iva;
+
+    document.getElementById("simSubtotal").textContent = '$' + subtotal.toFixed(2);
+    document.getElementById("simIva").textContent = '$' + iva.toFixed(2);
+    document.getElementById("simTotal").textContent = '$' + total.toFixed(2);
+}
+
+function simularDetallesDelProducto(){
+    if(productoSeleccionado == null){
+        return;
+    }
+    let precio = parseFloat(document.getElementById("detallePrecio").value);
+    let cantidad = parseFloat(document.getElementById("detalleCantidad").value);
+
+    if(isNaN(precio)){precio = 0;}
+    if(isNaN(cantidad)){cantidad = 1;}
+    
+    actualizarSimulacion(precio, cantidad, productoSeleccionado.iva)
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+    // Cuando la página termina de cargar, dibujamos todos los productos
+    renderizarProductos(productos);
+    }
+);
 function consultarCalendario() {
     let digito = document.getElementById("txtDigito");
     let digitoTexto = digito.value;
