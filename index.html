@@ -84,7 +84,7 @@
 
                 <div class="alternador-simuladores">
                     <button type="button" id="btnModFactura" class="btn-alternador activo"
-                        onclick="mostrarModuloSimulador('formFactura', this)">Factura</button>
+                        onclick="mostrarModuloSimulador('formFactura', this)">Facturas </button>
                     <button type="button" id="btnModRetencion" class="btn-alternador"
                         onclick="mostrarModuloSimulador('formRetencion', this)">Retención</button>
                     <button type="button" id="btnModNota" class="btn-alternador"
@@ -178,82 +178,86 @@
             </div>
         </section>
 
-       <section id="sec-tabla" class="seccion-pagina">
-    <div class="layout-tabla-iva">
+        <section id="sec-tabla" class="seccion-pagina">
+            <div class="layout-tabla-iva">
 
-        <!-- TARJETA IZQUIERDA: Buscador + Lista de productos -->
-        <div class="tarjeta-cristal tarjeta-productos">
-            <div class="cabecera-formulario">
-                <h2>Productos</h2>
-                <p>Busca y selecciona un ítem para ver su información fiscal.</p>
-            </div>
+                <!-- TARJETA IZQUIERDA: Buscador + Lista de productos -->
+                <div class="tarjeta-cristal tarjeta-productos">
+                    <div class="cabecera-formulario">
+                        <h2>Productos</h2>
+                        <p>Busca y selecciona un ítem para ver su información fiscal.</p>
+                    </div>
 
-            <div class="grupo-entrada">
-                <input type="text" id="txtBusquedaProducto" class="entrada-neon" placeholder="🔍  Buscar producto..." oninput="buscarProducto()">
-            </div>
+                    <div class="grupo-entrada">
+                        <input type="text" id="txtBusquedaProducto" class="entrada-neon"
+                            placeholder="🔍  Buscar producto..." oninput="buscarProducto()">
+                    </div>
 
-            <ul id="listaProductos" class="lista-productos">
-                <!-- generada por JS -->
-            </ul>
-        </div>
-
-        <!-- TARJETA DERECHA: Detalle del producto seleccionado -->
-        <div class="tarjeta-cristal tarjeta-detalle-producto">
-            <div id="panelVacio" class="panel-vacio">
-                <div class="icono-vacio">📋</div>
-                <h3>Selecciona un producto</h3>
-                <p>Haz clic en cualquier ítem de la lista para ver su información fiscal y simulación de facturación.</p>
-            </div>
-
-            <div id="panelDetalle" class="panel-detalle" style="display:none;">
-                <div class="detalle-encabezado">
-                    <span id="detalleBadge" class="badge-iva"></span>
-                    <h2 id="detalleNombre" class="texto-brillante"></h2>
-                    <p id="detalleCategoria" class="detalle-categoria"></p>
+                    <ul id="listaProductos" class="lista-productos">
+                        <!-- generada por JS -->
+                    </ul>
                 </div>
 
-                <div class="detalle-grid">
-                    <div class="detalle-stat">
-                        <span class="stat-label">Tarifa IVA</span>
-                        <span id="detalleTarifa" class="stat-valor"></span>
+                <!-- TARJETA DERECHA: Detalle del producto seleccionado -->
+                <div class="tarjeta-cristal tarjeta-detalle-producto">
+                    <div id="panelVacio" class="panel-vacio">
+                        <div class="icono-vacio">📋</div>
+                        <h3>Selecciona un producto</h3>
+                        <p>Haz clic en cualquier ítem de la lista para ver su información fiscal y simulación de
+                            facturación.</p>
+                    </div>
+
+                    <div id="panelDetalle" class="panel-detalle" style="display:none;">
+                        <div class="detalle-encabezado">
+                            <span id="detalleBadge" class="badge-iva"></span>
+                            <h2 id="detalleNombre" class="texto-brillante"></h2>
+                            <p id="detalleCategoria" class="detalle-categoria"></p>
+                        </div>
+
+                        <div class="detalle-grid">
+                            <div class="detalle-stat">
+                                <span class="stat-label">Tarifa IVA</span>
+                                <span id="detalleTarifa" class="stat-valor"></span>
+                            </div>
+                        </div>
+
+                        <div class="separador-neon"></div>
+
+                        <h4 class="subtitulo-detalle">⚡ Simulador Rápido</h4>
+                        <div class="grupo-entrada">
+                            <label>Precio unitario del producto ($)</label>
+                            <input type="number" id="detallePrecio" class="entrada-neon" placeholder="Ej: 100.00"
+                                step="0.01" oninput="simularDetallesDelProducto()">
+                        </div>
+                        <div class="grupo-entrada">
+                            <label>Cantidad</label>
+                            <input type="number" id="detalleCantidad" class="entrada-neon" placeholder="Ej: 2" step="1"
+                                min="1" value="1" oninput="simularDetallesDelProducto()">
+                        </div>
+
+                        <div class="mini-resultado">
+                            <div class="mini-fila">
+                                <span>Subtotal</span>
+                                <span id="simSubtotal">$0.00</span>
+                            </div>
+                            <div class="mini-fila">
+                                <span id="simLabelIva">IVA (15%)</span>
+                                <span id="simIva">$0.00</span>
+                            </div>
+                            <div class="mini-fila mini-total">
+                                <span>Total Factura</span>
+                                <span id="simTotal">$0.00</span>
+                            </div>
+                        </div>
+
+                        <div class="separador-neon"></div>
+
+                        <h4 class="subtitulo-detalle">📌 Descripción</h4>
+                        <p id="detalleDescripcion" class="texto-descripcion"></p>
                     </div>
                 </div>
-
-                <div class="separador-neon"></div>
-
-                <h4 class="subtitulo-detalle">⚡ Simulador Rápido</h4>
-                <div class="grupo-entrada">
-                    <label>Precio unitario del producto ($)</label>
-                    <input type="number" id="detallePrecio" class="entrada-neon" placeholder="Ej: 100.00" step="0.01" oninput="simularDetallesDelProducto()">
-                </div>
-                <div class="grupo-entrada">
-                    <label>Cantidad</label>
-                    <input type="number" id="detalleCantidad" class="entrada-neon" placeholder="Ej: 2" step="1" min="1" value="1" oninput="simularDetallesDelProducto()">
-                </div>
-
-                <div class="mini-resultado">
-                    <div class="mini-fila">
-                        <span>Subtotal</span>
-                        <span id="simSubtotal">$0.00</span>
-                    </div>
-                    <div class="mini-fila">
-                        <span id="simLabelIva">IVA (15%)</span>
-                        <span id="simIva">$0.00</span>
-                    </div>
-                    <div class="mini-fila mini-total">
-                        <span>Total Factura</span>
-                        <span id="simTotal">$0.00</span>
-                    </div>
-                </div>
-
-                <div class="separador-neon"></div>
-
-                <h4 class="subtitulo-detalle">📌 Descripción</h4>
-                <p id="detalleDescripcion" class="texto-descripcion"></p>
             </div>
-        </div>
-    </div>
-</section>
+        </section>
 
         <section id="sec-calendario" class="seccion-pagina">
             <div class="tarjeta-cristal tarjeta-formulario">
