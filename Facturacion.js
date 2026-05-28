@@ -43,8 +43,7 @@ function ocultarSecciones() {
     document.getElementById("sec-inicio").classList.remove("activa");
     document.getElementById("sec-simulador").classList.remove("activa");
     document.getElementById("sec-tabla").classList.remove("activa");
-    document.getElementById("sec-soporte").classList.remove("activa");
-    document.getElementById("sec-login").classList.remove("activa");
+    document.getElementById("sec-calendario").classList.remove("activa");
 }
 
 function mostrarSeccion(idSeccion, elementoBoton) {
@@ -301,3 +300,43 @@ document.addEventListener('DOMContentLoaded', function(){
     renderizarProductos(productos);
     }
 );
+function consultarCalendario() {
+    let digito = document.getElementById("txtDigito");
+    let digitoTexto = digito.value;
+
+    if (digitoTexto === "" || isNaN(digitoTexto) || digitoTexto < 0 || digitoTexto > 9) {
+        alert("Por favor, ingrese un dígito válido.");
+        return;
+    }
+
+    let cmpDigito = parseInt(digitoTexto);
+    let fechaMaxima = 0;
+
+    if (cmpDigito === 1) {
+        fechaMaxima = 10;
+    } else if (cmpDigito === 2) {
+        fechaMaxima = 12;
+    } else if (cmpDigito === 3) {
+        fechaMaxima = 14;
+    } else if (cmpDigito === 4) {
+        fechaMaxima = 16;
+    } else if (cmpDigito === 5) {
+        fechaMaxima = 18;
+    } else if (cmpDigito === 6) {
+        fechaMaxima = 20;
+    } else if (cmpDigito === 7) {
+        fechaMaxima = 22;
+    } else if (cmpDigito === 8) {
+        fechaMaxima = 24;
+    } else if (cmpDigito === 9) {
+        fechaMaxima = 26;
+    } else if (cmpDigito === 0) {
+        fechaMaxima = 28;
+    }
+
+    mostrarEnSpan("lblDigito", cmpDigito);
+    mostrarEnSpan("lblFechaMensual", fechaMaxima);
+    mostrarEnSpan("lblFechaSemestral", fechaMaxima);
+
+    document.getElementById("resultadoCalendario").style.display = "block";
+}

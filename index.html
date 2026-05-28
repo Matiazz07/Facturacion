@@ -18,7 +18,9 @@
             </li>
             <li><a href="#" class="item-enlace" onclick="mostrarSeccion('sec-simulador', this)">Simulador</a></li>
             <li><a href="#" class="item-enlace" onclick="mostrarSeccion('sec-tabla', this)">Tabla del IVA</a></li>
-            <li><a href="#" class="item-enlace" onclick="mostrarSeccion('sec-soporte', this)">Soporte</a></li>
+            <li><a href="#" class="item-enlace" onclick="mostrarSeccion('sec-calendario', this)">Calendario
+                    Tributario</a>
+            </li>
             <div id="indicadorNeon" class="indicador-neon"></div>
         </ul>
     </nav>
@@ -254,34 +256,41 @@
 </section>
 
         <section id="sec-soporte" class="seccion-pagina">
-            <div class="tarjeta-cristal" style="text-align: center;">
-                <h2>Centro de Soporte Técnico</h2>
-                <p style="color: #a0aec0; margin-top: 15px;">¿Tienes dudas con tus cálculos? El equipo de
-                    <strong>Git-gajero</strong> está listo para ayudarte.
-                </p>
-            </div>
-        </section>
-
-        <section id="sec-login" class="seccion-pagina">
             <div class="tarjeta-cristal tarjeta-formulario">
                 <div class="cabecera-formulario">
-                    <h2>Iniciar Sesión</h2>
-                    <p>Acceso exclusivo al sistema.</p>
+                    <h2>Calendario Tributario</h2>
+                    <p>Consulta las fechas máximas de declaración según el noveno dígito de tu RUC o Cédula.</p>
+                </div>
+
+                <div class="formulario-simulador activa-modulo">
+                    <div class="grupo-entrada">
+                        <label>Noveno dígito del RUC / Cédula</label>
+                        <input type="number" id="txtDigito" placeholder="Ej: 5" class="entrada-neon" min="0" max="9">
+                    </div>
+                    <button type="button" class="boton-primario" onclick="consultarCalendario()">Consultar
+                        Fechas</button>
+
+                    <div id="resultadoCalendario" class="panel-resultado">
+                        <p>Dígito ingresado: <span id="lblDigito" class="texto-brillante"></span></p>
+                        <h3 style="margin-top: 15px; margin-bottom: 10px;">Fechas Máximas de Declaración:</h3>
+                        <p>Mensual (IVA / Retenciones): Día <span id="lblFechaMensual" class="texto-brillante"></span>
+                            del mes siguiente.</p>
+                        <p>Semestral (IVA): Día <span id="lblFechaSemestral" class="texto-brillante"></span> de los
+                            meses de Julio y Enero.</p>
+                    </div>
                 </div>
             </div>
         </section>
-    </main>
-
-    <div id="modalInformacion" class="capa-modal">
-        <div class="caja-modal">
-            <h2 id="tituloModal" class="texto-brillante">Titulo</h2>
-            <div id="contenidoModal" class="cuerpo-modal">
+        <div id="modalInformacion" class="capa-modal">
+            <div class="caja-modal">
+                <h2 id="tituloModal" class="texto-brillante">Titulo</h2>
+                <div id="contenidoModal" class="cuerpo-modal">
+                </div>
+                <button type="button" class="boton-cerrar-modal" onclick="cerrarModalInformacion()">Entendido</button>
             </div>
-            <button type="button" class="boton-cerrar-modal" onclick="cerrarModalInformacion()">Entendido</button>
         </div>
-    </div>
 
-    <script src="Facturacion.js"></script>
+        <script src="Facturacion.js"></script>
 </body>
 
 </html>
