@@ -19,8 +19,8 @@
             <li><a href="#" class="item-enlace" onclick="mostrarSeccion('sec-simulador', this)">Simulador</a></li>
             <li><a href="#" class="item-enlace" onclick="mostrarSeccion('sec-tabla', this)">Tabla del IVA</a></li>
             <li><a href="#" class="item-enlace" onclick="mostrarSeccion('sec-calendario', this)">Calendario
-                    Tributario</a>
-            </li>
+                    Tributario</a></li>
+            <li><a href="#" class="item-enlace" onclick="mostrarSeccion('sec-fundamentos', this)">Fundamentos</a></li>
             <div id="indicadorNeon" class="indicador-neon"></div>
         </ul>
     </nav>
@@ -85,12 +85,14 @@
                 <div class="alternador-simuladores">
                     <button type="button" id="btnModFactura" class="btn-alternador activo"
                         onclick="mostrarModuloSimulador('formFactura', this)">Factura</button>
+                    <button type="button" id="btnModDesglose" class="btn-alternador"
+                        onclick="mostrarModuloSimulador('formDesglose', this)">Desglose</button>
                     <button type="button" id="btnModRetencion" class="btn-alternador"
                         onclick="mostrarModuloSimulador('formRetencion', this)">Retención</button>
                     <button type="button" id="btnModNota" class="btn-alternador"
                         onclick="mostrarModuloSimulador('formNota', this)">Nota de Crédito</button>
                     <button type="button" id="btnPagoIntereses" class="btn-alternador"
-                        onclick="mostrarModuloSimulador('formaNota', this)">Intereses</button>
+                        onclick="mostrarModuloSimulador('formIntereses', this)">Intereses</button>
                 </div>
 
                 <div id="formFactura" class="formulario-simulador activa-modulo">
@@ -117,6 +119,28 @@
                         <p>Descuento Aplicado: $<span id="lblFacturaDescuento">0.00</span></p>
                         <p>IVA Calculado: $<span id="lblFacturaIva">0.00</span></p>
                         <h3>Total Factura: $<span id="lblFacturaTotal">0.00</span></h3>
+                    </div>
+                </div>
+
+                <div id="formDesglose" class="formulario-simulador">
+                    <div class="grupo-entrada">
+                        <label>Valor Total a Pagar ($)</label>
+                        <input type="number" id="txtTotalDesglose" placeholder="Ej: 115.00" class="entrada-neon"
+                            step="0.01">
+                    </div>
+                    <div class="grupo-entrada">
+                        <label>Tarifa de IVA Aplicada</label>
+                        <select id="selIvaDesglose" class="entrada-neon">
+                            <option value="0.15">IVA 15%</option>
+                            <option value="0.0">IVA 0%</option>
+                        </select>
+                    </div>
+                    <button type="button" class="boton-primario" onclick="calcularDesglose()">Calcular Desglose</button>
+
+                    <div id="resultadoDesglose" class="panel-resultado">
+                        <p>Subtotal Original: $<span id="lblDesgloseSubtotal">0.00</span></p>
+                        <p>IVA Extraído: $<span id="lblDesgloseIva">0.00</span></p>
+                        <h3>Total Verificado: $<span id="lblDesgloseTotal">0.00</span></h3>
                     </div>
                 </div>
 
@@ -175,13 +199,39 @@
                         <h3>Nuevo Total Modificado: $<span id="lblNotaNuevoTotal">0.00</span></h3>
                     </div>
                 </div>
+
+                <div id="formIntereses" class="formulario-simulador">
+                    <div class="grupo-entrada">
+                        <p style="color: #94a3b8; text-align: center; margin-top: 20px;">Módulo de intereses en
+                            construcción.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="tarjeta-cristal contenedor-historial">
+                <div class="cabecera-formulario">
+                    <h2>Panel de Historial</h2>
+                    <p>Registro local de los cálculos procesados en esta sesión.</p>
+                </div>
+                <table class="tabla-cristal" id="tablaHistorial">
+                    <thead>
+                        <tr>
+                            <th>Tipo de Trámite</th>
+                            <th>Base / Subtotal</th>
+                            <th>Valor Impuesto</th>
+                            <th>Valor Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpoHistorial">
+                    </tbody>
+                </table>
+                <button type="button" class="boton-limpiar" onclick="limpiarHistorial()">Borrar Historial</button>
             </div>
         </section>
 
         <section id="sec-tabla" class="seccion-pagina">
             <div class="layout-tabla-iva">
-
-                <!-- TARJETA IZQUIERDA: Buscador + Lista de productos -->
                 <div class="tarjeta-cristal tarjeta-productos">
                     <div class="cabecera-formulario">
                         <h2>Productos</h2>
@@ -190,18 +240,17 @@
 
                     <div class="grupo-entrada">
                         <input type="text" id="txtBusquedaProducto" class="entrada-neon"
-                            placeholder="🔍  Buscar producto..." oninput="buscarProducto()">
+                            placeholder="Buscar producto..." oninput="buscarProducto()">
                     </div>
 
                     <ul id="listaProductos" class="lista-productos">
-                        <!-- generada por JS -->
                     </ul>
                 </div>
 
-                <!-- TARJETA DERECHA: Detalle del producto seleccionado -->
                 <div class="tarjeta-cristal tarjeta-detalle-producto">
                     <div id="panelVacio" class="panel-vacio">
-                        <div class="icono-vacio">📋</div>
+                        <div class="icono-vacio" style="font-family: sans-serif; font-size: 2.5rem; font-weight: 300;">[
+                            i ]</div>
                         <h3>Selecciona un producto</h3>
                         <p>Haz clic en cualquier ítem de la lista para ver su información fiscal y simulación de
                             facturación.</p>
@@ -223,7 +272,7 @@
 
                         <div class="separador-neon"></div>
 
-                        <h4 class="subtitulo-detalle">⚡ Simulador Rápido</h4>
+                        <h4 class="subtitulo-detalle">Simulador Rápido</h4>
                         <div class="grupo-entrada">
                             <label>Precio unitario del producto ($)</label>
                             <input type="number" id="detallePrecio" class="entrada-neon" placeholder="Ej: 100.00"
@@ -252,7 +301,7 @@
 
                         <div class="separador-neon"></div>
 
-                        <h4 class="subtitulo-detalle">📌 Descripción</h4>
+                        <h4 class="subtitulo-detalle">Descripción</h4>
                         <p id="detalleDescripcion" class="texto-descripcion"></p>
                     </div>
                 </div>
@@ -285,16 +334,44 @@
                 </div>
             </div>
         </section>
-        <div id="modalInformacion" class="capa-modal">
-            <div class="caja-modal">
-                <h2 id="tituloModal" class="texto-brillante">Titulo</h2>
-                <div id="contenidoModal" class="cuerpo-modal">
-                </div>
-                <button type="button" class="boton-cerrar-modal" onclick="cerrarModalInformacion()">Entendido</button>
-            </div>
-        </div>
 
-        <script src="Facturacion.js"></script>
+        <section id="sec-fundamentos" class="seccion-pagina">
+            <div class="tarjeta-cristal tarjeta-formulario">
+                <div class="cabecera-formulario">
+                    <h2>Fundamentos Matemáticos</h2>
+                    <p>Base analítica de los cálculos tributarios implementados en el sistema.</p>
+                </div>
+
+                <div class="caja-formula">
+                    <h3>Cálculo Directo de IVA</h3>
+                    <p>Fórmula: Monto_IVA = Base_Imponible * (Porcentaje_IVA / 100)</p>
+                    <p>Fórmula: Total = Base_Imponible + Monto_IVA</p>
+                </div>
+
+                <div class="caja-formula">
+                    <h3>Desglose de IVA (Cálculo Inverso)</h3>
+                    <p>Fórmula: Base_Imponible = Total / (1 + (Porcentaje_IVA / 100))</p>
+                    <p>Fórmula: Monto_IVA = Total - Base_Imponible</p>
+                </div>
+
+                <div class="caja-formula">
+                    <h3>Retenciones en la Fuente</h3>
+                    <p>Fórmula: Valor_Retenido = Base_Imponible * (Porcentaje_Retención / 100)</p>
+                    <p>Fórmula: Valor_Neto = (Base_Imponible + Monto_IVA) - Total_Retenciones</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="modalInformacion" class="capa-modal">
+        <div class="caja-modal">
+            <h2 id="tituloModal" class="texto-brillante">Titulo</h2>
+            <div id="contenidoModal" class="cuerpo-modal"></div>
+            <button type="button" class="boton-cerrar-modal" onclick="cerrarModalInformacion()">Entendido</button>
+        </div>
+    </div>
+
+    <script src="Facturacion.js"></script>
 </body>
 
 </html>
