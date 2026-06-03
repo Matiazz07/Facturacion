@@ -125,7 +125,7 @@ body {
 
 .contenedor-contenido {
     width: 90%;
-    max-width: 1100px;
+    max-width: 1250px;
     margin: 50px auto;
     display: flex;
     flex-direction: column;
@@ -455,12 +455,13 @@ select.entrada-neon option {
 /* ── LAYOUT TABLA IVA ── */
 .layout-tabla-iva {
     display: grid;
-    grid-template-columns: 1fr 1.4fr;
-    gap: 25px;
+    grid-template-columns: 1fr 1.2fr 1.5fr;
+    gap: 20px;
     align-items: start;
+    width: 100%;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .layout-tabla-iva {
         grid-template-columns: 1fr;
     }
@@ -545,28 +546,7 @@ select.entrada-neon option {
     color: #64748b;
 }
 
-.badge-lista {
-    font-size: 0.72rem;
-    font-weight: 700;
-    padding: 3px 8px;
-    border-radius: 20px;
-    white-space: nowrap;
-    flex-shrink: 0;
-}
-
-.badge-15 {
-    background: rgba(0, 240, 255, 0.12);
-    color: #00f0ff;
-    border: 1px solid rgba(0, 240, 255, 0.25);
-}
-
-.badge-0 {
-    background: rgba(100, 220, 100, 0.1);
-    color: #6ee7b7;
-    border: 1px solid rgba(110, 231, 183, 0.25);
-}
-
-/* ── TARJETA DERECHA ── */
+/* ── TARJETA CENTRAL ── */
 .tarjeta-detalle-producto {
     min-height: 400px;
     display: flex;
@@ -619,6 +599,18 @@ select.entrada-neon option {
     border-radius: 20px;
 }
 
+.badge-15 {
+    background: rgba(0, 240, 255, 0.12);
+    color: #00f0ff;
+    border: 1px solid rgba(0, 240, 255, 0.25);
+}
+
+.badge-0 {
+    background: rgba(100, 220, 100, 0.1);
+    color: #6ee7b7;
+    border: 1px solid rgba(110, 231, 183, 0.25);
+}
+
 .detalle-encabezado h2 {
     font-size: 1.6rem;
     font-weight: 700;
@@ -631,7 +623,7 @@ select.entrada-neon option {
 
 .detalle-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 14px;
 }
 
@@ -658,11 +650,6 @@ select.entrada-neon option {
     color: #00f0ff;
 }
 
-.stat-small {
-    font-size: 0.85rem !important;
-    color: #94a3b8 !important;
-}
-
 .separador-neon {
     height: 1px;
     background: linear-gradient(90deg, rgba(0, 240, 255, 0.4), transparent);
@@ -675,7 +662,6 @@ select.entrada-neon option {
     letter-spacing: 0.3px;
 }
 
-/* Mini simulador */
 .mini-resultado {
     background: rgba(0, 240, 255, 0.04);
     border: 1px solid rgba(0, 240, 255, 0.12);
@@ -702,16 +688,103 @@ select.entrada-neon option {
     color: #00f0ff !important;
 }
 
-.mini-total span {
-    color: #00f0ff;
-}
-
 .texto-descripcion {
     font-size: 0.9rem;
     color: #64748b;
     line-height: 1.7;
 }
 
+/* ── TARJETA FACTURA ── */
+.tarjeta-factura {
+    display: flex;
+    flex-direction: column;
+    min-height: 400px;
+}
+
+.lista-factura-contenedor {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    max-height: 300px;
+}
+
+.lista-factura-contenedor::-webkit-scrollbar {
+    width: 5px;
+}
+
+.lista-factura-contenedor::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+}
+
+.lista-factura-contenedor::-webkit-scrollbar-thumb {
+    background: rgba(0, 240, 255, 0.25);
+    border-radius: 10px;
+}
+
+.tabla-factura {
+    font-size: 0.85rem;
+    width: 100%;
+}
+
+.tabla-factura th,
+.tabla-factura td {
+    padding: 10px 5px;
+}
+
+.col-cant {
+    width: 12%;
+}
+
+.col-det {
+    width: 40%;
+}
+
+.col-vunit {
+    width: 20%;
+}
+
+.col-vtot {
+    width: 20%;
+}
+
+.col-btn {
+    width: 8%;
+    text-align: right;
+}
+
+.resumen-factura {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 15px;
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.btn-eliminar-item {
+    background: rgba(255, 16, 122, 0.1);
+    color: #ff107a;
+    border: 1px solid #ff107a;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.75rem;
+    transition: all 0.2s ease;
+}
+
+.btn-eliminar-item:hover {
+    background: #ff107a;
+    color: #fff;
+}
+
+/* OTROS ELEMENTOS */
 .caja-formula {
     background: rgba(0, 0, 0, 0.4);
     border-left: 4px solid #00f0ff;

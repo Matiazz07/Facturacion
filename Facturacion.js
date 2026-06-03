@@ -1,7 +1,7 @@
 let baseDatosConceptos = {
     "iva": {
         titulo: "Impuesto al Valor Agregado (IVA)",
-        contenido: "<p>El Impuesto al Valor Agregado grava el valor de las transferencias locales o importaciones de bienes muebles, en todas sus etapas de comercialización y al valor de los servicios prestados.</p><h4>Dudas Frecuentes resueltas:</h4><ul><li><strong>¿Quién asume este pago?</strong> El gravamen es asumido por el consumidor final de dicho bien o servicio.</li><li><strong>¿Quién debe declararlo?</strong> Todos los agentes que intervienen en la cadena de comercialización están obligados a declarar y pagar el IVA generado.</li><li><strong>¿Existen excepciones?</strong> Sí, existen bienes y servicios con tarifa 0% (como salud, educación o transporte público) según las regulaciones tributarias.</li></ul><h3 class='titulo-tarjeta'>Productos Gravados con IVA</h3><p>Los productos gravados con IVA, son todos aquellos bienes o servicios a los que se le suma un porcentaje extra a su valor original (15% en Ecuador).</p><h4>Producto Gravados (Si Pagan IVA)</h4><ul><li>Tecnologia y Accesorios</li><li>Entrenimiento y servicios digitales</li><li>Ropa y productos procesados</li><li>Electrodomésticos y menaje de hogar</li></ul><h4>Productos con Tarifa 0% (No Pagan IVA)</h4><ul><li>Alimentos y bebidas no procesadas (productos frescos de la canasta básica).</li><li>Medicamentos de uso humano, equipos e instrumental médico.</li><li>Transporte público de personas.</li><li>Salud y educacion</li></ul>"
+        contenido: "<p>El Impuesto al Valor Agregado grava el valor de las transferencias locales o importaciones de bienes muebles, en todas sus etapas de comercialización y al valor de los servicios prestados.</p><h4>Dudas Frecuentes resueltas:</h4><ul><li><strong>¿Quién asume este pago?</strong> El gravamen es asumido por el consumidor final de dicho bien o servicio.</li><li><strong>¿Quién debe declararlo?</strong> Todos los agentes que intervienen en la cadena de comercialización están obligados a declarar y pagar el IVA generado.</li><li><strong>¿Existen excepciones?</strong> Sí, existen bienes y servicios con tarifa 0% (como salud, educación o transporte público) según las regulaciones tributarias.</li></ul><h3 class='titulo-tarjeta'>Productos Gravados con IVA</h3><p>Los productos gravados con IVA, son todos aquellos bienes o servicios a los que se le suma un porcentaje extra a su valor original (15% en Ecuador).</p><h4>Producto Gravados (Si Pagan IVA)</h4><ul><li>Tecnología y Accesorios</li><li>Entretenimiento y servicios digitales</li><li>Ropa y productos procesados</li><li>Electrodomésticos y menaje de hogar</li></ul><h4>Productos con Tarifa 0% (No Pagan IVA)</h4><ul><li>Alimentos y bebidas no procesadas (productos frescos de la canasta básica).</li><li>Medicamentos de uso humano, equipos e instrumental médico.</li><li>Transporte público de personas.</li><li>Salud y educación</li></ul>"
     },
     "base": {
         titulo: "Base Imponible",
@@ -37,12 +37,12 @@ const productos = [
 ];
 
 let productoSeleccionado = null;
+let carritoFactura = [];
 
 function ocultarSecciones() {
     document.getElementById("sec-inicio").classList.remove("activa");
     document.getElementById("sec-simulador").classList.remove("activa");
     document.getElementById("sec-tabla").classList.remove("activa");
-    document.getElementById("sec-calendario").classList.remove("activa");
     document.getElementById("sec-fundamentos").classList.remove("activa");
 }
 
@@ -79,13 +79,11 @@ function cerrarModalInformacion() {
 }
 
 function ocultarModulosSimulador() {
-    document.getElementById("formFactura").classList.remove("activa-modulo");
     document.getElementById("formDesglose").classList.remove("activa-modulo");
     document.getElementById("formRetencion").classList.remove("activa-modulo");
     document.getElementById("formNota").classList.remove("activa-modulo");
     document.getElementById("formIntereses").classList.remove("activa-modulo");
 
-    document.getElementById("btnModFactura").classList.remove("activo");
     document.getElementById("btnModDesglose").classList.remove("activo");
     document.getElementById("btnModRetencion").classList.remove("activo");
     document.getElementById("btnModNota").classList.remove("activo");
@@ -102,6 +100,8 @@ window.onload = function () {
     let botonInicio = document.getElementById("btnInicio");
     mostrarSeccion("sec-inicio", botonInicio);
     pintarHistorial();
+    renderizarProductos(productos);
+    renderizarFactura();
 }
 
 function recuperarTxtAFloat(idComponente) {
@@ -159,34 +159,6 @@ function pintarHistorial() {
 function limpiarHistorial() {
     localStorage.removeItem("datosFacturacion");
     pintarHistorial();
-}
-
-function calcularFactura() {
-    let subtotal = recuperarTxtAFloat("txtSubtotal");
-    let porcentajeDescuento = recuperarTxtAFloat("txtDescuento");
-    let tasaIva = recuperarTxtAFloat("selIva");
-
-    if (isNaN(porcentajeDescuento)) {
-        porcentajeDescuento = 0;
-    }
-
-    if (isNaN(subtotal) || subtotal <= 0) {
-        alert("Por favor, ingresa un subtotal válido mayor a 0.");
-        return;
-    }
-
-    let montoDescuento = subtotal * (porcentajeDescuento / 100);
-    let subtotalNeto = subtotal - montoDescuento;
-    let ivaCalculado = subtotalNeto * tasaIva;
-    let totalFactura = subtotalNeto + ivaCalculado;
-
-    mostrarEnSpan("lblFacturaSubtotal", subtotalNeto.toFixed(2));
-    mostrarEnSpan("lblFacturaDescuento", montoDescuento.toFixed(2));
-    mostrarEnSpan("lblFacturaIva", ivaCalculado.toFixed(2));
-    mostrarEnSpan("lblFacturaTotal", totalFactura.toFixed(2));
-
-    document.getElementById("resultadoFactura").style.display = "block";
-    guardarHistorial("Factura Directa", subtotalNeto.toFixed(2), ivaCalculado.toFixed(2), totalFactura.toFixed(2));
 }
 
 function calcularDesglose() {
@@ -255,6 +227,32 @@ function calcularNota() {
 
     document.getElementById("resultadoNota").style.display = "block";
     guardarHistorial("Nota Crédito", valorOriginal.toFixed(2), valorModificar.toFixed(2), nuevoTotal.toFixed(2));
+}
+
+function calcularIntereses() {
+    let impuesto = recuperarTxtAFloat("txtImpuestoVencido");
+    let meses = recuperarTxtAFloat("txtMesesAtraso");
+    let tasaInteres = recuperarTxtAFloat("txtTasaInteres");
+    let tasaMulta = recuperarTxtAFloat("txtTasaMulta");
+
+    if (isNaN(impuesto) || impuesto <= 0 || isNaN(meses) || meses <= 0) {
+        alert("Por favor, ingresa el impuesto vencido y los meses de atraso válidos mayores a 0.");
+        return;
+    }
+
+    if (isNaN(tasaInteres)) tasaInteres = 0;
+    if (isNaN(tasaMulta)) tasaMulta = 0;
+
+    let totalInteres = impuesto * (tasaInteres / 100) * meses;
+    let totalMulta = impuesto * (tasaMulta / 100) * meses;
+    let totalPagar = impuesto + totalInteres + totalMulta;
+
+    mostrarEnSpan("lblInteresGenerado", totalInteres.toFixed(2));
+    mostrarEnSpan("lblMultaGenerada", totalMulta.toFixed(2));
+    mostrarEnSpan("lblInteresesTotal", totalPagar.toFixed(2));
+
+    document.getElementById("resultadoIntereses").style.display = "block";
+    guardarHistorial("Intereses Mora", impuesto.toFixed(2), (totalInteres + totalMulta).toFixed(2), totalPagar.toFixed(2));
 }
 
 function renderizarProductos(productosRender) {
@@ -340,39 +338,91 @@ function simularDetallesDelProducto() {
     if (isNaN(precio)) { precio = 0; }
     if (isNaN(cantidad)) { cantidad = 1; }
 
-    actualizarSimulacion(precio, cantidad, productoSeleccionado.iva)
+    actualizarSimulacion(precio, cantidad, productoSeleccionado.iva);
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    renderizarProductos(productos);
-});
-
-function consultarCalendario() {
-    let digito = document.getElementById("txtDigito");
-    let digitoTexto = digito.value;
-
-    if (digitoTexto === "" || isNaN(digitoTexto) || digitoTexto < 0 || digitoTexto > 9) {
-        alert("Por favor, ingrese un dígito válido.");
+function agregarAFactura() {
+    if (productoSeleccionado == null) {
+        alert("Por favor selecciona un producto primero.");
         return;
     }
 
-    let cmpDigito = parseInt(digitoTexto);
-    let fechaMaxima = 0;
+    let precio = parseFloat(document.getElementById("detallePrecio").value);
+    let cantidad = parseFloat(document.getElementById("detalleCantidad").value);
 
-    if (cmpDigito === 1) fechaMaxima = 10;
-    else if (cmpDigito === 2) fechaMaxima = 12;
-    else if (cmpDigito === 3) fechaMaxima = 14;
-    else if (cmpDigito === 4) fechaMaxima = 16;
-    else if (cmpDigito === 5) fechaMaxima = 18;
-    else if (cmpDigito === 6) fechaMaxima = 20;
-    else if (cmpDigito === 7) fechaMaxima = 22;
-    else if (cmpDigito === 8) fechaMaxima = 24;
-    else if (cmpDigito === 9) fechaMaxima = 26;
-    else if (cmpDigito === 0) fechaMaxima = 28;
+    if (isNaN(precio) || precio <= 0) {
+        alert("Por favor ingresa un precio válido mayor a 0.");
+        return;
+    }
+    if (isNaN(cantidad) || cantidad <= 0) {
+        alert("Por favor ingresa una cantidad válida.");
+        return;
+    }
 
-    mostrarEnSpan("lblDigito", cmpDigito);
-    mostrarEnSpan("lblFechaMensual", fechaMaxima);
-    mostrarEnSpan("lblFechaSemestral", fechaMaxima);
+    let subtotal = precio * cantidad;
 
-    document.getElementById("resultadoCalendario").style.display = "block";
+    let itemFactura = {
+        id: new Date().getTime(),
+        nombre: productoSeleccionado.nombre,
+        cantidad: cantidad,
+        precio: precio,
+        subtotal: subtotal,
+        tasaIva: productoSeleccionado.iva
+    };
+
+    carritoFactura.push(itemFactura);
+    renderizarFactura();
+
+    document.getElementById("detallePrecio").value = "";
+    document.getElementById("detalleCantidad").value = "1";
+    document.getElementById("simSubtotal").textContent = "$0.00";
+    document.getElementById("simIva").textContent = "$0.00";
+    document.getElementById("simTotal").textContent = "$0.00";
+}
+
+function eliminarDeFactura(idItem) {
+    let nuevoCarrito = [];
+    for (let i = 0; i < carritoFactura.length; i++) {
+        if (carritoFactura[i].id !== idItem) {
+            nuevoCarrito.push(carritoFactura[i]);
+        }
+    }
+    carritoFactura = nuevoCarrito;
+    renderizarFactura();
+}
+
+function renderizarFactura() {
+    let cuerpoFactura = document.getElementById("cuerpoFactura");
+    cuerpoFactura.innerHTML = "";
+
+    let subtotal15 = 0;
+    let subtotal0 = 0;
+
+    for (let i = 0; i < carritoFactura.length; i++) {
+        let item = carritoFactura[i];
+
+        if (item.tasaIva > 0) {
+            subtotal15 += item.subtotal;
+        } else {
+            subtotal0 += item.subtotal;
+        }
+
+        let fila = document.createElement("tr");
+        fila.innerHTML = `
+            <td>${item.cantidad}</td>
+            <td style="max-width: 130px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${item.nombre}">${item.nombre}</td>
+            <td>$${item.precio.toFixed(2)}</td>
+            <td>$${item.subtotal.toFixed(2)}</td>
+            <td><button type="button" class="btn-eliminar-item" onclick="eliminarDeFactura(${item.id})">X</button></td>
+        `;
+        cuerpoFactura.appendChild(fila);
+    }
+
+    let ivaCalculado = subtotal15 * 0.15;
+    let totalGeneral = subtotal15 + subtotal0 + ivaCalculado;
+
+    document.getElementById("facSubtotal15").textContent = "$" + subtotal15.toFixed(2);
+    document.getElementById("facSubtotal0").textContent = "$" + subtotal0.toFixed(2);
+    document.getElementById("facIva").textContent = "$" + ivaCalculado.toFixed(2);
+    document.getElementById("facTotal").textContent = "$" + totalGeneral.toFixed(2);
 }
