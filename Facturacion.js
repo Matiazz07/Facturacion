@@ -33,7 +33,18 @@ const productos = [
     { id: 6, nombre: "Paracetamol", categoria: "Salud", icono: "·", iva: 0, descripcion: "Medicamento de uso humano exento de IVA para garantizar el acceso a la salud." },
     { id: 7, nombre: "Levotiroxina", categoria: "Salud", icono: "·", iva: 0, descripcion: "Medicamento de uso humano exento de IVA para garantizar el acceso a la salud." },
     { id: 8, nombre: "Servicios médicos", categoria: "Salud", icono: "·", iva: 0, descripcion: "Prestaciones médicas, odontológicas y de diagnóstico clínico están gravadas con tarifa 0% de IVA." },
-    { id: 9, nombre: "Atún y sardinas", categoria: "Alimentos básicos", icono: "·", iva: 0.15, descripcion: "Conservas de pescado para consumo humano." }
+    { id: 9, nombre: "Atún", categoria: "Alimento Procesado", icono: "·", iva: 0.15, descripcion: "Conservas de pescado para consumo humano." },
+    { id: 10, nombre: "Sardina", categoria: "Alimento Procesado", icono: "·", iva: 0.15, descripcion: "Conservas de pescado para consumo humano."},
+    { id: 11, nombre: "Zapatos", categoria: "Calzado", icono: "·", iva: 0.15, descripcion: "Calzado para uso formal."},
+    { id: 12, nombre: "Zapatillas", categoria: "Calzado", icono: "·", iva: 0.15, descripcion: "Calzado para uso deportivo o semi formal."},
+    { id: 13, nombre: "Camisa", categoria: "Ropa", icono: "·", iva: 0.15, descripcion: "Preda de vestir para uso formal o informal."},
+    { id: 14, nombre: "Camiseta", categoria: "Ropa", icono: "·", iva: 0.15, descripcion: "Prenda de ropa para uso casual."},
+    { id: 15, nombre: "Lavadora", categoria: "Electrodomésticos", icono: "·", iva: 0.15, descripcion: "Electrodoméstico automatizado para lavar ropa."},
+    { id: 16, nombre: "Refrigerador", categoria: "Electrodomésticos", icono: "·", iva: 0.15, descripcion: "Electrodoméstico que permite almacenar alimentos en un ambiente fresco."},
+    { id: 17, nombre: "Fioravanti", categoria: "Bebidas", icono: "·", iva: 0.15, descripcion: "Bebida gaseosa para consumo humano."},
+    { id: 18, nombre: "Pilsener", categoria: "Bebidas Alcólicas", icono: "·", iva: 0.15, descripcion: "Bebida alcólica para consumo humano."},
+    { id: 19, nombre: "Aceite de cocina", categoria: "Alimentos básicos", icono: "·", iva: 0, descripción: "Alimento de la canasta básica familiar."},
+    { id: 20, nombre: "Mantequilla", categoria: "Alimentos báscios", icono: "·", iva: 0, descripcion: "Alimento de la canasta básica familiar."}
 ];
 
 let productoSeleccionado = null;
