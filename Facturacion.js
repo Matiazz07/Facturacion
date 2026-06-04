@@ -21,7 +21,7 @@ let baseDatosConceptos = {
     },
     "electronica": {
         titulo: "Factura Electrónica",
-        contenido: "<p>Es un documento digital legalmente válido que respalda las operaciones comerciales y se emite de acuerdo a los estándares establecidos por la administración tributaria (SRI en el caso de Ecuador).</p><h4>Dudas Frecuentes resueltas:</h4><ul><li><strong>¿Tiene la misma validez que la física?</strong> Tiene exactamente la misma validez tributaria y legal que una factura en papel.</li><li><strong>¿Cómo se garantiza su seguridad?</strong> Se valida mediante una firma electrónica encriptada y un código de autorización único generado por la entidad de control.</li><li><strong>Beneficios:</strong> Ahorro de papel, envío inmediato por correo, almacenamiento seguro y agilidad en las declaraciones.</li></ul>"
+        contenido: "<p>Es un documento digital legalmente válido que respalda las operaciones comerciales y se emite de acuerdo a los estándares establecidos por la administración tributaria.</p><h4>Dudas Frecuentes resueltas:</h4><ul><li><strong>¿Tiene la misma validez que la física?</strong> Tiene exactamente la misma validez tributaria y legal que una factura en papel.</li><li><strong>¿Cómo se garantiza su seguridad?</strong> Se valida mediante una firma electrónica encriptada y un código de autorización único generado por la entidad de control.</li><li><strong>Beneficios:</strong> Ahorro de papel, envío inmediato por correo, almacenamiento seguro y agilidad en las declaraciones.</li></ul>"
     }
 };
 
@@ -50,14 +50,40 @@ const productos = [
 let productoSeleccionado = null;
 let carritoFactura = [];
 
+function mostrarError(idElemento, mensaje) {
+    let elemento = document.getElementById(idElemento);
+    if (elemento) {
+        elemento.textContent = mensaje;
+        elemento.style.display = "block";
+    }
+}
+
+function ocultarError(idElemento) {
+    let elemento = document.getElementById(idElemento);
+    if (elemento) {
+        elemento.style.display = "none";
+    }
+}
+
 function iniciarSesion() {
+    ocultarError("errLogin");
     let nombre = document.getElementById("txtNombreLogin").value.trim();
-    if (nombre === "") {
-        alert("Por favor, ingresa tu nombre completo para continuar.");
+    let validacionLetras = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
+
+    if (nombre === "" || !validacionLetras.test(nombre)) {
+        mostrarError("errLogin", "Por favor, ingresa un nombre válido usando solo letras.");
         return;
     }
+
     localStorage.setItem("usuarioActual", nombre);
     document.getElementById("overlayLogin").classList.remove("visible");
+    mostrarSeccion('sec-inicio', document.getElementById('btnInicio'));
+}
+
+function cerrarSesion() {
+    localStorage.removeItem("usuarioActual");
+    document.getElementById("txtNombreLogin").value = "";
+    document.getElementById("overlayLogin").classList.add("visible");
 }
 
 function ocultarSecciones() {
@@ -193,11 +219,12 @@ function limpiarHistorial() {
 }
 
 function calcularDesglose() {
+    ocultarError("errDesglose");
     let total = recuperarTxtAFloat("txtTotalDesglose");
     let tasaIva = recuperarTxtAFloat("selIvaDesglose");
 
-    if (isNaN(total) || total <= 0) {
-        alert("Por favor, ingresa un total válido mayor a 0.");
+    if (isNaN(total) || total <= 0 || total > 100000) {
+        mostrarError("errDesglose", "Por favor, ingresa un total válido mayor a 0 y hasta 100,000.");
         return;
     }
 
@@ -213,12 +240,13 @@ function calcularDesglose() {
 }
 
 function calcularRetencion() {
+    ocultarError("errRetencion");
     let montoBase = recuperarTxtAFloat("txtMontoBase");
     let tasaRenta = recuperarTxtAFloat("selRenta");
     let tasaIvaRet = recuperarTxtAFloat("selIvaRet");
 
-    if (isNaN(montoBase) || montoBase <= 0) {
-        alert("Por favor, ingresa un monto base válido mayor a 0.");
+    if (isNaN(montoBase) || montoBase <= 0 || montoBase > 100000) {
+        mostrarError("errRetencion", "Por favor, ingresa un monto base válido mayor a 0 y hasta 100,000.");
         return;
     }
 
@@ -238,16 +266,17 @@ function calcularRetencion() {
 }
 
 function calcularNota() {
+    ocultarError("errNota");
     let valorOriginal = recuperarTxtAFloat("txtValorOriginal");
     let valorModificar = recuperarTxtAFloat("txtValorModificar");
 
-    if (isNaN(valorOriginal) || valorOriginal <= 0 || isNaN(valorModificar) || valorModificar <= 0) {
-        alert("Por favor, ingresa valores válidos mayores a 0.");
+    if (isNaN(valorOriginal) || valorOriginal <= 0 || valorOriginal > 100000 || isNaN(valorModificar) || valorModificar <= 0 || valorModificar > 100000) {
+        mostrarError("errNota", "Por favor, ingresa valores válidos mayores a 0 y hasta 100,000.");
         return;
     }
 
     if (valorModificar > valorOriginal) {
-        alert("El monto a modificar no puede ser mayor al valor original de la factura.");
+        mostrarError("errNota", "El monto a modificar no puede ser mayor al valor original.");
         return;
     }
 
@@ -261,18 +290,23 @@ function calcularNota() {
 }
 
 function calcularIntereses() {
+    ocultarError("errIntereses");
     let impuesto = recuperarTxtAFloat("txtImpuestoVencido");
     let meses = recuperarTxtAFloat("txtMesesAtraso");
     let tasaInteres = recuperarTxtAFloat("txtTasaInteres");
     let tasaMulta = recuperarTxtAFloat("txtTasaMulta");
 
-    if (isNaN(impuesto) || impuesto <= 0 || isNaN(meses) || meses <= 0) {
-        alert("Por favor, ingresa el impuesto vencido y los meses de atraso válidos mayores a 0.");
+    if (isNaN(impuesto) || impuesto <= 0 || impuesto > 100000) {
+        mostrarError("errIntereses", "Por favor, ingresa un impuesto vencido válido mayor a 0 y hasta 100,000.");
+        return;
+    }
+    if (isNaN(meses) || meses <= 0 || meses > 100000) {
+        mostrarError("errIntereses", "Por favor, ingresa meses de atraso válidos mayores a 0 y hasta 100,000.");
         return;
     }
 
-    if (isNaN(tasaInteres)) tasaInteres = 0;
-    if (isNaN(tasaMulta)) tasaMulta = 0;
+    if (isNaN(tasaInteres) || tasaInteres < 0 || tasaInteres > 100) tasaInteres = 0;
+    if (isNaN(tasaMulta) || tasaMulta < 0 || tasaMulta > 100) tasaMulta = 0;
 
     let totalInteres = impuesto * (tasaInteres / 100) * meses;
     let totalMulta = impuesto * (tasaMulta / 100) * meses;
@@ -347,6 +381,7 @@ function seleccionarProducto(producto) {
     document.getElementById("detalleCantidad").value = "1";
 
     actualizarSimulacion(0, 1, producto.iva);
+    ocultarError("errDetalleProducto");
 }
 
 function actualizarSimulacion(precio, cantidad, tasaIva) {
@@ -366,27 +401,29 @@ function simularDetallesDelProducto() {
     let precio = parseFloat(document.getElementById("detallePrecio").value);
     let cantidad = parseFloat(document.getElementById("detalleCantidad").value);
 
-    if (isNaN(precio)) { precio = 0; }
-    if (isNaN(cantidad)) { cantidad = 1; }
+    if (isNaN(precio) || precio < 0 || precio > 100000) { precio = 0; }
+    if (isNaN(cantidad) || cantidad < 1 || cantidad > 100000) { cantidad = 1; }
 
     actualizarSimulacion(precio, cantidad, productoSeleccionado.iva);
 }
 
 function agregarAFactura() {
+    ocultarError("errDetalleProducto");
+
     if (productoSeleccionado == null) {
-        alert("Por favor selecciona un producto primero.");
+        mostrarError("errDetalleProducto", "Por favor selecciona un producto del catálogo primero.");
         return;
     }
 
     let precio = parseFloat(document.getElementById("detallePrecio").value);
     let cantidad = parseFloat(document.getElementById("detalleCantidad").value);
 
-    if (isNaN(precio) || precio <= 0) {
-        alert("Por favor ingresa un precio válido mayor a 0.");
+    if (isNaN(precio) || precio <= 0 || precio > 100000) {
+        mostrarError("errDetalleProducto", "Por favor ingresa un precio válido mayor a 0 y hasta 100,000.");
         return;
     }
-    if (isNaN(cantidad) || cantidad <= 0) {
-        alert("Por favor ingresa una cantidad válida.");
+    if (isNaN(cantidad) || cantidad <= 0 || cantidad > 100000) {
+        mostrarError("errDetalleProducto", "Por favor ingresa una cantidad válida mayor a 0 y hasta 100,000.");
         return;
     }
 
@@ -459,6 +496,8 @@ function renderizarFactura() {
 }
 
 function calificarEvaluacion() {
+    ocultarError("errEvaluacion");
+
     let p1 = document.querySelector('input[name="preg1"]:checked');
     let p2 = document.querySelector('input[name="preg2"]:checked');
     let p3 = document.querySelector('input[name="preg3"]:checked');
@@ -466,7 +505,7 @@ function calificarEvaluacion() {
     let p5 = document.querySelector('input[name="preg5"]:checked');
 
     if (!p1 || !p2 || !p3 || !p4 || !p5) {
-        alert("Por favor, responde las 5 preguntas obligatorias para procesar la evaluación.");
+        mostrarError("errEvaluacion", "Por favor, responde las 5 preguntas obligatorias para procesar la evaluación.");
         return;
     }
 
@@ -484,7 +523,7 @@ function calificarEvaluacion() {
 
     let usuario = localStorage.getItem("usuarioActual");
     if (!usuario || usuario === "") {
-        alert("Error de sesión. Debes identificarte al inicio para realizar la prueba.");
+        mostrarError("errEvaluacion", "Error de sesión. Debes identificarte al inicio para realizar la prueba.");
         return;
     }
 

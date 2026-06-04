@@ -283,6 +283,18 @@ select.entrada-neon option {
     box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
 }
 
+.mensaje-error {
+    color: #ff4d4d;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+    display: none;
+    text-align: center;
+    background: rgba(255, 77, 77, 0.1);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 77, 77, 0.3);
+}
+
 .boton-primario {
     width: 100%;
     background: linear-gradient(90deg, #00f0ff, #0080ff);
@@ -329,7 +341,7 @@ select.entrada-neon option {
     border-left: 4px solid #00f0ff;
     border-radius: 8px;
     box-shadow: inset 0 0 15px rgba(0, 240, 255, 0.02);
-    text-align: right
+    text-align: right;
 }
 
 .panel-resultado p {
@@ -458,7 +470,6 @@ select.entrada-neon option {
     transform: scale(1.02);
 }
 
-/* ── LAYOUT TABLA IVA ── */
 .layout-tabla-iva {
     display: grid;
     grid-template-columns: 1fr 1.2fr 1.5fr;
@@ -473,7 +484,6 @@ select.entrada-neon option {
     }
 }
 
-/* ── TARJETA IZQUIERDA ── */
 .tarjeta-productos {
     max-height: 75vh;
     display: flex;
@@ -552,7 +562,6 @@ select.entrada-neon option {
     color: #64748b;
 }
 
-/* ── TARJETA CENTRAL ── */
 .tarjeta-detalle-producto {
     min-height: 400px;
     display: flex;
@@ -700,7 +709,6 @@ select.entrada-neon option {
     line-height: 1.7;
 }
 
-/* ── TARJETA FACTURA ── */
 .tarjeta-factura {
     display: flex;
     flex-direction: column;
@@ -790,7 +798,6 @@ select.entrada-neon option {
     color: #fff;
 }
 
-/* OTROS ELEMENTOS */
 .caja-formula {
     background: rgba(0, 0, 0, 0.4);
     border-left: 4px solid #00f0ff;
@@ -858,7 +865,6 @@ select.entrada-neon option {
     transform: scale(1.02);
 }
 
-/* Estilos de Evaluación */
 .radio-grupo {
     display: flex;
     flex-direction: column;

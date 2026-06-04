@@ -20,6 +20,7 @@
             <li><a href="#" class="item-enlace" onclick="mostrarSeccion('sec-tabla', this)">Tabla del IVA</a></li>
             <li><a href="#" class="item-enlace" onclick="mostrarSeccion('sec-fundamentos', this)">Fundamentos</a></li>
             <li><a href="#" class="item-enlace" onclick="mostrarSeccion('sec-evaluacion', this)">Evaluación</a></li>
+            <li><a href="#" class="item-enlace" onclick="cerrarSesion()">Cerrar Sesión</a></li>
             <div id="indicadorNeon" class="indicador-neon"></div>
         </ul>
     </nav>
@@ -96,7 +97,7 @@
                     <div class="grupo-entrada">
                         <label>Valor Total a Pagar ($)</label>
                         <input type="number" id="txtTotalDesglose" placeholder="Ej: 115.00" class="entrada-neon"
-                            step="0.01">
+                            step="0.01" min="0.01" max="100000">
                     </div>
                     <div class="grupo-entrada">
                         <label>Tarifa de IVA Aplicada</label>
@@ -105,6 +106,7 @@
                             <option value="0.0">IVA 0%</option>
                         </select>
                     </div>
+                    <div id="errDesglose" class="mensaje-error"></div>
                     <button type="button" class="boton-primario" onclick="calcularDesglose()">Calcular Desglose</button>
 
                     <div id="resultadoDesglose" class="panel-resultado">
@@ -117,8 +119,8 @@
                 <div id="formRetencion" class="formulario-simulador">
                     <div class="grupo-entrada">
                         <label>Monto Base de Operación ($)</label>
-                        <input type="number" id="txtMontoBase" placeholder="Ej: 500.00" class="entrada-neon"
-                            step="0.01">
+                        <input type="number" id="txtMontoBase" placeholder="Ej: 500.00" class="entrada-neon" step="0.01"
+                            min="0.01" max="100000">
                     </div>
                     <div class="grupo-entrada">
                         <label>Retención Impuesto a la Renta</label>
@@ -138,6 +140,7 @@
                             <option value="0.0">0% (Sin Retención)</option>
                         </select>
                     </div>
+                    <div id="errRetencion" class="mensaje-error"></div>
                     <button type="button" class="boton-primario" onclick="calcularRetencion()">Calcular
                         Retenciones</button>
 
@@ -154,13 +157,14 @@
                     <div class="grupo-entrada">
                         <label>Valor Total Original de Factura ($)</label>
                         <input type="number" id="txtValorOriginal" placeholder="Ej: 250.00" class="entrada-neon"
-                            step="0.01">
+                            step="0.01" min="0.01" max="100000">
                     </div>
                     <div class="grupo-entrada">
                         <label>Monto a Modificar o Anular ($)</label>
                         <input type="number" id="txtValorModificar" placeholder="Ej: 50.00" class="entrada-neon"
-                            step="0.01">
+                            step="0.01" min="0.01" max="100000">
                     </div>
+                    <div id="errNota" class="mensaje-error"></div>
                     <button type="button" class="boton-primario" onclick="calcularNota()">Aplicar Nota de
                         Crédito</button>
 
@@ -174,23 +178,24 @@
                     <div class="grupo-entrada">
                         <label>Impuesto Vencido a Pagar ($)</label>
                         <input type="number" id="txtImpuestoVencido" placeholder="Ej: 150.00" class="entrada-neon"
-                            step="0.01">
+                            step="0.01" min="0.01" max="100000">
                     </div>
                     <div class="grupo-entrada">
                         <label>Meses de Atraso</label>
                         <input type="number" id="txtMesesAtraso" placeholder="Ej: 3" class="entrada-neon" step="1"
-                            min="1">
+                            min="1" max="100000">
                     </div>
                     <div class="grupo-entrada">
                         <label>Tasa de Interés Mensual Referencial (%)</label>
                         <input type="number" id="txtTasaInteres" placeholder="Ej: 0.75" class="entrada-neon" step="0.01"
-                            value="0.75">
+                            value="0.75" min="0" max="100">
                     </div>
                     <div class="grupo-entrada">
                         <label>Multa por Mes de Atraso (%)</label>
                         <input type="number" id="txtTasaMulta" placeholder="Ej: 3.0" class="entrada-neon" step="0.1"
-                            value="3.0">
+                            value="3.0" min="0" max="100">
                     </div>
+                    <div id="errIntereses" class="mensaje-error"></div>
                     <button type="button" class="boton-primario" onclick="calcularIntereses()">Calcular Valores en
                         Mora</button>
 
@@ -269,12 +274,12 @@
                         <div class="grupo-entrada">
                             <label>Precio unitario ($)</label>
                             <input type="number" id="detallePrecio" class="entrada-neon" placeholder="Ej: 100.00"
-                                step="0.01" oninput="simularDetallesDelProducto()">
+                                step="0.01" min="0.01" max="100000" oninput="simularDetallesDelProducto()">
                         </div>
                         <div class="grupo-entrada">
                             <label>Cantidad</label>
                             <input type="number" id="detalleCantidad" class="entrada-neon" placeholder="Ej: 2" step="1"
-                                min="1" value="1" oninput="simularDetallesDelProducto()">
+                                min="1" max="100000" value="1" oninput="simularDetallesDelProducto()">
                         </div>
 
                         <div class="mini-resultado">
@@ -292,6 +297,7 @@
                             </div>
                         </div>
 
+                        <div id="errDetalleProducto" class="mensaje-error"></div>
                         <button type="button" class="boton-primario" style="margin-top: 15px;"
                             onclick="agregarAFactura()">Agregar a Factura</button>
 
@@ -437,6 +443,7 @@
                             placeholder="Escribe aquí qué cambiarías o mejorarías de este sistema..."></textarea>
                     </div>
 
+                    <div id="errEvaluacion" class="mensaje-error"></div>
                     <button type="button" class="boton-primario" onclick="calificarEvaluacion()">Enviar
                         Respuestas</button>
                 </form>
@@ -480,6 +487,7 @@
                 <input type="text" id="txtNombreLogin" class="entrada-neon" placeholder="Escribe tu nombre completo...">
             </div>
 
+            <div id="errLogin" class="mensaje-error"></div>
             <button type="button" class="boton-primario" onclick="iniciarSesion()" style="margin-top: 15px;">Ingresar de
                 Forma Segura</button>
         </div>
