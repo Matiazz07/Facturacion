@@ -19,6 +19,7 @@
             <li><a href="#" class="item-enlace" onclick="mostrarSeccion('sec-simulador', this)">Simulador</a></li>
             <li><a href="#" class="item-enlace" onclick="mostrarSeccion('sec-tabla', this)">Tabla del IVA</a></li>
             <li><a href="#" class="item-enlace" onclick="mostrarSeccion('sec-fundamentos', this)">Fundamentos</a></li>
+            <li><a href="#" class="item-enlace" onclick="mostrarSeccion('sec-evaluacion', this)">Evaluación</a></li>
             <div id="indicadorNeon" class="indicador-neon"></div>
         </ul>
     </nav>
@@ -83,8 +84,6 @@
                 <div class="alternador-simuladores">
                     <button type="button" id="btnModDesglose" class="btn-alternador activo"
                         onclick="mostrarModuloSimulador('formDesglose', this)">Desglose IVA</button>
-                    <button type="button" id="btnModFactura" class="btn-alternador activo"
-                        onclick="mostrarModuloSimulador('formFactura', this)">Factura</button>
                     <button type="button" id="btnModRetencion" class="btn-alternador"
                         onclick="mostrarModuloSimulador('formRetencion', this)">Retención</button>
                     <button type="button" id="btnModNota" class="btn-alternador"
@@ -325,7 +324,7 @@
                     <div class="resumen-factura">
                         <div class="mini-fila"><span>Subtotal Gravado (15%):</span><span id="facSubtotal15">$0.00</span>
                         </div>
-                        <div class="mini-fila"><span>Subtotal sin IVA (0%):</span><span id="facSubtotal0">$0.00</span>
+                        <div class="mini-fila"><span>Subtotal Exento (0%):</span><span id="facSubtotal0">$0.00</span>
                         </div>
                         <div class="mini-fila"><span>IVA Calculado (15%):</span><span id="facIva">$0.00</span></div>
                         <div class="mini-fila mini-total"><span>TOTAL GENERAL:</span><span id="facTotal">$0.00</span>
@@ -367,7 +366,124 @@
                 </div>
             </div>
         </section>
+
+        <section id="sec-evaluacion" class="seccion-pagina">
+            <div class="tarjeta-cristal tarjeta-formulario" style="max-width: 800px;">
+                <div class="cabecera-formulario">
+                    <h2>Evaluación de Conocimientos</h2>
+                    <p>Demuestra tu dominio sobre facturación, impuestos y retenciones.</p>
+                </div>
+
+                <form id="formEvaluacion">
+                    <div class="grupo-entrada">
+                        <label>1. ¿Cuál es la tarifa general del IVA vigente utilizada en este sistema?</label>
+                        <div class="radio-grupo">
+                            <label class="radio-opcion"><input type="radio" name="preg1" value="0"> 0%</label>
+                            <label class="radio-opcion"><input type="radio" name="preg1" value="12"> 12%</label>
+                            <label class="radio-opcion"><input type="radio" name="preg1" value="15"> 15%</label>
+                        </div>
+                    </div>
+
+                    <div class="grupo-entrada">
+                        <label>2. ¿Sobre qué valor se calcula directamente el porcentaje del IVA?</label>
+                        <div class="radio-grupo">
+                            <label class="radio-opcion"><input type="radio" name="preg2" value="descuento">
+                                Descuento</label>
+                            <label class="radio-opcion"><input type="radio" name="preg2" value="base"> Base
+                                Imponible</label>
+                            <label class="radio-opcion"><input type="radio" name="preg2" value="total"> Total a
+                                Pagar</label>
+                        </div>
+                    </div>
+
+                    <div class="grupo-entrada">
+                        <label>3. ¿Qué comprobante está validado digitalmente por la administración tributaria?</label>
+                        <div class="radio-grupo">
+                            <label class="radio-opcion"><input type="radio" name="preg3" value="fisica"> Factura
+                                Física</label>
+                            <label class="radio-opcion"><input type="radio" name="preg3" value="electronica"> Factura
+                                Electrónica</label>
+                            <label class="radio-opcion"><input type="radio" name="preg3" value="nota"> Nota de Venta
+                                Rápida</label>
+                        </div>
+                    </div>
+
+                    <div class="grupo-entrada">
+                        <label>4. Persona o empresa obligada por ley a retener el impuesto al momento del pago:</label>
+                        <div class="radio-grupo">
+                            <label class="radio-opcion"><input type="radio" name="preg4" value="agente"> Agente de
+                                Retención</label>
+                            <label class="radio-opcion"><input type="radio" name="preg4" value="consumidor"> Consumidor
+                                Final</label>
+                            <label class="radio-opcion"><input type="radio" name="preg4" value="auditor"> Auditor
+                                Externo</label>
+                        </div>
+                    </div>
+
+                    <div class="grupo-entrada">
+                        <label>5. ¿A qué tarifa de IVA están sujetos los medicamentos de uso humano?</label>
+                        <div class="radio-grupo">
+                            <label class="radio-opcion"><input type="radio" name="preg5" value="0"> 0%</label>
+                            <label class="radio-opcion"><input type="radio" name="preg5" value="5"> 5%</label>
+                            <label class="radio-opcion"><input type="radio" name="preg5" value="15"> 15%</label>
+                        </div>
+                    </div>
+
+                    <div class="separador-neon" style="margin: 30px 0;"></div>
+
+                    <div class="grupo-entrada">
+                        <label>6. Reseña de la plataforma (Opcional)</label>
+                        <textarea id="txtResena" class="entrada-neon"
+                            placeholder="Escribe aquí qué cambiarías o mejorarías de este sistema..."></textarea>
+                    </div>
+
+                    <button type="button" class="boton-primario" onclick="calificarEvaluacion()">Enviar
+                        Respuestas</button>
+                </form>
+
+                <div id="resultadoEvaluacion" class="panel-resultado" style="text-align: center;">
+                    <p>Evaluación procesada correctamente.</p>
+                    <h3>Tu Calificación: <span id="lblNotaFinal">0 / 100</span></h3>
+                </div>
+            </div>
+
+            <div class="tarjeta-cristal contenedor-historial"
+                style="max-width: 800px; margin-left: auto; margin-right: auto;">
+                <div class="cabecera-formulario">
+                    <h2>Registro de Evaluaciones</h2>
+                    <p>Historial de calificaciones obtenidas por los usuarios.</p>
+                </div>
+                <table class="tabla-cristal" id="tablaEvaluaciones">
+                    <thead>
+                        <tr>
+                            <th>Estudiante</th>
+                            <th>Calificación</th>
+                            <th>Reseña / Comentarios</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpoEvaluaciones">
+                    </tbody>
+                </table>
+            </div>
+        </section>
     </main>
+
+    <div id="overlayLogin" class="capa-modal visible">
+        <div class="caja-modal">
+            <h2 class="texto-brillante" style="text-align: center; font-size: 2rem; margin-bottom: 10px;">Acceso al
+                Sistema</h2>
+            <p style="color: #94a3b8; margin-bottom: 30px; text-align: center; font-size: 0.95rem;">Para acceder a los
+                módulos de simulación y rendir la evaluación obligatoria, por favor identifícate.</p>
+
+            <div class="grupo-entrada">
+                <label>Nombre y Apellido</label>
+                <input type="text" id="txtNombreLogin" class="entrada-neon" placeholder="Escribe tu nombre completo...">
+            </div>
+
+            <button type="button" class="boton-primario" onclick="iniciarSesion()" style="margin-top: 15px;">Ingresar de
+                Forma Segura</button>
+        </div>
+    </div>
 
     <div id="modalInformacion" class="capa-modal">
         <div class="caja-modal">

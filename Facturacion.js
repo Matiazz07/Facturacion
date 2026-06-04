@@ -34,27 +34,38 @@ const productos = [
     { id: 7, nombre: "Levotiroxina", categoria: "Salud", icono: "·", iva: 0, descripcion: "Medicamento de uso humano exento de IVA para garantizar el acceso a la salud." },
     { id: 8, nombre: "Servicios médicos", categoria: "Salud", icono: "·", iva: 0, descripcion: "Prestaciones médicas, odontológicas y de diagnóstico clínico están gravadas con tarifa 0% de IVA." },
     { id: 9, nombre: "Atún", categoria: "Alimento Procesado", icono: "·", iva: 0.15, descripcion: "Conservas de pescado para consumo humano." },
-    { id: 10, nombre: "Sardina", categoria: "Alimento Procesado", icono: "·", iva: 0.15, descripcion: "Conservas de pescado para consumo humano."},
-    { id: 11, nombre: "Zapatos", categoria: "Calzado", icono: "·", iva: 0.15, descripcion: "Calzado para uso formal."},
-    { id: 12, nombre: "Zapatillas", categoria: "Calzado", icono: "·", iva: 0.15, descripcion: "Calzado para uso deportivo o semi formal."},
-    { id: 13, nombre: "Camisa", categoria: "Ropa", icono: "·", iva: 0.15, descripcion: "Preda de vestir para uso formal o informal."},
-    { id: 14, nombre: "Camiseta", categoria: "Ropa", icono: "·", iva: 0.15, descripcion: "Prenda de ropa para uso casual."},
-    { id: 15, nombre: "Lavadora", categoria: "Electrodomésticos", icono: "·", iva: 0.15, descripcion: "Electrodoméstico automatizado para lavar ropa."},
-    { id: 16, nombre: "Refrigerador", categoria: "Electrodomésticos", icono: "·", iva: 0.15, descripcion: "Electrodoméstico que permite almacenar alimentos en un ambiente fresco."},
-    { id: 17, nombre: "Fioravanti", categoria: "Bebidas", icono: "·", iva: 0.15, descripcion: "Bebida gaseosa para consumo humano."},
-    { id: 18, nombre: "Pilsener", categoria: "Bebidas Alcólicas", icono: "·", iva: 0.15, descripcion: "Bebida alcólica para consumo humano."},
-    { id: 19, nombre: "Aceite de cocina", categoria: "Alimentos básicos", icono: "·", iva: 0, descripción: "Alimento de la canasta básica familiar."},
-    { id: 20, nombre: "Mantequilla", categoria: "Alimentos báscios", icono: "·", iva: 0, descripcion: "Alimento de la canasta básica familiar."}
+    { id: 10, nombre: "Sardina", categoria: "Alimento Procesado", icono: "·", iva: 0.15, descripcion: "Conservas de pescado para consumo humano." },
+    { id: 11, nombre: "Zapatos", categoria: "Calzado", icono: "·", iva: 0.15, descripcion: "Calzado para uso formal." },
+    { id: 12, nombre: "Zapatillas", categoria: "Calzado", icono: "·", iva: 0.15, descripcion: "Calzado para uso deportivo o semi formal." },
+    { id: 13, nombre: "Camisa", categoria: "Ropa", icono: "·", iva: 0.15, descripcion: "Prenda de vestir para uso formal o informal." },
+    { id: 14, nombre: "Camiseta", categoria: "Ropa", icono: "·", iva: 0.15, descripcion: "Prenda de ropa para uso casual." },
+    { id: 15, nombre: "Lavadora", categoria: "Electrodomésticos", icono: "·", iva: 0.15, descripcion: "Electrodoméstico automatizado para lavar ropa." },
+    { id: 16, nombre: "Refrigerador", categoria: "Electrodomésticos", icono: "·", iva: 0.15, descripcion: "Electrodoméstico que permite almacenar alimentos en un ambiente fresco." },
+    { id: 17, nombre: "Agua con gas", categoria: "Bebidas", icono: "·", iva: 0.15, descripcion: "Bebida gaseosa para consumo humano." },
+    { id: 18, nombre: "Cerveza", categoria: "Bebidas Alcohólicas", icono: "·", iva: 0.15, descripcion: "Bebida alcohólica para consumo humano." },
+    { id: 19, nombre: "Aceite de cocina", categoria: "Alimentos básicos", icono: "·", iva: 0, descripcion: "Alimento de la canasta básica familiar." },
+    { id: 20, nombre: "Mantequilla", categoria: "Alimentos básicos", icono: "·", iva: 0, descripcion: "Alimento de la canasta básica familiar." }
 ];
 
 let productoSeleccionado = null;
 let carritoFactura = [];
+
+function iniciarSesion() {
+    let nombre = document.getElementById("txtNombreLogin").value.trim();
+    if (nombre === "") {
+        alert("Por favor, ingresa tu nombre completo para continuar.");
+        return;
+    }
+    localStorage.setItem("usuarioActual", nombre);
+    document.getElementById("overlayLogin").classList.remove("visible");
+}
 
 function ocultarSecciones() {
     document.getElementById("sec-inicio").classList.remove("activa");
     document.getElementById("sec-simulador").classList.remove("activa");
     document.getElementById("sec-tabla").classList.remove("activa");
     document.getElementById("sec-fundamentos").classList.remove("activa");
+    document.getElementById("sec-evaluacion").classList.remove("activa");
 }
 
 function mostrarSeccion(idSeccion, elementoBoton) {
@@ -108,11 +119,20 @@ function mostrarModuloSimulador(idModulo, elementoBoton) {
 }
 
 window.onload = function () {
+    let usuario = localStorage.getItem("usuarioActual");
+    if (!usuario) {
+        document.getElementById("overlayLogin").classList.add("visible");
+    } else {
+        document.getElementById("overlayLogin").classList.remove("visible");
+    }
+
     let botonInicio = document.getElementById("btnInicio");
     mostrarSeccion("sec-inicio", botonInicio);
+
     pintarHistorial();
     renderizarProductos(productos);
     renderizarFactura();
+    pintarEvaluaciones();
 }
 
 function recuperarTxtAFloat(idComponente) {
@@ -436,4 +456,80 @@ function renderizarFactura() {
     document.getElementById("facSubtotal0").textContent = "$" + subtotal0.toFixed(2);
     document.getElementById("facIva").textContent = "$" + ivaCalculado.toFixed(2);
     document.getElementById("facTotal").textContent = "$" + totalGeneral.toFixed(2);
+}
+
+function calificarEvaluacion() {
+    let p1 = document.querySelector('input[name="preg1"]:checked');
+    let p2 = document.querySelector('input[name="preg2"]:checked');
+    let p3 = document.querySelector('input[name="preg3"]:checked');
+    let p4 = document.querySelector('input[name="preg4"]:checked');
+    let p5 = document.querySelector('input[name="preg5"]:checked');
+
+    if (!p1 || !p2 || !p3 || !p4 || !p5) {
+        alert("Por favor, responde las 5 preguntas obligatorias para procesar la evaluación.");
+        return;
+    }
+
+    let nota = 0;
+    if (p1.value === "15") nota += 20;
+    if (p2.value === "base") nota += 20;
+    if (p3.value === "electronica") nota += 20;
+    if (p4.value === "agente") nota += 20;
+    if (p5.value === "0") nota += 20;
+
+    let resena = document.getElementById("txtResena").value.trim();
+    if (resena === "") {
+        resena = "Sin comentarios registrados.";
+    }
+
+    let usuario = localStorage.getItem("usuarioActual");
+    if (!usuario || usuario === "") {
+        alert("Error de sesión. Debes identificarte al inicio para realizar la prueba.");
+        return;
+    }
+
+    mostrarEnSpan("lblNotaFinal", nota + " / 100");
+    document.getElementById("resultadoEvaluacion").style.display = "block";
+
+    guardarEvaluacion(usuario, nota, resena);
+}
+
+function guardarEvaluacion(usuario, nota, resena) {
+    let evaluaciones = localStorage.getItem("datosEvaluaciones");
+    let lista = [];
+    if (evaluaciones) {
+        lista = JSON.parse(evaluaciones);
+    }
+
+    let nuevoRegistro = {
+        usuario: usuario,
+        nota: nota,
+        resena: resena
+    };
+
+    lista.push(nuevoRegistro);
+    localStorage.setItem("datosEvaluaciones", JSON.stringify(lista));
+    pintarEvaluaciones();
+}
+
+function pintarEvaluaciones() {
+    let evaluaciones = localStorage.getItem("datosEvaluaciones");
+    let lista = [];
+    if (evaluaciones) {
+        lista = JSON.parse(evaluaciones);
+    }
+
+    let cuerpoTabla = document.getElementById("cuerpoEvaluaciones");
+    if (cuerpoTabla) {
+        let filasHTML = "";
+        for (let i = 0; i < lista.length; i++) {
+            let registro = lista[i];
+            filasHTML += "<tr>";
+            filasHTML += "<td>" + registro.usuario + "</td>";
+            filasHTML += "<td><span class='texto-brillante'>" + registro.nota + " / 100</span></td>";
+            filasHTML += "<td>" + registro.resena + "</td>";
+            filasHTML += "</tr>";
+        }
+        cuerpoTabla.innerHTML = filasHTML;
+    }
 }
