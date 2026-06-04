@@ -27,13 +27,18 @@ body {
     -webkit-backdrop-filter: blur(15px);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
     border: 0.5px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .barra-navegacion ul {
     position: relative;
     list-style: none;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
     gap: 10px;
 }
 
@@ -48,7 +53,7 @@ body {
     display: inline-block;
     text-decoration: none;
     color: #a0aec0;
-    padding: 10px 25px;
+    padding: 10px 20px;
     border-radius: 30px;
     font-size: 0.95rem;
     font-weight: 500;
@@ -851,4 +856,43 @@ select.entrada-neon option {
 .boton-limpiar:hover {
     background: rgba(255, 16, 122, 0.1);
     transform: scale(1.02);
+}
+
+/* Estilos de Evaluación */
+.radio-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.radio-opcion {
+    color: #a0aec0;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.radio-opcion:hover {
+    color: #00f0ff;
+}
+
+.radio-opcion input[type="radio"] {
+    cursor: pointer;
+    accent-color: #00f0ff;
+    width: 16px;
+    height: 16px;
+}
+
+textarea.entrada-neon {
+    resize: vertical;
+    min-height: 100px;
+    font-family: inherit;
 }
