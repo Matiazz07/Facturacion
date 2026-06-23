@@ -81,6 +81,11 @@ let temaClaro = false;
 let productoSeleccionado = null;
 let carritoFactura = [];
 
+function toggleMenuColores(){
+    let menu = document.getElementById("menuColores")
+    menu.classList.toggle("oculto")
+}
+
 function mostrarError(idElemento, mensaje) {
     let elemento = document.getElementById(idElemento);
     if (elemento) {
