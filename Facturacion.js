@@ -110,6 +110,16 @@ function aplicarColorPaleta(boton){
     document.getElementById("menuColores").classList.add("oculto");
 }
 
+function recuperarPaleta(){
+    let guardado = localStorage.getItem("colorPaleta");
+    if (guardado){
+        let datos = JSON.parse(guardado);
+        document.documentElement.style.setProperty("--tm-acento", datos.acento);
+        document.documentElement.style.setProperty("--tm-acento-brillo", datos.brillo);
+        document.documentElement.style.setProperty("--tm-acento-oscuro", datos.oscuro);
+    }
+}
+
 function mostrarError(idElemento, mensaje) {
     let elemento = document.getElementById(idElemento);
     if (elemento) {
@@ -220,6 +230,7 @@ window.onload = function () {
     renderizarFactura();
     pintarEvaluaciones();
     temaSeleccionado();
+    recuperarPaleta();
 }
 
 function recuperarTxtAFloat(idComponente) {

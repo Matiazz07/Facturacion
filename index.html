@@ -322,7 +322,7 @@
                                     <th class="col-vtot">V. Total</th>
                                     <th class="col-btn"></th>
                                 </tr>
-                            </thead>
+                            </tbody>
                             <tbody id="cuerpoFactura">
                             </tbody>
                         </table>
@@ -500,6 +500,31 @@
             <button type="button" class="boton-cerrar-modal" onclick="cerrarModalInformacion()">Entendido</button>
         </div>
     </div>
+
+    <div id="contenedorPaleta">
+        <div id="menuColores" class="menu-colores oculto">
+            <button class="btn-color" data-acento="#00c8d7" data-brillo="#00f0ff"
+                    data-oscuro="#0080ff" style="background:#00c8d7"
+                    title="Celeste (original)" onclick="aplicarColorPaleta(this)"></button>
+
+            <button class="btn-color" data-acento="#ef4444" data-brillo="#f87171"
+                    data-oscuro="#dc2626" style="background:#ef4444"
+                    title="Rojo" onclick="aplicarColorPaleta(this)"></button>
+
+            <button class="btn-color" data-acento="#eab308" data-brillo="#fde047"
+                    data-oscuro="#ca8a04" style="background:#eab308"
+                    title="Amarillo" onclick="aplicarColorPaleta(this)"></button>
+
+            <button class="btn-color" data-acento="#22c55e" data-brillo="#4ade80"
+                    data-oscuro="#16a34a" style="background:#22c55e"
+                    title="Verde" onclick="aplicarColorPaleta(this)"></button>
+        </div>
+
+        <button id="btnPaleta" onclick="toggleMenuColores()" title="Cambiar color">
+            🎨
+        </button>
+    </div>
+
     <button type="button" id="btnTema" onclick="cambiarTema()">
         &#9790;
     </button>
