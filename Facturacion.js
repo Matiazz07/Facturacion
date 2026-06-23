@@ -86,6 +86,30 @@ function toggleMenuColores(){
     menu.classList.toggle("oculto")
 }
 
+function aplicarColorPaleta(boton){
+    let acento = boton.getAttribute("data-acento");
+    let brillo = boton.getAttribute("data-brillo");
+    let oscuro = boton.getAttribute("data-oscuro");
+
+    document.documentElement.style.setProperty("--tm-acento", acento);
+    document.documentElement.style.setProperty("--tm-acento-brillo", brillo);
+    document.documentElement.style.setProperty("--tm-acento-oscuro", oscuro);
+    
+    let botones = document.querySelectorAll(".btn-color");
+    for(let i = 0; i < botones.length; i++){
+        botones[i].classList.remove("activo");
+    }
+    boton.classList.add("activo");
+    
+    localStorage.setItem("colorPaleta", JSON.stringify({
+        acento: acento,
+        brillo: brillo,
+        oscuro: oscuro
+    }));
+
+    document.getElementById("menuColores").classList.add("oculto");
+}
+
 function mostrarError(idElemento, mensaje) {
     let elemento = document.getElementById(idElemento);
     if (elemento) {
