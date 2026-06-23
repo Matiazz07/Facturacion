@@ -1,12 +1,11 @@
 let baseDatosConceptos = {
     "iva": {
-
         titulo: "Impuesto al Valor Agregado (IVA)",
-        contenido: "<p>El Impuesto al Valor Agregado grava el valor de las transferencias locales o importaciones de bienes muebles, en todas sus etapas de comercialización y al valor de los servicios prestados.</p><h4>Dudas Frecuentes resueltas:</h4><ul><li><strong>¿Quién asume este pago?</strong> El gravamen es asumido por el consumidor final de dicho bien o servicio.</li><li><strong>¿Quién debe declararlo?</strong> Todos los agentes que intervienen en la cadena de comercialización están obligados a declarar y pagar el IVA generado.</li><li><strong>¿Existen excepciones?</strong> Sí, existen bienes y servicios con tarifa 0% (como salud, educación o transporte público) según las regulaciones tributarias.</li></ul><h3 class='titulo-tarjeta'>Productos Gravados con IVA</h3><p>Los productos gravados con IVA, son todos aquellos bienes o servicios a los que se le suma un porcentaje extra a su valor original (15% en Ecuador).</p><h4>Producto Gravados (Si Pagan IVA)</h4><ul><li>Tecnologia y Accesorios</li><li>Entrenimiento y servicios digitales</li><li>Ropa y productos procesados</li><li>Electrodomésticos y menaje de hogar</li></ul><h4>Productos con Tarifa 0% (No Pagan IVA)</h4><ul><li>Alimentos y bebidas no procesadas (productos frescos de la canasta básica).</li><li>Medicamentos de uso humano, equipos e instrumental médico.</li><li>Transporte público de personas.</li><li>Salud y educacion</li></ul>"
+        contenido: "<p>El Impuesto al Valor Agregado grava el valor de las transferencias locales o importaciones de bienes muebles, en todas sus etapas de comercialización y al valor de los servicios prestados.</p><h4>Dudas Frecuentes resueltas:</h4><ul><li><strong>¿Quién asume este pago?</strong> El gravamen es asumido por el consumidor final de dicho bien o servicio.</li><li><strong>¿Quién debe declararlo?</strong> Todos los agentes que intervienen en la cadena de comercialización están obligados a declarar y pagar el IVA generado.</li><li><strong>¿Existen excepciones?</strong> Sí, existen bienes y servicios con tarifa 0% (como salud, educación o transporte público) según las regulaciones tributarias.</li></ul><h3 class='titulo-tarjeta'>Productos Gravados con IVA</h3><p>Los productos gravados con IVA, son todos aquellos bienes o servicios a los que se le suma un porcentaje extra a su valor original (15% en Ecuador).</p><h4>Producto Gravados (Si Pagan IVA)</h4><ul><li>Tecnología y Accesorios</li><li>Entretenimiento y servicios digitales</li><li>Ropa y productos procesados</li><li>Electrodomésticos y menaje de hogar</li></ul><h4>Productos con Tarifa 0% (No Pagan IVA)</h4><ul><li>Alimentos y bebidas no procesadas (productos frescos de la canasta básica).</li><li>Medicamentos de uso humano, equipos e instrumental médico.</li><li>Transporte público de personas.</li><li>Salud y educación</li></ul>"
     },
     "base": {
         titulo: "Base Imponible",
-        contenido: "<p>Es el valor total de los bienes que se transfieren o de los servicios que se prestan, calculado a base de sus precios de venta o de prestación del servicio, que incluyen impuestos, tasas por servicios y demás gastos legalmente imputables al precio.</p><h4>Dudas Frecuentes resueltas:</h4><ul><li><strong>En términos simples:</strong> Es el monto financiero neto sobre el cual se calculará el porcentaje del IVA (sea 15% o 0%).</li><li><strong>¿Incluye descuentos?</strong> La base imponible se calcula <em>después</em> de aplicar cualquier descuento comercial permitido por la ley.</li></ul>"
+        contenido: "<p>Es el valor total de los bienes que se transfieren o de los servicios que se prestan, calculado a base de sus precios de venta o de prestación del servicio, que incluyen impuestos, tasas por servicios y demás gastos legalmente imputables al precio.</p><h4>Dudas Frecuentes resueltas:</h4><ul><li><strong>En términos simples:</strong> Es el monto financiero neto sobre el cual se calculará el porcentaje del IVA (sea 15% o 0%).</li><li><strong>¿Incluye descuentos?</strong> La base imponible se calcula <em>después</em> de aplicar cualquier descuento comercial permitido por la ley.</li></ul><h3 class='titulo-tarjeta'>Subtotal</h3><p>El subtotal es el valor total de los bienes o servicios antes de aplicar cualquier descuento, impuesto o recargo.</p><h3 class='titulo-tarjeta'>Cálculo</h3><ul><li><strong>Fórmula:</strong> Base Imponible = Subtotal - Descuentos</li></ul> "
     },
     "agente": {
         titulo: "Agente de Retención",
@@ -22,28 +21,147 @@ let baseDatosConceptos = {
     },
     "electronica": {
         titulo: "Factura Electrónica",
-        contenido: "<p>Es un documento digital legalmente válido que respalda las operaciones comerciales y se emite de acuerdo a los estándares establecidos por la administración tributaria (SRI en el caso de Ecuador).</p><h4>Dudas Frecuentes resueltas:</h4><ul><li><strong>¿Tiene la misma validez que la física?</strong> Tiene exactamente la misma validez tributaria y legal que una factura en papel.</li><li><strong>¿Cómo se garantiza su seguridad?</strong> Se valida mediante una firma electrónica encriptada y un código de autorización único generado por la entidad de control.</li><li><strong>Beneficios:</strong> Ahorro de papel, envío inmediato por correo, almacenamiento seguro y agilidad en las declaraciones.</li></ul>"
+        contenido: "<p>Es un documento digital legalmente válido que respalda las operaciones comerciales y se emite de acuerdo a los estándares establecidos por la administración tributaria.</p><h4>Dudas Frecuentes resueltas:</h4><ul><li><strong>¿Tiene la misma validez que la física?</strong> Tiene exactamente la misma validez tributaria y legal que una factura en papel.</li><li><strong>¿Cómo se garantiza su seguridad?</strong> Se valida mediante una firma electrónica encriptada y un código de autorización único generado por la entidad de control.</li><li><strong>Beneficios:</strong> Ahorro de papel, envío inmediato por correo, almacenamiento seguro y agilidad en las declaraciones.</li></ul>"
     }
 };
 
 const productos = [
-    { id: 1, nombre: "Arroz ",                   categoria: "Alimentos básicos",     icono: "🌾", iva: 0,    descripcion: "Alimento de la canasta básica familiar ." },
-    { id: 2, nombre: "Pan",                      categoria: "Alimentos básicos",     icono: "🌾", iva: 0,    descripcion: "Alimento de la canasta básica familiar ." },
-    { id: 3, nombre: "Leche",                    categoria: "Alimentos básicos",     icono: "🌾", iva: 0,    descripcion: "Alimento de la canasta básica familiar ." },
-    { id: 5, nombre: "Ibuprofeno",               categoria: "Salud",                 icono: "💊", iva: 0,    descripcion: "Medicamento de uso humano exento de IVA para garantizar el acceso a la salud." },
-    { id: 6, nombre: "Pareacetamol",             categoria: "Salud",                 icono: "💊", iva: 0,    descripcion: "Medicamento de uso humano exento de IVA para garantizar el acceso a la salud." },
-    { id: 7, nombre: "levotiroxina",             categoria: "Salud",                 icono: "💊", iva: 0,    descripcion: "Medicamento de uso humano exento de IVA para garantizar el acceso a la salud." },
-    { id: 8, nombre: "Servicios médicos",        categoria: "Salud",                 icono: "🏥", iva: 0,    descripcion: "Prestaciones médicas, odontológicas y de diagnóstico clínico están gravadas con tarifa 0% de IVA." },
-    { id: 9, nombre: "Atún y sardinas",          categoria: "Alimentos básicos",     icono: "🐟", iva: 0.15, descripcion: "Conservas de pescado para consumo humano." },
+    { id: 1, nombre: "Arroz", categoria: "Alimentos básicos", icono: "·", iva: 0, descripcion: "Alimento de la canasta básica familiar." },
+    { id: 2, nombre: "Pan", categoria: "Alimentos básicos", icono: "·", iva: 0, descripcion: "Alimento de la canasta básica familiar." },
+    { id: 3, nombre: "Leche", categoria: "Alimentos básicos", icono: "·", iva: 0, descripcion: "Alimento de la canasta básica familiar." },
+    { id: 5, nombre: "Ibuprofeno", categoria: "Salud", icono: "·", iva: 0, descripcion: "Medicamento de uso humano exento de IVA para garantizar el acceso a la salud." },
+    { id: 6, nombre: "Paracetamol", categoria: "Salud", icono: "·", iva: 0, descripcion: "Medicamento de uso humano exento de IVA para garantizar el acceso a la salud." },
+    { id: 7, nombre: "Levotiroxina", categoria: "Salud", icono: "·", iva: 0, descripcion: "Medicamento de uso humano exento de IVA para garantizar el acceso a la salud." },
+    { id: 8, nombre: "Servicios médicos", categoria: "Salud", icono: "·", iva: 0, descripcion: "Prestaciones médicas, odontológicas y de diagnóstico clínico están gravadas con tarifa 0% de IVA." },
+    { id: 9, nombre: "Atún", categoria: "Alimento Procesado", icono: "·", iva: 0.15, descripcion: "Conservas de pescado para consumo humano." },
+    { id: 10, nombre: "Sardina", categoria: "Alimento Procesado", icono: "·", iva: 0.15, descripcion: "Conservas de pescado para consumo humano." },
+    { id: 11, nombre: "Zapatos", categoria: "Calzado", icono: "·", iva: 0.15, descripcion: "Calzado para uso formal." },
+    { id: 12, nombre: "Zapatillas", categoria: "Calzado", icono: "·", iva: 0.15, descripcion: "Calzado para uso deportivo o semi formal." },
+    { id: 13, nombre: "Camisa", categoria: "Ropa", icono: "·", iva: 0.15, descripcion: "Prenda de vestir para uso formal o informal." },
+    { id: 14, nombre: "Camiseta", categoria: "Ropa", icono: "·", iva: 0.15, descripcion: "Prenda de ropa para uso casual." },
+    { id: 15, nombre: "Lavadora", categoria: "Electrodomésticos", icono: "·", iva: 0.15, descripcion: "Electrodoméstico automatizado para lavar ropa." },
+    { id: 16, nombre: "Refrigerador", categoria: "Electrodomésticos", icono: "·", iva: 0.15, descripcion: "Electrodoméstico que permite almacenar alimentos en un ambiente fresco." },
+    { id: 17, nombre: "Agua con gas", categoria: "Bebidas", icono: "·", iva: 0.15, descripcion: "Bebida gaseosa para consumo humano." },
+    { id: 18, nombre: "Cerveza", categoria: "Bebidas Alcohólicas", icono: "·", iva: 0.15, descripcion: "Bebida alcohólica para consumo humano." },
+    { id: 19, nombre: "Aceite de cocina", categoria: "Alimentos básicos", icono: "·", iva: 0, descripcion: "Alimento de la canasta básica familiar." },
+    { id: 20, nombre: "Mantequilla", categoria: "Alimentos básicos", icono: "·", iva: 0, descripcion: "Alimento de la canasta básica familiar." }
 ];
 
+let configuracionTema = [
+    { variable: '--tm-fondo-body',    oscuro: '#0b1121',                   claro: '#f1f5f9' },
+    { variable: '--tm-fondo-punto',   oscuro: 'rgba(0, 240, 255, 0.1)',    claro: 'rgba(99, 102, 241, 0.06)' },
+    { variable: '--tm-color-texto',   oscuro: '#ffffff',                   claro: '#0f172a' },
+    { variable: '--tm-color-gris',    oscuro: '#94a3b8',                   claro: '#334155' },
+    { variable: '--tm-tarjeta-fondo', oscuro: 'rgba(255, 255, 255, 0.03)', claro: '#ffffff' },
+    { variable: '--tm-tarjeta-borde', oscuro: 'rgba(255, 255, 255, 0.08)', claro: 'rgba(0, 0, 0, 0.08)' },
+    { variable: '--tm-entrada-fondo', oscuro: 'rgba(0, 0, 0, 0.4)',        claro: '#ffffff' },
+    { variable: '--tm-entrada-borde', oscuro: 'rgba(255, 255, 255, 0.1)',  claro: '#cbd5e1' },
+    { variable: '--tm-entrada-color', oscuro: '#ffffff',                   claro: '#0f172a' },
+    { variable: '--tm-modal-fondo',   oscuro: '#0f172a',                   claro: '#ffffff' },
+    { variable: '--tm-nav-texto',     oscuro: '#a0aec0',                   claro: '#475569' },
+    { variable: '--tm-nav-activo',    oscuro: '#ffffff',                   claro: '#0f172a' },
+    { variable: '--tm-label-color',   oscuro: '#cbd5e1',                   claro: '#334155' },
+    { variable: '--tm-radio-bg',      oscuro: 'rgba(0, 0, 0, 0.2)',        claro: '#f8fafc' },
+    { variable: '--tm-radio-borde',   oscuro: 'rgba(255, 255, 255, 0.05)', claro: '#e2e8f0' },
+    { variable: '--tm-radio-texto',   oscuro: '#a0aec0',                   claro: '#1e293b' },
+    { variable: '--tm-formula-bg',    oscuro: 'rgba(0, 0, 0, 0.4)',        claro: '#f8fafc' },
+    { variable: '--tm-formula-texto', oscuro: '#cbd5e1',                   claro: '#1e293b' },
+    { variable: '--tm-resumen-bg',    oscuro: 'rgba(0, 0, 0, 0.3)',        claro: '#f1f5f9' },
+    { variable: '--tm-tabla-texto',   oscuro: '#a0aec0',                   claro: '#334155' },
+    { variable: '--tm-h1-color',      oscuro: '#ffffff',                   claro: '#0f172a' },
+    { variable: '--tm-subtitulo',     oscuro: '#ffffff',                   claro: '#0f172a' },
+    { variable: '--tm-alternador-bg', oscuro: 'rgba(0, 0, 0, 0.3)',        claro: '#e2e8f0' },
+    { variable: '--tm-modal-texto',   oscuro: '#cbd5e1',                   claro: '#334155' },
+    { variable: '--tm-panel-vacio-h', oscuro: '#475569',                   claro: '#64748b' },
+    { variable: '--tm-panel-vacio-p', oscuro: '#334155',                   claro: '#94a3b8' },
+];
+
+
+let temaClaro = false;
 let productoSeleccionado = null;
+let carritoFactura = [];
+
+function toggleMenuColores(){
+    let menu = document.getElementById("menuColores")
+    menu.classList.toggle("oculto")
+}
+
+function aplicarColorPaleta(boton){
+    let acento = boton.getAttribute("data-acento");
+    let brillo = boton.getAttribute("data-brillo");
+    let oscuro = boton.getAttribute("data-oscuro");
+
+    document.documentElement.style.setProperty("--tm-acento", acento);
+    document.documentElement.style.setProperty("--tm-acento-brillo", brillo);
+    document.documentElement.style.setProperty("--tm-acento-oscuro", oscuro);
+    
+    let botones = document.querySelectorAll(".btn-color");
+    for(let i = 0; i < botones.length; i++){
+        botones[i].classList.remove("activo");
+    }
+    boton.classList.add("activo");
+    
+    localStorage.setItem("colorPaleta", JSON.stringify({
+        acento: acento,
+        brillo: brillo,
+        oscuro: oscuro
+    }));
+
+    document.getElementById("menuColores").classList.add("oculto");
+}
+
+function recuperarPaleta(){
+    let guardado = localStorage.getItem("colorPaleta");
+    if (guardado){
+        let datos = JSON.parse(guardado);
+        document.documentElement.style.setProperty("--tm-acento", datos.acento);
+        document.documentElement.style.setProperty("--tm-acento-brillo", datos.brillo);
+        document.documentElement.style.setProperty("--tm-acento-oscuro", datos.oscuro);
+    }
+}
+
+function mostrarError(idElemento, mensaje) {
+    let elemento = document.getElementById(idElemento);
+    if (elemento) {
+        elemento.textContent = mensaje;
+        elemento.style.display = "block";
+    }
+}
+
+function ocultarError(idElemento) {
+    let elemento = document.getElementById(idElemento);
+    if (elemento) {
+        elemento.style.display = "none";
+    }
+}
+
+function iniciarSesion() {
+    ocultarError("errLogin");
+    let nombre = document.getElementById("txtNombreLogin").value.trim();
+    let validacionLetras = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
+
+    if (nombre === "" || !validacionLetras.test(nombre)) {
+        mostrarError("errLogin", "Por favor, ingresa un nombre válido usando solo letras.");
+        return;
+    }
+
+    localStorage.setItem("usuarioActual", nombre);
+    document.getElementById("overlayLogin").classList.remove("visible");
+    mostrarSeccion('sec-inicio', document.getElementById('btnInicio'));
+}
+
+function cerrarSesion() {
+    localStorage.removeItem("usuarioActual");
+    document.getElementById("txtNombreLogin").value = "";
+    document.getElementById("overlayLogin").classList.add("visible");
+}
 
 function ocultarSecciones() {
     document.getElementById("sec-inicio").classList.remove("activa");
     document.getElementById("sec-simulador").classList.remove("activa");
     document.getElementById("sec-tabla").classList.remove("activa");
-    document.getElementById("sec-calendario").classList.remove("activa");
+    document.getElementById("sec-fundamentos").classList.remove("activa");
+    document.getElementById("sec-evaluacion").classList.remove("activa");
 }
 
 function mostrarSeccion(idSeccion, elementoBoton) {
@@ -79,13 +197,15 @@ function cerrarModalInformacion() {
 }
 
 function ocultarModulosSimulador() {
-    document.getElementById("formFactura").classList.remove("activa-modulo");
+    document.getElementById("formDesglose").classList.remove("activa-modulo");
     document.getElementById("formRetencion").classList.remove("activa-modulo");
     document.getElementById("formNota").classList.remove("activa-modulo");
+    document.getElementById("formIntereses").classList.remove("activa-modulo");
 
-    document.getElementById("btnModFactura").classList.remove("activo");
+    document.getElementById("btnModDesglose").classList.remove("activo");
     document.getElementById("btnModRetencion").classList.remove("activo");
     document.getElementById("btnModNota").classList.remove("activo");
+    document.getElementById("btnPagoIntereses").classList.remove("activo");
 }
 
 function mostrarModuloSimulador(idModulo, elementoBoton) {
@@ -95,8 +215,22 @@ function mostrarModuloSimulador(idModulo, elementoBoton) {
 }
 
 window.onload = function () {
+    let usuario = localStorage.getItem("usuarioActual");
+    if (!usuario) {
+        document.getElementById("overlayLogin").classList.add("visible");
+    } else {
+        document.getElementById("overlayLogin").classList.remove("visible");
+    }
+
     let botonInicio = document.getElementById("btnInicio");
     mostrarSeccion("sec-inicio", botonInicio);
+
+    pintarHistorial();
+    renderizarProductos(productos);
+    renderizarFactura();
+    pintarEvaluaciones();
+    temaSeleccionado();
+    recuperarPaleta();
 }
 
 function recuperarTxtAFloat(idComponente) {
@@ -109,40 +243,82 @@ function mostrarEnSpan(idSpan, valorTexto) {
     document.getElementById(idSpan).textContent = valorTexto;
 }
 
-function calcularFactura() {
-    let subtotal = recuperarTxtAFloat("txtSubtotal");
-    let porcentajeDescuento = recuperarTxtAFloat("txtDescuento");
-    let tasaIva = recuperarTxtAFloat("selIva");
-
-    if (isNaN(porcentajeDescuento)) {
-        porcentajeDescuento = 0;
+function guardarHistorial(tipo, base, impuesto, total) {
+    let historialTexto = localStorage.getItem("datosFacturacion");
+    let lista = [];
+    if (historialTexto) {
+        lista = JSON.parse(historialTexto);
     }
 
-    if (isNaN(subtotal) || subtotal <= 0) {
-        alert("Por favor, ingresa un subtotal válido mayor a 0.");
+    let nuevoRegistro = {
+        tipoCalculo: tipo,
+        valorBase: base,
+        valorImpuesto: impuesto,
+        valorTotal: total
+    };
+
+    lista.push(nuevoRegistro);
+    localStorage.setItem("datosFacturacion", JSON.stringify(lista));
+    pintarHistorial();
+}
+
+function pintarHistorial() {
+    let historialTexto = localStorage.getItem("datosFacturacion");
+    let lista = [];
+    if (historialTexto) {
+        lista = JSON.parse(historialTexto);
+    }
+
+    let cuerpoTabla = document.getElementById("cuerpoHistorial");
+    let filasHTML = "";
+
+    for (let i = 0; i < lista.length; i++) {
+        let registro = lista[i];
+        filasHTML += "<tr>";
+        filasHTML += "<td>" + registro.tipoCalculo + "</td>";
+        filasHTML += "<td>$" + parseFloat(registro.valorBase).toFixed(2) + "</td>";
+        filasHTML += "<td>$" + parseFloat(registro.valorImpuesto).toFixed(2) + "</td>";
+        filasHTML += "<td>$" + parseFloat(registro.valorTotal).toFixed(2) + "</td>";
+        filasHTML += "</tr>";
+    }
+
+    cuerpoTabla.innerHTML = filasHTML;
+}
+
+function limpiarHistorial() {
+    localStorage.removeItem("datosFacturacion");
+    pintarHistorial();
+}
+
+function calcularDesglose() {
+    ocultarError("errDesglose");
+    let total = recuperarTxtAFloat("txtTotalDesglose");
+    let tasaIva = recuperarTxtAFloat("selIvaDesglose");
+
+    if (isNaN(total) || total <= 0 || total > 100000) {
+        mostrarError("errDesglose", "Por favor, ingresa un total válido mayor a 0 y hasta 100,000.");
         return;
     }
 
-    let montoDescuento = subtotal * (porcentajeDescuento / 100);
-    let subtotalNeto = subtotal - montoDescuento;
-    let ivaCalculado = subtotalNeto * tasaIva;
-    let totalFactura = subtotalNeto + ivaCalculado;
+    let subtotal = total / (1 + tasaIva);
+    let ivaExtraido = total - subtotal;
 
-    mostrarEnSpan("lblFacturaSubtotal", subtotalNeto.toFixed(2));
-    mostrarEnSpan("lblFacturaDescuento", montoDescuento.toFixed(2));
-    mostrarEnSpan("lblFacturaIva", ivaCalculado.toFixed(2));
-    mostrarEnSpan("lblFacturaTotal", totalFactura.toFixed(2));
+    mostrarEnSpan("lblDesgloseSubtotal", subtotal.toFixed(2));
+    mostrarEnSpan("lblDesgloseIva", ivaExtraido.toFixed(2));
+    mostrarEnSpan("lblDesgloseTotal", total.toFixed(2));
 
-    document.getElementById("resultadoFactura").style.display = "block";
+    document.getElementById("resultadoDesglose").style.display = "block";
+    guardarHistorial("Desglose IVA", subtotal.toFixed(2), ivaExtraido.toFixed(2), total.toFixed(2));
 }
 
 function calcularRetencion() {
+    ocultarError("errRetencion");
     let montoBase = recuperarTxtAFloat("txtMontoBase");
     let tasaRenta = recuperarTxtAFloat("selRenta");
     let tasaIvaRet = recuperarTxtAFloat("selIvaRet");
 
-    if (isNaN(montoBase) || montoBase <= 0) {
-        alert("Por favor, ingresa un monto base válido mayor a 0.");
+    if (isNaN(montoBase) || montoBase <= 0 || montoBase > 100000) {
+        mostrarError("errRetencion", "Por favor, ingresa un monto base válido mayor a 0 y hasta 100,000.");
         return;
     }
 
@@ -158,19 +334,21 @@ function calcularRetencion() {
     mostrarEnSpan("lblRetencionNeto", netoAPagar.toFixed(2));
 
     document.getElementById("resultadoRetencion").style.display = "block";
+    guardarHistorial("Retenciones", montoBase.toFixed(2), totalRetenido.toFixed(2), netoAPagar.toFixed(2));
 }
 
 function calcularNota() {
+    ocultarError("errNota");
     let valorOriginal = recuperarTxtAFloat("txtValorOriginal");
     let valorModificar = recuperarTxtAFloat("txtValorModificar");
 
-    if (isNaN(valorOriginal) || valorOriginal <= 0 || isNaN(valorModificar) || valorModificar <= 0) {
-        alert("Por favor, ingresa valores válidos mayores a 0.");
+    if (isNaN(valorOriginal) || valorOriginal <= 0 || valorOriginal > 100000 || isNaN(valorModificar) || valorModificar <= 0 || valorModificar > 100000) {
+        mostrarError("errNota", "Por favor, ingresa valores válidos mayores a 0 y hasta 100,000.");
         return;
     }
 
     if (valorModificar > valorOriginal) {
-        alert("El monto a modificar no puede ser mayor al valor original de la factura.");
+        mostrarError("errNota", "El monto a modificar no puede ser mayor al valor original.");
         return;
     }
 
@@ -180,17 +358,48 @@ function calcularNota() {
     mostrarEnSpan("lblNotaNuevoTotal", nuevoTotal.toFixed(2));
 
     document.getElementById("resultadoNota").style.display = "block";
+    guardarHistorial("Nota Crédito", valorOriginal.toFixed(2), valorModificar.toFixed(2), nuevoTotal.toFixed(2));
 }
 
-//Esta fución permitirá visualizar cada producto guardado dentro del arreglo
-function renderizarProductos(productos){
+function calcularIntereses() {
+    ocultarError("errIntereses");
+    let impuesto = recuperarTxtAFloat("txtImpuestoVencido");
+    let meses = recuperarTxtAFloat("txtMesesAtraso");
+    let tasaInteres = recuperarTxtAFloat("txtTasaInteres");
+    let tasaMulta = recuperarTxtAFloat("txtTasaMulta");
+
+    if (isNaN(impuesto) || impuesto <= 0 || impuesto > 100000) {
+        mostrarError("errIntereses", "Por favor, ingresa un impuesto vencido válido mayor a 0 y hasta 100,000.");
+        return;
+    }
+    if (isNaN(meses) || meses <= 0 || meses > 100000) {
+        mostrarError("errIntereses", "Por favor, ingresa meses de atraso válidos mayores a 0 y hasta 100,000.");
+        return;
+    }
+
+    if (isNaN(tasaInteres) || tasaInteres < 0 || tasaInteres > 100) tasaInteres = 0;
+    if (isNaN(tasaMulta) || tasaMulta < 0 || tasaMulta > 100) tasaMulta = 0;
+
+    let totalInteres = impuesto * (tasaInteres / 100) * meses;
+    let totalMulta = impuesto * (tasaMulta / 100) * meses;
+    let totalPagar = impuesto + totalInteres + totalMulta;
+
+    mostrarEnSpan("lblInteresGenerado", totalInteres.toFixed(2));
+    mostrarEnSpan("lblMultaGenerada", totalMulta.toFixed(2));
+    mostrarEnSpan("lblInteresesTotal", totalPagar.toFixed(2));
+
+    document.getElementById("resultadoIntereses").style.display = "block";
+    guardarHistorial("Intereses Mora", impuesto.toFixed(2), (totalInteres + totalMulta).toFixed(2), totalPagar.toFixed(2));
+}
+
+function renderizarProductos(productosRender) {
     let lista = document.getElementById("listaProductos");
     lista.innerHTML = "";
-    for(let i = 0; i < productos.length; i++){
-        let producto = productos[i];
+    for (let i = 0; i < productosRender.length; i++) {
+        let producto = productosRender[i];
         let li = document.createElement("li");
         li.className = "item-producto";
-        li.onclick = function(){
+        li.onclick = function () {
             seleccionarProducto(producto);
         }
         li.innerHTML = `<span class = "producto-icono">${producto.icono}</span>
@@ -198,83 +407,58 @@ function renderizarProductos(productos){
                             <div class = "producto-nombre">${producto.nombre}</div>
                             <div class = "producto-categoria">${producto.categoria}</div>
                         </div>`;
-
         lista.appendChild(li);
     }
 }
 
-//La siguiente función que es buscarProducto hará lo siguiente lo siguiente
-//lee lo que escribo
-//recorre todos los productos con un for
-//Guarda los que coincidan en un array (arreglo) nuevo
-//llamará a renderizarProductos en ese arreglo
-
-function buscarProducto(){
-    //toLowerCase convierte mayúsculas en minúsculas.
+function buscarProducto() {
     let buscar = document.getElementById("txtBusquedaProducto").value.toLowerCase();
     let encontrados = [];
 
-    for(let i = 0; i < productos.length; i++){
+    for (let i = 0; i < productos.length; i++) {
         let nombre = productos[i].nombre.toLowerCase();
         let categoria = productos[i].categoria.toLowerCase();
-        //includes ve si tiene un textro contiene otro texto
-        if(nombre.includes(buscar) || categoria.includes(buscar)){
-            //el push agrega al arreglo
+        if (nombre.includes(buscar) || categoria.includes(buscar)) {
             encontrados.push(productos[i]);
         }
     }
     renderizarProductos(encontrados);
 }
 
-function seleccionarProducto(producto){
-    //se guarda en la variable global
+function seleccionarProducto(producto) {
     productoSeleccionado = producto;
     renderizarProductos(productos);
-    //por si me olvido, el style me da acceso al css no al html, se puede poner tambien style.backgoundColor  ="red" por ejemplo
-    //vale con todos los elementos del css, creo.
-    //oculta el mensaje de seleccionar producto
-    document.getElementById("panelVacio").style.display = "none";
-    //muestra el panel con la información
-    document.getElementById("panelDetalle").style.display="flex"
 
-    //llenamos los datos del producto
-    //textContent lo que hace es que cambia el texto que se ve dentro del elemento HTML
+    document.getElementById("panelVacio").style.display = "none";
+    document.getElementById("panelDetalle").style.display = "flex";
+
     document.getElementById("detalleNombre").textContent = producto.nombre;
     document.getElementById("detalleCategoria").textContent = producto.categoria;
-    document.getElementById("detalleDescripcion").textContent = producto.descripcion
-
-    //El estado del impuesto, si aplica o no el IVA
+    document.getElementById("detalleDescripcion").textContent = producto.descripcion;
 
     let impuestoAplicado = document.getElementById("detalleBadge");
-    if(producto.iva === 0){
+    if (producto.iva === 0) {
         impuestoAplicado.textContent = "IVA = 0% - Exento";
         impuestoAplicado.className = "badge-iva badge-0";
         document.getElementById("detalleTarifa").textContent = "0%";
-        document.getElementById("simLabelIva").textContent = "IVA (0%)"
-    }else{
+        document.getElementById("simLabelIva").textContent = "IVA (0%)";
+    } else {
         impuestoAplicado.textContent = "IVA = 15% - Tarifa General";
         impuestoAplicado.className = "badge-iva badge-15";
         document.getElementById("detalleTarifa").textContent = "15%";
-        document.getElementById("simLabelIva").textContent = "IVA (15%)"
+        document.getElementById("simLabelIva").textContent = "IVA (15%)";
     }
-
-    //va a limpiar los inputs
 
     document.getElementById("detallePrecio").value = "";
     document.getElementById("detalleCantidad").value = "1";
 
-    actualizarSimulacion(0,1,producto.iva);
+    actualizarSimulacion(0, 1, producto.iva);
+    ocultarError("errDetalleProducto");
 }
 
-//actualizarSimulacióm recibira tres datos y hará las matemáticas
-//Precio
-//Cantidad
-//tasa de IVA
-
-function actualizarSimulacion(precio,cantidad,tasaIva){
-    //multiplicamos para que nos de el subtotal
+function actualizarSimulacion(precio, cantidad, tasaIva) {
     let subtotal = precio * cantidad;
-    let iva = subtotal*tasaIva;
+    let iva = subtotal * tasaIva;
     let total = subtotal + iva;
 
     document.getElementById("simSubtotal").textContent = '$' + subtotal.toFixed(2);
@@ -282,61 +466,215 @@ function actualizarSimulacion(precio,cantidad,tasaIva){
     document.getElementById("simTotal").textContent = '$' + total.toFixed(2);
 }
 
-function simularDetallesDelProducto(){
-    if(productoSeleccionado == null){
+function simularDetallesDelProducto() {
+    if (productoSeleccionado == null) {
         return;
     }
     let precio = parseFloat(document.getElementById("detallePrecio").value);
     let cantidad = parseFloat(document.getElementById("detalleCantidad").value);
 
-    if(isNaN(precio)){precio = 0;}
-    if(isNaN(cantidad)){cantidad = 1;}
-    
-    actualizarSimulacion(precio, cantidad, productoSeleccionado.iva)
+    if (isNaN(precio) || precio < 0 || precio > 100000) { precio = 0; }
+    if (isNaN(cantidad) || cantidad < 1 || cantidad > 100000) { cantidad = 1; }
+
+    actualizarSimulacion(precio, cantidad, productoSeleccionado.iva);
 }
 
-document.addEventListener('DOMContentLoaded', function(){
-    // Cuando la página termina de cargar, dibujamos todos los productos
-    renderizarProductos(productos);
-    }
-);
-function consultarCalendario() {
-    let digito = document.getElementById("txtDigito");
-    let digitoTexto = digito.value;
+function agregarAFactura() {
+    ocultarError("errDetalleProducto");
 
-    if (digitoTexto === "" || isNaN(digitoTexto) || digitoTexto < 0 || digitoTexto > 9) {
-        alert("Por favor, ingrese un dígito válido.");
+    if (productoSeleccionado == null) {
+        mostrarError("errDetalleProducto", "Por favor selecciona un producto del catálogo primero.");
         return;
     }
 
-    let cmpDigito = parseInt(digitoTexto);
-    let fechaMaxima = 0;
+    let precio = parseFloat(document.getElementById("detallePrecio").value);
+    let cantidad = parseFloat(document.getElementById("detalleCantidad").value);
 
-    if (cmpDigito === 1) {
-        fechaMaxima = 10;
-    } else if (cmpDigito === 2) {
-        fechaMaxima = 12;
-    } else if (cmpDigito === 3) {
-        fechaMaxima = 14;
-    } else if (cmpDigito === 4) {
-        fechaMaxima = 16;
-    } else if (cmpDigito === 5) {
-        fechaMaxima = 18;
-    } else if (cmpDigito === 6) {
-        fechaMaxima = 20;
-    } else if (cmpDigito === 7) {
-        fechaMaxima = 22;
-    } else if (cmpDigito === 8) {
-        fechaMaxima = 24;
-    } else if (cmpDigito === 9) {
-        fechaMaxima = 26;
-    } else if (cmpDigito === 0) {
-        fechaMaxima = 28;
+    if (isNaN(precio) || precio <= 0 || precio > 100000) {
+        mostrarError("errDetalleProducto", "Por favor ingresa un precio válido mayor a 0 y hasta 100,000.");
+        return;
+    }
+    if (isNaN(cantidad) || cantidad <= 0 || cantidad > 100000) {
+        mostrarError("errDetalleProducto", "Por favor ingresa una cantidad válida mayor a 0 y hasta 100,000.");
+        return;
     }
 
-    mostrarEnSpan("lblDigito", cmpDigito);
-    mostrarEnSpan("lblFechaMensual", fechaMaxima);
-    mostrarEnSpan("lblFechaSemestral", fechaMaxima);
+    let subtotal = precio * cantidad;
 
-    document.getElementById("resultadoCalendario").style.display = "block";
+    let itemFactura = {
+        id: new Date().getTime(),
+        nombre: productoSeleccionado.nombre,
+        cantidad: cantidad,
+        precio: precio,
+        subtotal: subtotal,
+        tasaIva: productoSeleccionado.iva
+    };
+
+    carritoFactura.push(itemFactura);
+    renderizarFactura();
+
+    document.getElementById("detallePrecio").value = "";
+    document.getElementById("detalleCantidad").value = "1";
+    document.getElementById("simSubtotal").textContent = "$0.00";
+    document.getElementById("simIva").textContent = "$0.00";
+    document.getElementById("simTotal").textContent = "$0.00";
+}
+
+function eliminarDeFactura(idItem) {
+    let nuevoCarrito = [];
+    for (let i = 0; i < carritoFactura.length; i++) {
+        if (carritoFactura[i].id !== idItem) {
+            nuevoCarrito.push(carritoFactura[i]);
+        }
+    }
+    carritoFactura = nuevoCarrito;
+    renderizarFactura();
+}
+
+function renderizarFactura() {
+    let cuerpoFactura = document.getElementById("cuerpoFactura");
+    cuerpoFactura.innerHTML = "";
+
+    let subtotal15 = 0;
+    let subtotal0 = 0;
+
+    for (let i = 0; i < carritoFactura.length; i++) {
+        let item = carritoFactura[i];
+
+        if (item.tasaIva > 0) {
+            subtotal15 += item.subtotal;
+        } else {
+            subtotal0 += item.subtotal;
+        }
+
+        let fila = document.createElement("tr");
+        fila.innerHTML = `
+            <td>${item.cantidad}</td>
+            <td style="max-width: 130px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${item.nombre}">${item.nombre}</td>
+            <td>$${item.precio.toFixed(2)}</td>
+            <td>$${item.subtotal.toFixed(2)}</td>
+            <td><button type="button" class="btn-eliminar-item" onclick="eliminarDeFactura(${item.id})">X</button></td>
+        `;
+        cuerpoFactura.appendChild(fila);
+    }
+
+    let ivaCalculado = subtotal15 * 0.15;
+    let totalGeneral = subtotal15 + subtotal0 + ivaCalculado;
+
+    document.getElementById("facSubtotal15").textContent = "$" + subtotal15.toFixed(2);
+    document.getElementById("facSubtotal0").textContent = "$" + subtotal0.toFixed(2);
+    document.getElementById("facIva").textContent = "$" + ivaCalculado.toFixed(2);
+    document.getElementById("facTotal").textContent = "$" + totalGeneral.toFixed(2);
+}
+
+function calificarEvaluacion() {
+    ocultarError("errEvaluacion");
+
+    let p1 = document.querySelector('input[name="preg1"]:checked');
+    let p2 = document.querySelector('input[name="preg2"]:checked');
+    let p3 = document.querySelector('input[name="preg3"]:checked');
+    let p4 = document.querySelector('input[name="preg4"]:checked');
+    let p5 = document.querySelector('input[name="preg5"]:checked');
+
+    if (!p1 || !p2 || !p3 || !p4 || !p5) {
+        mostrarError("errEvaluacion", "Por favor, responde las 5 preguntas obligatorias para procesar la evaluación.");
+        return;
+    }
+
+    let nota = 0;
+    if (p1.value === "15") nota += 20;
+    if (p2.value === "base") nota += 20;
+    if (p3.value === "electronica") nota += 20;
+    if (p4.value === "agente") nota += 20;
+    if (p5.value === "0") nota += 20;
+
+    let resena = document.getElementById("txtResena").value.trim();
+    if (resena === "") {
+        resena = "Sin comentarios registrados.";
+    }
+
+    let usuario = localStorage.getItem("usuarioActual");
+    if (!usuario || usuario === "") {
+        mostrarError("errEvaluacion", "Error de sesión. Debes identificarte al inicio para realizar la prueba.");
+        return;
+    }
+
+    mostrarEnSpan("lblNotaFinal", nota + " / 100");
+    document.getElementById("resultadoEvaluacion").style.display = "block";
+
+    guardarEvaluacion(usuario, nota, resena);
+}
+
+function guardarEvaluacion(usuario, nota, resena) {
+    let evaluaciones = localStorage.getItem("datosEvaluaciones");
+    let lista = [];
+    if (evaluaciones) {
+        lista = JSON.parse(evaluaciones);
+    }
+
+    let nuevoRegistro = {
+        usuario: usuario,
+        nota: nota,
+        resena: resena
+    };
+
+    lista.push(nuevoRegistro);
+    localStorage.setItem("datosEvaluaciones", JSON.stringify(lista));
+    pintarEvaluaciones();
+}
+
+function pintarEvaluaciones() {
+    let evaluaciones = localStorage.getItem("datosEvaluaciones");
+    let lista = [];
+    if (evaluaciones) {
+        lista = JSON.parse(evaluaciones);
+    }
+
+    let cuerpoTabla = document.getElementById("cuerpoEvaluaciones");
+    if (cuerpoTabla) {
+        let filasHTML = "";
+        for (let i = 0; i < lista.length; i++) {
+            let registro = lista[i];
+            filasHTML += "<tr>";
+            filasHTML += "<td>" + registro.usuario + "</td>";
+            filasHTML += "<td><span class='texto-brillante'>" + registro.nota + " / 100</span></td>";
+            filasHTML += "<td>" + registro.resena + "</td>";
+            filasHTML += "</tr>";
+        }
+        cuerpoTabla.innerHTML = filasHTML;
+    }
+}
+
+function cambiarTema(){
+    temaClaro = !temaClaro
+
+    for(let i = 0; i < configuracionTema.length; i++){
+        let entrada = configuracionTema[i];
+
+        let valorElegido;
+        if(temaClaro){
+            valorElegido = entrada.claro
+        }else{
+            valorElegido = entrada.oscuro
+        }
+        document.documentElement.style.setProperty(entrada.variable, valorElegido);
+    }
+    let boton = document.getElementById("btnTema");
+    if(temaClaro){
+        boton.innerHTML = '&#9728;';
+    }else{
+        boton.innerHTML = '&#9790;';
+    }
+    if(temaClaro){
+        localStorage.setItem('temaPreferido','claro');
+    }else{
+        localStorage.setItem('temaPreferido','oscuro');
+    }
+}
+
+function temaSeleccionado(){
+    let temaEscogido = localStorage.getItem('temaPreferido');
+    if(temaEscogido === 'claro'){
+        cambiarTema();
+    }
 }
