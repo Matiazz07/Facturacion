@@ -623,6 +623,32 @@
 
     <div id="modalInformacion" class="capa-modal">
         <div class="caja-modal">
+        <h2 id="tituloModalFacturas" class="texto-brillante"
+            style="text-align:center; font-size:1.5rem;">
+            Facturas del Cliente
+        </h2>
+        <div id="contenidoModalFacturas" class="cuerpo-modal">
+            <!-- Se llena con verFacturasCliente() -->
+        </div>
+        <button type="button" class="boton-cerrar-modal"
+                onclick="cerrarModalFacturasCliente()">
+            CERRAR
+        </button>
+    </div>
+    <div class="caja-modal">
+        <h2 id="tituloModalDetalle" class="texto-brillante"
+            style="text-align:center; font-size:1.5rem;">
+            Detalle de Factura
+        </h2>
+        <div id="contenidoModalDetalle" class="cuerpo-modal">
+            <!-- Se llena con abrirDetalleFactura() -->
+        </div>
+        <button type="button" class="boton-cerrar-modal"
+                onclick="cerrarModalDetalleFactura()">
+            CERRAR
+        </button>
+
+        <div class="caja-modal">
             <h2 id="tituloModal" class="texto-brillante">Titulo</h2>
             <div id="contenidoModal" class="cuerpo-modal"></div>
             <button type="button" class="boton-cerrar-modal" onclick="cerrarModalInformacion()">Entendido</button>
