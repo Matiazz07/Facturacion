@@ -27,7 +27,7 @@ let baseDatosConceptos = {
 
 let listaProductos = [];
 
-let productoEditadoId = [];
+let productoEditadoId = null;
 
 const productos = [
     { id: 1, nombre: "Arroz", categoria: "Alimentos básicos", icono: "·", iva: 0, descripcion: "Alimento de la canasta básica familiar." },
@@ -681,4 +681,61 @@ function temaSeleccionado(){
     if(temaEscogido === 'claro'){
         cambiarTema();
     }
+}
+
+function guardarProducto(){
+    ocultarError("errProducto");
+
+    let nombre = document.getElementById("txtNombreProducto").value.trim();
+    let precio = parseFloat(document.getElementById("txtPrecioProducto").value);
+    let iva = parseFloat(document.getElementById("selIvaProducto").value);
+
+    let validacionLetras = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
+
+    if(nombre === "" || !validacionLetras.test(nombre)){
+        mostrarError("errProducto", "Ingresa un nombre al producto");
+        return;
+    }
+
+    if(isNaN(precio)|| precio < 0){
+        mostrarError("errProducto", "Ingrese un valor válido mayor a 0")
+        return;
+    }else if ((isNaN(precio)|| precio < 10000)){
+        mostrarError("errProducto","Ingrese un valor válido menor a 10000");
+        return;
+    }
+
+    let texto = localStorage.getItem("datosProductos");
+    let lista = [];
+
+    if (texto){
+        lista = JSON.parse(texto);
+    }
+
+    if (productoEditadoId !== null){
+        for(let i = 0; i < lista.length; i++){
+            if (lista[i].id === productoEditadoId){
+                listas[i].nombre = nombre;
+                lista[i].precio = precio;
+                lista[i].iva = iva;
+            }
+        }
+        productoEditadoId = null;
+    }else {
+        let nuevoProducto = {
+            id: new Date().getItem(),
+            nombre: nombre,
+            precio: precio,
+            iva: iva
+        };
+        lista.push(nuevoProducto);
+    }
+
+    localStorage.setItem("datosProducto", JSON.stringify(lista));
+
+    document.getElementById("txtNombreProducto").value = "";
+    document.getElementById("txtPrecioProducto").value = "";
+    document.getElementById("selIvaProducto").value = 0;
+
+    pintarProductos();
 }
