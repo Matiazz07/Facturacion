@@ -25,6 +25,10 @@ let baseDatosConceptos = {
     }
 };
 
+let listaProductos = [];
+
+let productoEditadoId = [];
+
 const productos = [
     { id: 1, nombre: "Arroz", categoria: "Alimentos básicos", icono: "·", iva: 0, descripcion: "Alimento de la canasta básica familiar." },
     { id: 2, nombre: "Pan", categoria: "Alimentos básicos", icono: "·", iva: 0, descripcion: "Alimento de la canasta básica familiar." },

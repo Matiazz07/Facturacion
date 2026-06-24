@@ -75,6 +75,8 @@
             </div>
         </section>
 
+        <div id=""></div>
+
         <section id="sec-simulador" class="seccion-pagina">
             <div class="tarjeta-cristal tarjeta-formulario">
                 <div class="cabecera-formulario">
@@ -322,7 +324,7 @@
                                     <th class="col-vtot">V. Total</th>
                                     <th class="col-btn"></th>
                                 </tr>
-                            </tbody>
+                                </tbody>
                             <tbody id="cuerpoFactura">
                             </tbody>
                         </table>
@@ -338,6 +340,132 @@
                     </div>
                 </div>
             </div>
+            <div class="contenedor-contenido" style="margin-top: 40px;">
+
+                <h2 class="subtitulo-seccion">Gestión de Productos</h2>
+
+                <!-- Formulario para agregar / editar producto -->
+                <div class="tarjeta-cristal tarjeta-formulario">
+                    <div class="cabecera-formulario">
+                        <h2>Agregar / Editar Producto</h2>
+                        <p>Completa los datos y guarda el producto en el catálogo.</p>
+                    </div>
+
+                    <div class="grupo-entrada">
+                        <label>Nombre del Producto</label>
+                        <input type="text" id="txtNombreProducto" class="entrada-neon"
+                            placeholder="Ej: Camisa de algodón">
+                    </div>
+
+                    <div class="grupo-entrada">
+                        <label>Precio Unitario ($)</label>
+                        <input type="number" id="txtPrecioProducto" class="entrada-neon" placeholder="Ej: 25.00"
+                            step="0.01" min="0.01" max="100000">
+                    </div>
+
+                    <div class="grupo-entrada">
+                        <label>Tarifa de IVA</label>
+                        <select id="selIvaProducto" class="entrada-neon">
+                            <option value="0">0% — Exento</option>
+                            <option value="0.15">15% — Tarifa General</option>
+                        </select>
+                    </div>
+
+                    <div id="errProducto" class="mensaje-error"></div>
+                    <button type="button" class="boton-primario" onclick="guardarProducto()">
+                        GUARDAR PRODUCTO
+                    </button>
+                </div>
+
+                <!-- Tabla de productos guardados -->
+                <div class="contenedor-historial">
+                    <h2 class="subtitulo-seccion">Productos Guardados</h2>
+                    <div style="overflow-x: auto;">
+                        <table class="tabla-cristal">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Precio</th>
+                                    <th>IVA</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cuerpoProductos"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="contenedor-contenido" style="margin-top: 10px;">
+
+                <h2 class="subtitulo-seccion">Registrar Cliente</h2>
+
+                <!-- Formulario de cliente -->
+                <div class="tarjeta-cristal tarjeta-formulario">
+                    <div class="cabecera-formulario">
+                        <h2>Datos del Cliente</h2>
+                        <p>Registra al cliente para asociarle facturas generadas.</p>
+                    </div>
+
+                    <div class="grupo-entrada">
+                        <label>Nombre completo</label>
+                        <input type="text" id="txtNombreCliente" class="entrada-neon" placeholder="Ej: Juan Pérez">
+                    </div>
+
+                    <div class="grupo-entrada">
+                        <label>Cédula</label>
+                        <input type="text" id="txtCedulaCliente" class="entrada-neon" placeholder="Ej: 1712345678">
+                    </div>
+
+                    <div class="grupo-entrada">
+                        <label>Correo electrónico</label>
+                        <input type="text" id="txtCorreoCliente" class="entrada-neon" placeholder="Ej: juan@email.com">
+                    </div>
+
+                    <div id="errCliente" class="mensaje-error"></div>
+                    <button type="button" class="boton-primario" onclick="guardarCliente()">
+                        REGISTRAR CLIENTE
+                    </button>
+                </div>
+
+                <!-- Campo para vincular factura a cliente -->
+                <div class="tarjeta-cristal tarjeta-formulario" style="margin-top: 20px;">
+                    <div class="cabecera-formulario">
+                        <h2>Guardar Factura para Cliente</h2>
+                        <p>Ingresa la cédula del cliente y guarda la Factura en Curso.</p>
+                    </div>
+                    <div class="grupo-entrada">
+                        <label>Cédula del cliente</label>
+                        <input type="text" id="txtCedulaFactura" class="entrada-neon" placeholder="Ej: 1712345678">
+                    </div>
+                    <div id="errGuardarFactura" class="mensaje-error"></div>
+                    <button type="button" class="boton-primario" onclick="guardarFacturaParaCliente()">
+                        GUARDAR FACTURA PARA CLIENTE
+                    </button>
+                </div>
+
+                <!-- Historial de clientes registrados -->
+                <div class="contenedor-historial">
+                    <h2 class="subtitulo-seccion">Historial de Clientes</h2>
+                    <div style="overflow-x: auto;">
+                        <table class="tabla-cristal">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cuerpoClientes"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+
         </section>
 
         <section id="sec-fundamentos" class="seccion-pagina">
@@ -503,21 +631,17 @@
 
     <div id="contenedorPaleta">
         <div id="menuColores" class="menu-colores oculto">
-            <button class="btn-color" data-acento="#00c8d7" data-brillo="#00f0ff"
-                    data-oscuro="#0080ff" style="background:#00c8d7"
-                    title="Celeste (original)" onclick="aplicarColorPaleta(this)"></button>
+            <button class="btn-color" data-acento="#00c8d7" data-brillo="#00f0ff" data-oscuro="#0080ff"
+                style="background:#00c8d7" title="Celeste (original)" onclick="aplicarColorPaleta(this)"></button>
 
-            <button class="btn-color" data-acento="#ef4444" data-brillo="#ff6b6b"
-                    data-oscuro="#991b1b" style="background:#ef4444"
-                    title="Rojo" onclick="aplicarColorPaleta(this)"></button>
+            <button class="btn-color" data-acento="#ef4444" data-brillo="#ff6b6b" data-oscuro="#991b1b"
+                style="background:#ef4444" title="Rojo" onclick="aplicarColorPaleta(this)"></button>
 
-            <button class="btn-color" data-acento="#eab308" data-brillo="#fde047"
-                    data-oscuro="#ca8a04" style="background:#eab308"
-                    title="Amarillo" onclick="aplicarColorPaleta(this)"></button>
+            <button class="btn-color" data-acento="#eab308" data-brillo="#fde047" data-oscuro="#ca8a04"
+                style="background:#eab308" title="Amarillo" onclick="aplicarColorPaleta(this)"></button>
 
-            <button class="btn-color" data-acento="#22c55e" data-brillo="#4ade80"
-                    data-oscuro="#16a34a" style="background:#22c55e"
-                    title="Verde" onclick="aplicarColorPaleta(this)"></button>
+            <button class="btn-color" data-acento="#22c55e" data-brillo="#4ade80" data-oscuro="#16a34a"
+                style="background:#22c55e" title="Verde" onclick="aplicarColorPaleta(this)"></button>
         </div>
 
         <button id="btnPaleta" onclick="toggleMenuColores()" title="Cambiar color">
