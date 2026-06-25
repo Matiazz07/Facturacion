@@ -43,7 +43,7 @@ const productos = [
     { id: 16, nombre: "Refrigerador", categoria: "Electrodomésticos", icono: "·", iva: 0.15, descripcion: "Electrodoméstico que permite almacenar alimentos en un ambiente fresco." },
     { id: 17, nombre: "Agua con gas", categoria: "Bebidas", icono: "·", iva: 0.15, descripcion: "Bebida gaseosa para consumo humano." },
     { id: 18, nombre: "Cerveza", categoria: "Bebidas Alcohólicas", icono: "·", iva: 0.15, descripcion: "Bebida alcohólica para consumo humano." },
-    { id: 19, nombre: "Aceite de cocina", categoria: "Alimentos básicos", icono: "·", iva: 0, descripcion: "Alimento de la canasta básica familiar." },
+    { id: 19, nombre: "Aceite de cocina", categoria: "Alimentos básicos", icono: "·", iva: 0.15, descripcion: "Alimento de la canasta básica familiar." },
     { id: 20, nombre: "Mantequilla", categoria: "Alimentos básicos", icono: "·", iva: 0, descripcion: "Alimento de la canasta básica familiar." }
 ];
 
@@ -1095,4 +1095,28 @@ function abrirDetalleFactura(idCliente, indice) {
 
 function cerrarModalDetalleFactura(){
     document.getElementById("modalDetalleFactura").classList.remove("visible")
+}
+
+function eliminarFacturaCliente(idCliente,indice){
+    let confirmar = confirm("¿Seguro que quiere eliminar esta factura?");
+    if(!confirmar){
+        return;
+    }
+
+    let texto = localStorage.getItem("datosClientes");
+    let lista = [];
+
+    if(texto){
+        lista = JSON.parse(texto)
+    }
+
+    for(let i = 0; i < lista.length; i++){
+        if(lista[i].idCliente === idCliente){
+            lista[i].facturas.splice(indice, 1);
+            break;
+        }
+    }
+
+    localStorage.setItem("datosClientes", JSON.stringify(lista));
+    verFacturasCliente(idCliente)
 }
