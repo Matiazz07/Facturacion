@@ -43,7 +43,7 @@ const productos = [
     { id: 16, nombre: "Refrigerador", categoria: "Electrodomésticos", icono: "·", iva: 0.15, descripcion: "Electrodoméstico que permite almacenar alimentos en un ambiente fresco." },
     { id: 17, nombre: "Agua con gas", categoria: "Bebidas", icono: "·", iva: 0.15, descripcion: "Bebida gaseosa para consumo humano." },
     { id: 18, nombre: "Cerveza", categoria: "Bebidas Alcohólicas", icono: "·", iva: 0.15, descripcion: "Bebida alcohólica para consumo humano." },
-    { id: 19, nombre: "Aceite de cocina", categoria: "Alimentos básicos", icono: "·", iva: 0, descripcion: "Alimento de la canasta básica familiar." },
+    { id: 19, nombre: "Aceite de cocina", categoria: "Alimentos básicos", icono: "·", iva: 0.15, descripcion: "Alimento de la canasta básica familiar." },
     { id: 20, nombre: "Mantequilla", categoria: "Alimentos básicos", icono: "·", iva: 0, descripcion: "Alimento de la canasta básica familiar." }
 ];
 
@@ -409,13 +409,22 @@ function renderizarProductos(productosRender) {
                     <div class="producto-nombre">${producto.nombre}</div>
                     <div class="producto-categoria">${producto.categoria}</div>
                 </div>
-                <button type="button"
-                    style="background:transparent; border:1px solid var(--tm-acento);
-                           color:var(--tm-acento); border-radius:6px; padding:4px 10px;
-                           font-size:0.75rem; cursor:pointer; flex-shrink:0;"
-                    onclick="event.stopPropagation(); prepararEdicionProducto(${producto.id})">
-                    Editar
-                </button>`;
+                <div style="display:flex; gap:6px; flex-shrink:0;">
+                    <button type="button"
+                        style="background:transparent; border:1px solid var(--tm-acento);
+                               color:var(--tm-acento); border-radius:6px; padding:4px 10px;
+                               font-size:0.75rem; cursor:pointer; flex-shrink:0;"
+                        onclick="event.stopPropagation(); prepararEdicionProducto(${producto.id})">
+                        Editar
+                    </button>
+                    <button type="button"
+                        style="background:transparent; border:1px solid #ef4444;
+                               color:#ef4444; border-radius:6px; padding:4px 10px;
+                               font-size:0.75rem; cursor:pointer; flex-shrink:0;"
+                        onclick="event.stopPropagation(); eliminarProducto(${producto.id})">
+                        Eliminar
+                    </button>
+                </div>`;
         lista.appendChild(li);
     }
 }
@@ -753,6 +762,43 @@ function prepararEdicionProducto(id) {
     }
 }
 
+function eliminarProducto(id) {
+    let confirmar = confirm("¿Seguro que deseas eliminar este producto del catálogo?");
+    if (!confirmar) {
+        return;
+    }
+
+    let nuevaLista = [];
+    for (let i = 0; i < productos.length; i++) {
+        if (productos[i].id !== id) {
+            nuevaLista.push(productos[i]);
+        }
+    }
+    productos.length = 0;
+    for (let i = 0; i < nuevaLista.length; i++) {
+        productos.push(nuevaLista[i]);
+    }
+
+    if (productoEditandoId === id) {
+        productoEditandoId = null;
+        document.getElementById("txtNombreProducto").value = "";
+        document.getElementById("selIvaProducto").value = "0";
+    }
+
+    if (productoSeleccionado !== null && productoSeleccionado.id === id) {
+        productoSeleccionado = null;
+        document.getElementById("panelDetalle").style.display = "none";
+        document.getElementById("panelVacio").style.display = "flex";
+    }
+
+    let buscar = document.getElementById("txtBusquedaProducto").value.toLowerCase();
+    if (buscar !== "") {
+        buscarProducto();
+    } else {
+        renderizarProductos(productos);
+    }
+}
+
 function actualizarClienteEnFactura() {
     let nombre = document.getElementById("txtClienteNombreDetalle").value.trim();
     let correo = document.getElementById("txtClienteCorreoDetalle").value.trim();
@@ -908,10 +954,38 @@ function pintarClientes() {
         filasHTML += ' style="padding:6px 18px;font-size:0.82rem;width:auto;"';
         filasHTML += ' onclick="verFacturasCliente(' + c.idCliente + ')">';
         filasHTML += 'Ver Detalles</button>';
+        filasHTML += ' <button type="button"';
+        filasHTML += ' style="background:transparent; border:1px solid #ef4444; color:#ef4444;';
+        filasHTML += ' border-radius:8px; padding:6px 14px; font-size:0.8rem; cursor:pointer; margin-left:8px;"';
+        filasHTML += ' onclick="eliminarCliente(' + c.idCliente + ')">';
+        filasHTML += 'Eliminar</button>';
         filasHTML += '</td>';
         filasHTML += '</tr>';
     }
     cuerpo.innerHTML = filasHTML;
+}
+
+function eliminarCliente(idCliente) {
+    let confirmar = confirm("¿Seguro que deseas eliminar este cliente y todas sus facturas?");
+    if (!confirmar) {
+        return;
+    }
+
+    let texto = localStorage.getItem("datosClientes");
+    let lista = [];
+    if (texto) {
+        lista = JSON.parse(texto);
+    }
+
+    let nuevaLista = [];
+    for (let i = 0; i < lista.length; i++) {
+        if (lista[i].idCliente !== idCliente) {
+            nuevaLista.push(lista[i]);
+        }
+    }
+
+    localStorage.setItem("datosClientes", JSON.stringify(nuevaLista));
+    pintarClientes();
 }
 
 function verFacturasCliente(idCliente) {
@@ -951,6 +1025,11 @@ function verFacturasCliente(idCliente) {
             html += ' style="padding:6px 14px; font-size:0.8rem; width:auto;"';
             html += ' onclick="abrirDetalleFactura(' + idCliente + ',' + i + ')">';
             html += 'Ver Detalles</button>';
+            html += ' <button type="button"';
+            html += ' style="background:transparent; border:1px solid #ef4444; color:#ef4444;';
+            html += ' border-radius:8px; padding:6px 14px; font-size:0.8rem; cursor:pointer; margin-left:8px;"';
+            html += ' onclick="eliminarFacturaCliente(' + idCliente + ',' + i + ')">';
+            html += 'Eliminar</button>';
             html += '</td>';
             html += '</tr>';
         }
@@ -1016,4 +1095,28 @@ function abrirDetalleFactura(idCliente, indice) {
 
 function cerrarModalDetalleFactura(){
     document.getElementById("modalDetalleFactura").classList.remove("visible")
+}
+
+function eliminarFacturaCliente(idCliente,indice){
+    let confirmar = confirm("¿Seguro que quiere eliminar esta factura?");
+    if(!confirmar){
+        return;
+    }
+
+    let texto = localStorage.getItem("datosClientes");
+    let lista = [];
+
+    if(texto){
+        lista = JSON.parse(texto)
+    }
+
+    for(let i = 0; i < lista.length; i++){
+        if(lista[i].idCliente === idCliente){
+            lista[i].facturas.splice(indice, 1);
+            break;
+        }
+    }
+
+    localStorage.setItem("datosClientes", JSON.stringify(lista));
+    verFacturasCliente(idCliente)
 }

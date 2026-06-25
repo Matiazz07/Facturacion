@@ -477,7 +477,7 @@ select.entrada-neon option {
 }
 
 .tarjeta-productos {
-    max-height: 75vh;
+    max-height: 120vh;
     display: flex;
     flex-direction: column;
 }
