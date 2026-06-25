@@ -577,6 +577,37 @@
             <button type="button" class="boton-cerrar-modal" onclick="cerrarModalInformacion()">Entendido</button>
         </div>
     </div>
+    <div id="modalFacturasCliente" class="capa-modal">
+        <div class="caja-modal">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h2 class="texto-brillante" style="font-size:1.4rem;">Detalles del cliente</h2>
+                <button type="button" style="background:transparent; border:none; color:var(--tm-acento);
+                           font-size:1.5rem; cursor:pointer; padding:4px 10px;"
+                    onclick="cerrarModalFacturasCliente()">&#8592;</button>
+            </div>
+            <div id="contenidoModalFacturas" class="cuerpo-modal">
+                <!-- Se llena con verFacturasCliente() -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: Detalle de una factura específica -->
+    <div id="modalDetalleFactura" class="capa-modal">
+        <div class="caja-modal">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h2 id="tituloModalDetalle" class="texto-brillante" style="font-size:1.4rem;">
+                    Factura
+                </h2>
+                <button type="button" style="background:transparent; border:none; color:var(--tm-acento);
+                           font-size:1.5rem; cursor:pointer; padding:4px 10px;"
+                    onclick="cerrarModalDetalleFactura()">&#8592;</button>
+            </div>
+            <div id="contenidoModalDetalle" class="cuerpo-modal">
+                <!-- Se llena con abrirDetalleFactura() -->
+            </div>
+        </div>
+    </div>
+
 
     <div id="contenedorPaleta">
         <div id="menuColores" class="menu-colores oculto">

@@ -678,3 +678,36 @@ function temaSeleccionado(){
         cambiarTema();
     }
 }
+
+function guardarProducto(){
+    ocultarError("errProducto");
+
+    let nombre = document.getElementById("txtNombreProducto").value.trim();
+    let iva = parseFloat(document.getElementById("selIvaProducto").value);
+
+    if(nombre === ""){
+        mostrarError("errProducto", "Por favor, ingrese el nombre del profucto");
+        return;
+    }
+
+    let maxId = 0;
+    for (let i = 0; i < productos.length; i++){
+        maxId = productos[i].id;
+    }
+
+    let nuevoProducto = {
+        id: maxId + 1,
+        nombre: nombre,
+        categoria: "Personalizado",
+        icono: '·',
+        iva: iva,
+        descripcion: "Producto agregado manualmente al catálogo"
+    };
+
+    productos.push(nuevoProducto);
+
+    document.getElementById("txtNombreProducto").value = "";
+    document.getElementById("selIvaProducto").value = "0";
+
+    renderizarProductos(productos);
+}
