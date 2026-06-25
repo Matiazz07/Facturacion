@@ -1013,3 +1013,7 @@ function abrirDetalleFactura(idCliente, indice) {
     document.getElementById("contenidoModalDetalle").innerHTML = html;
     document.getElementById("modalDetalleFactura").classList.add("visible");
 }
+
+function cerrarModalDetalleFactura(){
+    document.getElementById("modalDetalleFactura").classList.remove("visible")
+}
