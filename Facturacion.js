@@ -232,6 +232,7 @@ window.onload = function () {
     pintarEvaluaciones();
     temaSeleccionado();
     recuperarPaleta();
+    pintarClientes();
 }
 
 function recuperarTxtAFloat(idComponente) {
@@ -913,35 +914,35 @@ function pintarClientes() {
     cuerpo.innerHTML = filasHTML;
 }
 
-function verFacturasCliente(idCliente){
+function verFacturasCliente(idCliente) {
     let texto = localStorage.getItem("datosClientes");
     let lista = [];
-    if(texto){
+    if (texto) {
         lista = JSON.parse(texto);
     }
 
     let cliente = null;
-    for(let i = 0; i < lista.length; i++){
-        if(lista[i].idCliente === idCliente){
+    for (let i = 0; i < lista.length; i++) {
+        if (lista[i].idCliente === idCliente) {
             cliente = lista[i]
         }
     }
-    if(!cliente){
+    if (!cliente) {
         return;
     }
     let html = '<p><strong>Nombre:</strong> ' + cliente.nombre + '</p>';
     html += '<p><strong>Cédula:</strong> ' + cliente.cedula + '</p>';
     html += '<hr style="margin:15px 0; border-color:rgba(0,200,215,0.3);">';
 
-    if(cliente.facturas.length === 0){
+    if (cliente.facturas.length === 0) {
         html += '<p>Este cliente no tiene facturas guardadas.</p>';
-    }else{
+    } else {
         html += '<table style="width:100%; border-collapse:collapse;">';
         html += '<tr>';
         html += '<th style="text-align:left; padding:8px; color:var(--tm-acento);">Num. Factura</th>';
         html += '<th style="text-align:left; padding:8px; color:var(--tm-acento);">Acciones</th>';
         html += '</tr>';
-        for(let i = 0; i < cliente.facturas.length; i++){
+        for (let i = 0; i < cliente.facturas.length; i++) {
             let f = cliente.facturas[i];
             html += '<tr>';
             html += '<td style="padding:8px;">' + f.idFactura + '</td>';
@@ -956,9 +957,59 @@ function verFacturasCliente(idCliente){
         html += '</table>';
     }
     document.getElementById("contenidoModalFacturas").innerHTML = html;
-    document.getElementById("modalFacturasClientes").classList.add("visible")
+    document.getElementById("modalFacturasCliente").classList.add("visible")
 }
 
-function cerrarModalFacturasCliente(){
-    document.getElementById("modalFacturasCliente").classList.add("visible");
+function cerrarModalFacturasCliente() {
+    document.getElementById("modalFacturasCliente").classList.remove("visible");
+}
+
+function abrirDetalleFactura(idCliente, indice) {
+    let texto = localStorage.getItem("datosClientes");
+    let lista = [];
+    if (texto) {
+        lista = JSON.parse(texto);
+    }
+
+    let cliente = null;
+    for (let i = 0; i < lista.length; i++) {
+        if (lista[i].idCliente === idCliente) {
+            cliente = lista[i];
+        }
+    }
+    if (!cliente) {
+        return;
+    }
+    let factura = cliente.facturas[indice];
+    if (!factura) {
+        return;
+    }
+    document.getElementById("tituloModalDetalle").textContent = "Factura " + factura.idFactura;
+
+    let html = '<table style="width:100%; border-collapse:collapse; font-size:0.9rem;">';
+    html += '<tr>';
+    html += '<th style="text-align:left; padding:8px; color:var(--tm-acento);">Cant.</th>';
+    html += '<th style="text-align:left; padding:8px; color:var(--tm-acento);">Detalle</th>';
+    html += '<th style="text-align:left; padding:8px; color:var(--tm-acento);">V. Unit</th>';
+    html += '<th style="text-align:left; padding:8px; color:var(--tm-acento);">V. Total</th>';
+    html += '</tr>';
+
+    for (let i = 0; i < factura.items.length; i++) {
+        let item = factura.items[i];
+        html += '<tr>';
+        html += '<td style="padding:8px;">' + item.cantidad + '</td>';
+        html += '<td style="padding:8px;">' + item.nombre + '</td>';
+        html += '<td style="padding:8px;">$' + item.precio.toFixed(2) + '</td>';
+        html += '<td style="padding:8px;">$' + item.subtotal.toFixed(2) + '</td>';
+        html += '</tr>';
+    }
+    html += '</table>';
+    html += '<hr style="margin:12px 0; border-color:rgba(0,200,215,0.3);">';
+    html += '<p style="text-align:right;">Subtotal Gravado (15%): $' + factura.subtotal15.toFixed(2) + '</p>';
+    html += '<p style="text-align:right;">Subtotal Exento (0%): $' + factura.subtotal0.toFixed(2) + '</p>';
+    html += '<p style="text-align:right;">IVA Calculado (15%): $' + factura.iva.toFixed(2) + '</p>';
+    html += '<p style="text-align:right; font-weight:700; color:var(--tm-acento);" > TOTAL GENERAL: $' + factura.total.toFixed(2) + '</p > ';
+
+    document.getElementById("contenidoModalDetalle").innerHTML = html;
+    document.getElementById("modalDetalleFactura").classList.add("visible");
 }
