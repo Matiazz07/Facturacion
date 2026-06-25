@@ -76,6 +76,7 @@ let configuracionTema = [
     { variable: '--tm-panel-vacio-p', oscuro: '#334155',                   claro: '#94a3b8' },
 ];
 
+let productoEditandoId = null;
 
 let temaClaro = false;
 let productoSeleccionado = null;
@@ -402,11 +403,18 @@ function renderizarProductos(productosRender) {
         li.onclick = function () {
             seleccionarProducto(producto);
         }
-        li.innerHTML = `<span class = "producto-icono">${producto.icono}</span>
-                        <div class = "producto-info">
-                            <div class = "producto-nombre">${producto.nombre}</div>
-                            <div class = "producto-categoria">${producto.categoria}</div>
-                        </div>`;
+        li.innerHTML = `<span class="producto-icono">${producto.icono}</span>
+                <div class="producto-info">
+                    <div class="producto-nombre">${producto.nombre}</div>
+                    <div class="producto-categoria">${producto.categoria}</div>
+                </div>
+                <button type="button"
+                    style="background:transparent; border:1px solid var(--tm-acento);
+                           color:var(--tm-acento); border-radius:6px; padding:4px 10px;
+                           font-size:0.75rem; cursor:pointer; flex-shrink:0;"
+                    onclick="event.stopPropagation(); prepararEdicionProducto(${producto.id})">
+                    Editar
+                </button>`;
         lista.appendChild(li);
     }
 }
@@ -679,35 +687,67 @@ function temaSeleccionado(){
     }
 }
 
-function guardarProducto(){
+function guardarProducto() {
     ocultarError("errProducto");
 
     let nombre = document.getElementById("txtNombreProducto").value.trim();
     let iva = parseFloat(document.getElementById("selIvaProducto").value);
 
-    if(nombre === ""){
-        mostrarError("errProducto", "Por favor, ingrese el nombre del profucto");
+    if (nombre === "") {
+        mostrarError("errProducto", "Por favor, ingrese el nombre del producto.");
         return;
     }
 
-    let maxId = 0;
-    for (let i = 0; i < productos.length; i++){
-        maxId = productos[i].id;
+    // Validación de nombre duplicado
+    for (let i = 0; i < productos.length; i++) {
+        if (productos[i].nombre.toLowerCase() === nombre.toLowerCase()) {
+            // Si estamos editando ese mismo producto, no es duplicado
+            if (productos[i].id !== productoEditandoId) {
+                mostrarError("errProducto", "Ya existe un producto con ese nombre.");
+                return;
+            }
+        }
     }
 
-    let nuevoProducto = {
-        id: maxId + 1,
-        nombre: nombre,
-        categoria: "Personalizado",
-        icono: '·',
-        iva: iva,
-        descripcion: "Producto agregado manualmente al catálogo"
-    };
-
-    productos.push(nuevoProducto);
+    if (productoEditandoId !== null) {
+        // MODO EDITAR: solo cambia el IVA
+        for (let i = 0; i < productos.length; i++) {
+            if (productos[i].id === productoEditandoId) {
+                productos[i].iva = iva;
+            }
+        }
+        productoEditandoId = null;
+    } else {
+        // MODO AGREGAR: buscar el id más alto
+        let maxId = 0;
+        for (let i = 0; i < productos.length; i++) {
+            if (productos[i].id > maxId) {
+                maxId = productos[i].id;
+            }
+        }
+        let nuevoProducto = {
+            id: maxId + 1,
+            nombre: nombre,
+            categoria: "Personalizado",
+            icono: "·",
+            iva: iva,
+            descripcion: "Producto agregado manualmente al catálogo."
+        };
+        productos.push(nuevoProducto);
+    }
 
     document.getElementById("txtNombreProducto").value = "";
     document.getElementById("selIvaProducto").value = "0";
 
     renderizarProductos(productos);
+}
+
+function prepararEdicionProducto(id) {
+    for (let i = 0; i < productos.length; i++) {
+        if (productos[i].id === id) {
+            document.getElementById("txtNombreProducto").value = productos[i].nombre;
+            document.getElementById("selIvaProducto").value = productos[i].iva;
+            productoEditandoId = id;
+        }
+    }
 }
