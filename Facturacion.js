@@ -958,3 +958,7 @@ function verFacturasCliente(idCliente){
     document.getElementById("contenidoModalFacturas").innerHTML = html;
     document.getElementById("modalFacturasClientes").classList.add("visible")
 }
+
+function cerrarModalFacturasCliente(){
+    document.getElementById("modalFacturasCliente").classList.add("visible");
+}
