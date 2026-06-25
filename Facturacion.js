@@ -789,3 +789,92 @@ function actualizarClienteEnFactura() {
         clienteActual = null
     }
 }
+
+function guardarFacturaCliente() {
+    ocultarError("errGuardarFactura");
+
+    if (clienteActual === null) {
+        mostrarError("errGuardarFactura", "Ingresa el nombre y cédula del cliente antes de guardar");
+        return;
+    }
+    if (carritoFactura.length === 0) {
+        mostrarError("errGuardarFactura", "La factura está vacía. Agregar productos primero");
+        return;
+    }
+
+    let texto = localStorage.getItem("datosCliente");
+    let lista = [];
+
+    if (texto) {
+        lista = JSON.parse(texto);
+    }
+
+    let indiceCliente = -1;
+
+    for (let i = 0; i < lista.length; i++) {
+        if (lista[i].cedula === clienteActual.cedula) {
+            indiceCliente = i;
+        }
+    }
+
+    let sub15 = 0;
+    let sub0 = 0;
+
+    for (let j = 0; j < carritoFactura.length; j++) {
+        if (carritoFactura[j].tasaIva > 0) {
+            sub15 += carritoFactura[j].subtotal;
+        } else {
+            sub0 += carritoFactura[j].subtotal;
+        }
+    }
+    let ivaCalc = sub15 * 0.15;
+    let totalCalc = sub15 + sub0 + ivaCalc
+
+    if (indiceCliente === -1) {
+        let maxId = 0;
+        for (let k = 0; k < lista.length; k++) {
+            if (lista[k].idCliente > maxId) {
+                maxId = lista[k].idCliente;
+            }
+        }
+        let nuevoCliente = {
+            idCliente: maxId + 1,
+            nombre: clienteActual.nombre,
+            correo: clienteActual.correo,
+            cedula: clienteActual.cedula,
+            facturas: []
+        };
+        lista.push(nuevoCliente);
+        indiceCliente = lista.length - 1;
+    }
+    let maxIdFac = 0;
+    for(let m = 0; m < lista[indiceCliente].facturas.length; m++){
+        if(lista[indiceCliente].facturas[m].idFactura > maxIdFac){
+            maxIdFac = lista[indiceCliente].facturas[m].idFactura;
+        }
+    }
+    let nuevaFactura = {
+        idFactura: maxIdFac + 1,
+        items: carritoFactura,
+        subtotal15: sub15,
+        subtotal0: sub0,
+        iva: ivaCalc,
+        total: totalCalc
+    };
+
+    lista[indiceCliente].facturas.push(nuevaFactura);
+    localStorage.setItem("datosCliente", JSON.stringify(lista));
+
+    carritoFactura = [];
+    clienteActual = null;
+    renderizarFactura();
+
+    document.getElementById("txtClienteNombreDetalle").value = "";
+    document.getElementById("txtClienteCorreoDetalle").value = "";
+    document.getElementById("txtClienteCedulaDetalle").value = "";
+    document.getElementById('facClienteNombre').textContent  = '—';
+    document.getElementById('facClienteCorreo').textContent  = '—';
+    document.getElementById('facClienteCedula').textContent  = '—';
+
+    pintarClientes();
+}
