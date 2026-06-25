@@ -75,8 +75,6 @@
             </div>
         </section>
 
-        <div id=""></div>
-
         <section id="sec-simulador" class="seccion-pagina">
             <div class="tarjeta-cristal tarjeta-formulario">
                 <div class="cabecera-formulario">
@@ -85,8 +83,8 @@
                 </div>
 
                 <div class="alternador-simuladores">
-                    <button type="button" id="btnModFactura" class="btn-alternador activo"
-                        onclick="mostrarModuloSimulador('formFactura', this)">Facturas</button>
+                    <button type="button" id="btnModDesglose" class="btn-alternador activo"
+                        onclick="mostrarModuloSimulador('formDesglose', this)">Desglose IVA</button>
                     <button type="button" id="btnModRetencion" class="btn-alternador"
                         onclick="mostrarModuloSimulador('formRetencion', this)">Retención</button>
                     <button type="button" id="btnModNota" class="btn-alternador"
@@ -234,6 +232,26 @@
             <div class="layout-tabla-iva">
 
                 <div class="tarjeta-cristal tarjeta-productos">
+                    <div class="cabecera-formulario" style="margin-bottom:15px;">
+                        <h2>Guardar Productos</h2>
+                    </div>
+                    <div class="grupo-entrada">
+                        <input type="text" id="txtNombreProducto" class="entrada-neon"
+                            placeholder="Nombre del producto">
+                    </div>
+                    <div class="grupo-entrada">
+                        <select id="selIvaProducto" class="entrada-neon">
+                            <option value="0">0% — Exento</option>
+                            <option value="0.15">15% — Tarifa General</option>
+                        </select>
+                    </div>
+                    <div id="errProducto" class="mensaje-error"></div>
+                    <button type="button" class="boton-primario" style="margin-bottom:20px;"
+                        onclick="guardarProducto()">
+                        GUARDAR PRODUCTO
+                    </button>
+                    <div class="separador-neon" style="margin-bottom:15px;"></div>
+
                     <div class="cabecera-formulario">
                         <h2>Catálogo</h2>
                         <p>Base de datos tributaria.</p>
@@ -269,10 +287,25 @@
                                 <span id="detalleTarifa" class="stat-valor"></span>
                             </div>
                         </div>
-
+                        <h4 class="subtitulo-detalle">Detalles de Cliente</h4>
+                        <div id="panelDatosCliente">
+                            <div class="grupo-entrada">
+                                <input type="text" id="txtClienteNombreDetalle" class="entrada-neon"
+                                    placeholder="Nombre y Apellido" oninput="actualizarClienteEnFactura()">
+                            </div>
+                            <div class="grupo-entrada">
+                                <input type="text" id="txtClienteCorreoDetalle" class="entrada-neon"
+                                    placeholder="Correo" oninput="actualizarClienteEnFactura()">
+                            </div>
+                            <div class="grupo-entrada">
+                                <input type="text" id="txtClienteCedulaDetalle" class="entrada-neon"
+                                    placeholder="Cédula" oninput="actualizarClienteEnFactura()">
+                            </div>
+                        </div>
                         <div class="separador-neon"></div>
 
                         <h4 class="subtitulo-detalle">Detalles de Inserción</h4>
+
                         <div class="grupo-entrada">
                             <label>Precio unitario ($)</label>
                             <input type="number" id="detallePrecio" class="entrada-neon" placeholder="Ej: 100.00"
@@ -312,8 +345,27 @@
                 <div class="tarjeta-cristal tarjeta-factura">
                     <div class="cabecera-formulario">
                         <h2>Factura en Curso</h2>
+
                         <p>Constructor dinámico de comprobante.</p>
                     </div>
+                    <div id="panelClienteFactura" style="margin-bottom:15px;">
+                        <h4 class="subtitulo-detalle" style="margin-bottom:10px;">Datos del cliente</h4>
+                        <div class="mini-resultado">
+                            <div class="mini-fila">
+                                <span>Nombre y Apellido</span>
+                                <span id="facClienteNombre" style="color:var(--tm-acento);">—</span>
+                            </div>
+                            <div class="mini-fila">
+                                <span>Correo</span>
+                                <span id="facClienteCorreo" style="color:var(--tm-acento);">—</span>
+                            </div>
+                            <div class="mini-fila">
+                                <span>Cédula</span>
+                                <span id="facClienteCedula" style="color:var(--tm-acento);">—</span>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="lista-factura-contenedor">
                         <table class="tabla-cristal tabla-factura">
                             <thead>
@@ -337,134 +389,31 @@
                         <div class="mini-fila"><span>IVA Calculado (15%):</span><span id="facIva">$0.00</span></div>
                         <div class="mini-fila mini-total"><span>TOTAL GENERAL:</span><span id="facTotal">$0.00</span>
                         </div>
+                        <div id="errGuardarFactura" class="mensaje-error"></div>
+                        <button type="button" class="boton-primario" style="margin-top:15px;"
+                            onclick="guardarFacturaParaCliente()">
+                            Guardar Factura
+                        </button>
+
                     </div>
                 </div>
             </div>
-            <div class="contenedor-contenido" style="margin-top: 40px;">
-
-                <h2 class="subtitulo-seccion">Gestión de Productos</h2>
-
-                <!-- Formulario para agregar / editar producto -->
-                <div class="tarjeta-cristal tarjeta-formulario">
-                    <div class="cabecera-formulario">
-                        <h2>Agregar / Editar Producto</h2>
-                        <p>Completa los datos y guarda el producto en el catálogo.</p>
-                    </div>
-
-                    <div class="grupo-entrada">
-                        <label>Nombre del Producto</label>
-                        <input type="text" id="txtNombreProducto" class="entrada-neon"
-                            placeholder="Ej: Camisa de algodón">
-                    </div>
-
-                    <div class="grupo-entrada">
-                        <label>Precio Unitario ($)</label>
-                        <input type="number" id="txtPrecioProducto" class="entrada-neon" placeholder="Ej: 25.00"
-                            step="0.01" min="0.01" max="100000">
-                    </div>
-
-                    <div class="grupo-entrada">
-                        <label>Tarifa de IVA</label>
-                        <select id="selIvaProducto" class="entrada-neon">
-                            <option value="0">0% — Exento</option>
-                            <option value="0.15">15% — Tarifa General</option>
-                        </select>
-                    </div>
-
-                    <div id="errProducto" class="mensaje-error"></div>
-                    <button type="button" class="boton-primario" onclick="guardarProducto()">
-                        GUARDAR PRODUCTO
-                    </button>
+            <div class="contenedor-historial" style="width:90%; max-width:1250px; margin:40px auto;">
+                <h2 class="subtitulo-seccion">Historial de Clientes</h2>
+                <div style="overflow-x:auto;">
+                    <table class="tabla-cristal">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Num cédula</th>
+                                <th>Nombre y apellido</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cuerpoClientes"></tbody>
+                    </table>
                 </div>
-
-                <!-- Tabla de productos guardados -->
-                <div class="contenedor-historial">
-                    <h2 class="subtitulo-seccion">Productos Guardados</h2>
-                    <div style="overflow-x: auto;">
-                        <table class="tabla-cristal">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nombre</th>
-                                    <th>Precio</th>
-                                    <th>IVA</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="cuerpoProductos"></tbody>
-                        </table>
-                    </div>
-                </div>
-
             </div>
-
-            <div class="contenedor-contenido" style="margin-top: 10px;">
-
-                <h2 class="subtitulo-seccion">Registrar Cliente</h2>
-
-                <!-- Formulario de cliente -->
-                <div class="tarjeta-cristal tarjeta-formulario">
-                    <div class="cabecera-formulario">
-                        <h2>Datos del Cliente</h2>
-                        <p>Registra al cliente para asociarle facturas generadas.</p>
-                    </div>
-
-                    <div class="grupo-entrada">
-                        <label>Nombre completo</label>
-                        <input type="text" id="txtNombreCliente" class="entrada-neon" placeholder="Ej: Juan Pérez">
-                    </div>
-
-                    <div class="grupo-entrada">
-                        <label>Cédula</label>
-                        <input type="text" id="txtCedulaCliente" class="entrada-neon" placeholder="Ej: 1712345678">
-                    </div>
-
-                    <div class="grupo-entrada">
-                        <label>Correo electrónico</label>
-                        <input type="text" id="txtCorreoCliente" class="entrada-neon" placeholder="Ej: juan@email.com">
-                    </div>
-
-                    <div id="errCliente" class="mensaje-error"></div>
-                    <button type="button" class="boton-primario" onclick="guardarCliente()">
-                        REGISTRAR CLIENTE
-                    </button>
-                </div>
-
-                <!-- Campo para vincular factura a cliente -->
-                <div class="tarjeta-cristal tarjeta-formulario" style="margin-top: 20px;">
-                    <div class="cabecera-formulario">
-                        <h2>Guardar Factura para Cliente</h2>
-                        <p>Ingresa la cédula del cliente y guarda la Factura en Curso.</p>
-                    </div>
-                    <div class="grupo-entrada">
-                        <label>Cédula del cliente</label>
-                        <input type="text" id="txtCedulaFactura" class="entrada-neon" placeholder="Ej: 1712345678">
-                    </div>
-                    <div id="errGuardarFactura" class="mensaje-error"></div>
-                    <button type="button" class="boton-primario" onclick="guardarFacturaParaCliente()">
-                        GUARDAR FACTURA PARA CLIENTE
-                    </button>
-                </div>
-
-                <!-- Historial de clientes registrados -->
-                <div class="contenedor-historial">
-                    <h2 class="subtitulo-seccion">Historial de Clientes</h2>
-                    <div style="overflow-x: auto;">
-                        <table class="tabla-cristal">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nombre</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="cuerpoClientes"></tbody>
-                        </table>
-                    </div>
-                </div>
-
-            </div>
-
 
         </section>
 
@@ -622,32 +571,6 @@
     </div>
 
     <div id="modalInformacion" class="capa-modal">
-        <div class="caja-modal">
-        <h2 id="tituloModalFacturas" class="texto-brillante"
-            style="text-align:center; font-size:1.5rem;">
-            Facturas del Cliente
-        </h2>
-        <div id="contenidoModalFacturas" class="cuerpo-modal">
-            <!-- Se llena con verFacturasCliente() -->
-        </div>
-        <button type="button" class="boton-cerrar-modal"
-                onclick="cerrarModalFacturasCliente()">
-            CERRAR
-        </button>
-    </div>
-    <div class="caja-modal">
-        <h2 id="tituloModalDetalle" class="texto-brillante"
-            style="text-align:center; font-size:1.5rem;">
-            Detalle de Factura
-        </h2>
-        <div id="contenidoModalDetalle" class="cuerpo-modal">
-            <!-- Se llena con abrirDetalleFactura() -->
-        </div>
-        <button type="button" class="boton-cerrar-modal"
-                onclick="cerrarModalDetalleFactura()">
-            CERRAR
-        </button>
-
         <div class="caja-modal">
             <h2 id="tituloModal" class="texto-brillante">Titulo</h2>
             <div id="contenidoModal" class="cuerpo-modal"></div>
