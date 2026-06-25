@@ -802,7 +802,7 @@ function guardarFacturaCliente() {
         return;
     }
 
-    let texto = localStorage.getItem("datosCliente");
+    let texto = localStorage.getItem("datosClientes");
     let lista = [];
 
     if (texto) {
@@ -827,8 +827,8 @@ function guardarFacturaCliente() {
             sub0 += carritoFactura[j].subtotal;
         }
     }
-    let ivaCalc = sub15 * 0.15;
-    let totalCalc = sub15 + sub0 + ivaCalc
+    let ivaCalc = parseFloat((sub15 * 0.15).toFixed(2));
+    let totalCalc = parseFloat((sub15 + sub0 + ivaCalc).toFixed(2));
 
     if (indiceCliente === -1) {
         let maxId = 0;
@@ -848,8 +848,13 @@ function guardarFacturaCliente() {
         indiceCliente = lista.length - 1;
     }
     let maxIdFac = 0;
-    for(let m = 0; m < lista[indiceCliente].facturas.length; m++){
-        if(lista[indiceCliente].facturas[m].idFactura > maxIdFac){
+    //validación defensiva para evitar posible error
+    if (!lista[indiceCliente].facturas) {
+        lista[indiceCliente].facturas = [];
+    }
+
+    for (let m = 0; m < lista[indiceCliente].facturas.length; m++) {
+        if (lista[indiceCliente].facturas[m].idFactura > maxIdFac) {
             maxIdFac = lista[indiceCliente].facturas[m].idFactura;
         }
     }
@@ -863,7 +868,7 @@ function guardarFacturaCliente() {
     };
 
     lista[indiceCliente].facturas.push(nuevaFactura);
-    localStorage.setItem("datosCliente", JSON.stringify(lista));
+    localStorage.setItem("datosClientes", JSON.stringify(lista));
 
     carritoFactura = [];
     clienteActual = null;
@@ -872,9 +877,38 @@ function guardarFacturaCliente() {
     document.getElementById("txtClienteNombreDetalle").value = "";
     document.getElementById("txtClienteCorreoDetalle").value = "";
     document.getElementById("txtClienteCedulaDetalle").value = "";
-    document.getElementById('facClienteNombre').textContent  = '—';
-    document.getElementById('facClienteCorreo').textContent  = '—';
-    document.getElementById('facClienteCedula').textContent  = '—';
+    document.getElementById('facClienteNombre').textContent = '—';
+    document.getElementById('facClienteCorreo').textContent = '—';
+    document.getElementById('facClienteCedula').textContent = '—';
 
     pintarClientes();
+}
+
+function pintarClientes() {
+    let texto = localStorage.getItem("datosClientes");
+    let lista = [];
+    if (texto) {
+        lista = JSON.parse(texto);
+    }
+    let cuerpo = document.getElementById("cuerpoClientes");
+    if (!cuerpo) {
+        return;
+    }
+
+    let filasHTML = "";
+    for (let i = 0; i < lista.length; i++) {
+        let c = lista[i];
+        filasHTML += '<tr>';
+        filasHTML += '<td>' + c.idCliente + '</td>';
+        filasHTML += '<td>' + c.cedula + '</td>';
+        filasHTML += '<td>' + c.nombre + '</td>';
+        filasHTML += '<td>';
+        filasHTML += '<button type="button" class="boton-primario"';
+        filasHTML += ' style="padding:6px 18px;font-size:0.82rem;width:auto;"';
+        filasHTML += ' onclick="verFacturasCliente(' + c.idCliente + ')">';
+        filasHTML += 'Ver Detalles</button>';
+        filasHTML += '</td>';
+        filasHTML += '</tr>';
+    }
+    cuerpo.innerHTML = filasHTML;
 }
