@@ -912,3 +912,49 @@ function pintarClientes() {
     }
     cuerpo.innerHTML = filasHTML;
 }
+
+function verFacturasCliente(idCliente){
+    let texto = localStorage.getItem("datosClientes");
+    let lista = [];
+    if(texto){
+        lista = JSON.parse(texto);
+    }
+
+    let cliente = null;
+    for(let i = 0; i < lista.length; i++){
+        if(lista[i].idCliente === idCliente){
+            cliente = lista[i]
+        }
+    }
+    if(!cliente){
+        return;
+    }
+    let html = '<p><strong>Nombre:</strong> ' + cliente.nombre + '</p>';
+    html += '<p><strong>Cédula:</strong> ' + cliente.cedula + '</p>';
+    html += '<hr style="margin:15px 0; border-color:rgba(0,200,215,0.3);">';
+
+    if(cliente.facturas.length === 0){
+        html += '<p>Este cliente no tiene facturas guardadas.</p>';
+    }else{
+        html += '<table style="width:100%; border-collapse:collapse;">';
+        html += '<tr>';
+        html += '<th style="text-align:left; padding:8px; color:var(--tm-acento);">Num. Factura</th>';
+        html += '<th style="text-align:left; padding:8px; color:var(--tm-acento);">Acciones</th>';
+        html += '</tr>';
+        for(let i = 0; i < cliente.facturas.length; i++){
+            let f = cliente.facturas[i];
+            html += '<tr>';
+            html += '<td style="padding:8px;">' + f.idFactura + '</td>';
+            html += '<td style="padding:8px;">';
+            html += '<button type="button" class="boton-primario"';
+            html += ' style="padding:6px 14px; font-size:0.8rem; width:auto;"';
+            html += ' onclick="abrirDetalleFactura(' + idCliente + ',' + i + ')">';
+            html += 'Ver Detalles</button>';
+            html += '</td>';
+            html += '</tr>';
+        }
+        html += '</table>';
+    }
+    document.getElementById("contenidoModalFacturas").innerHTML = html;
+    document.getElementById("modalFacturasClientes").classList.add("visible")
+}
