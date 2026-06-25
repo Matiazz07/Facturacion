@@ -48,45 +48,46 @@ const productos = [
 ];
 
 let configuracionTema = [
-    { variable: '--tm-fondo-body',    oscuro: '#0b1121',                   claro: '#f1f5f9' },
-    { variable: '--tm-fondo-punto',   oscuro: 'rgba(0, 240, 255, 0.1)',    claro: 'rgba(99, 102, 241, 0.06)' },
-    { variable: '--tm-color-texto',   oscuro: '#ffffff',                   claro: '#0f172a' },
-    { variable: '--tm-color-gris',    oscuro: '#94a3b8',                   claro: '#334155' },
+    { variable: '--tm-fondo-body', oscuro: '#0b1121', claro: '#f1f5f9' },
+    { variable: '--tm-fondo-punto', oscuro: 'rgba(0, 240, 255, 0.1)', claro: 'rgba(99, 102, 241, 0.06)' },
+    { variable: '--tm-color-texto', oscuro: '#ffffff', claro: '#0f172a' },
+    { variable: '--tm-color-gris', oscuro: '#94a3b8', claro: '#334155' },
     { variable: '--tm-tarjeta-fondo', oscuro: 'rgba(255, 255, 255, 0.03)', claro: '#ffffff' },
     { variable: '--tm-tarjeta-borde', oscuro: 'rgba(255, 255, 255, 0.08)', claro: 'rgba(0, 0, 0, 0.08)' },
-    { variable: '--tm-entrada-fondo', oscuro: 'rgba(0, 0, 0, 0.4)',        claro: '#ffffff' },
-    { variable: '--tm-entrada-borde', oscuro: 'rgba(255, 255, 255, 0.1)',  claro: '#cbd5e1' },
-    { variable: '--tm-entrada-color', oscuro: '#ffffff',                   claro: '#0f172a' },
-    { variable: '--tm-modal-fondo',   oscuro: '#0f172a',                   claro: '#ffffff' },
-    { variable: '--tm-nav-texto',     oscuro: '#a0aec0',                   claro: '#475569' },
-    { variable: '--tm-nav-activo',    oscuro: '#ffffff',                   claro: '#0f172a' },
-    { variable: '--tm-label-color',   oscuro: '#cbd5e1',                   claro: '#334155' },
-    { variable: '--tm-radio-bg',      oscuro: 'rgba(0, 0, 0, 0.2)',        claro: '#f8fafc' },
-    { variable: '--tm-radio-borde',   oscuro: 'rgba(255, 255, 255, 0.05)', claro: '#e2e8f0' },
-    { variable: '--tm-radio-texto',   oscuro: '#a0aec0',                   claro: '#1e293b' },
-    { variable: '--tm-formula-bg',    oscuro: 'rgba(0, 0, 0, 0.4)',        claro: '#f8fafc' },
-    { variable: '--tm-formula-texto', oscuro: '#cbd5e1',                   claro: '#1e293b' },
-    { variable: '--tm-resumen-bg',    oscuro: 'rgba(0, 0, 0, 0.3)',        claro: '#f1f5f9' },
-    { variable: '--tm-tabla-texto',   oscuro: '#a0aec0',                   claro: '#334155' },
-    { variable: '--tm-h1-color',      oscuro: '#ffffff',                   claro: '#0f172a' },
-    { variable: '--tm-subtitulo',     oscuro: '#ffffff',                   claro: '#0f172a' },
-    { variable: '--tm-alternador-bg', oscuro: 'rgba(0, 0, 0, 0.3)',        claro: '#e2e8f0' },
-    { variable: '--tm-modal-texto',   oscuro: '#cbd5e1',                   claro: '#334155' },
-    { variable: '--tm-panel-vacio-h', oscuro: '#475569',                   claro: '#64748b' },
-    { variable: '--tm-panel-vacio-p', oscuro: '#334155',                   claro: '#94a3b8' },
+    { variable: '--tm-entrada-fondo', oscuro: 'rgba(0, 0, 0, 0.4)', claro: '#ffffff' },
+    { variable: '--tm-entrada-borde', oscuro: 'rgba(255, 255, 255, 0.1)', claro: '#cbd5e1' },
+    { variable: '--tm-entrada-color', oscuro: '#ffffff', claro: '#0f172a' },
+    { variable: '--tm-modal-fondo', oscuro: '#0f172a', claro: '#ffffff' },
+    { variable: '--tm-nav-texto', oscuro: '#a0aec0', claro: '#475569' },
+    { variable: '--tm-nav-activo', oscuro: '#ffffff', claro: '#0f172a' },
+    { variable: '--tm-label-color', oscuro: '#cbd5e1', claro: '#334155' },
+    { variable: '--tm-radio-bg', oscuro: 'rgba(0, 0, 0, 0.2)', claro: '#f8fafc' },
+    { variable: '--tm-radio-borde', oscuro: 'rgba(255, 255, 255, 0.05)', claro: '#e2e8f0' },
+    { variable: '--tm-radio-texto', oscuro: '#a0aec0', claro: '#1e293b' },
+    { variable: '--tm-formula-bg', oscuro: 'rgba(0, 0, 0, 0.4)', claro: '#f8fafc' },
+    { variable: '--tm-formula-texto', oscuro: '#cbd5e1', claro: '#1e293b' },
+    { variable: '--tm-resumen-bg', oscuro: 'rgba(0, 0, 0, 0.3)', claro: '#f1f5f9' },
+    { variable: '--tm-tabla-texto', oscuro: '#a0aec0', claro: '#334155' },
+    { variable: '--tm-h1-color', oscuro: '#ffffff', claro: '#0f172a' },
+    { variable: '--tm-subtitulo', oscuro: '#ffffff', claro: '#0f172a' },
+    { variable: '--tm-alternador-bg', oscuro: 'rgba(0, 0, 0, 0.3)', claro: '#e2e8f0' },
+    { variable: '--tm-modal-texto', oscuro: '#cbd5e1', claro: '#334155' },
+    { variable: '--tm-panel-vacio-h', oscuro: '#475569', claro: '#64748b' },
+    { variable: '--tm-panel-vacio-p', oscuro: '#334155', claro: '#94a3b8' },
 ];
 
+let productoEditandoId = null;
 
 let temaClaro = false;
 let productoSeleccionado = null;
 let carritoFactura = [];
 
-function toggleMenuColores(){
+function toggleMenuColores() {
     let menu = document.getElementById("menuColores")
     menu.classList.toggle("oculto")
 }
 
-function aplicarColorPaleta(boton){
+function aplicarColorPaleta(boton) {
     let acento = boton.getAttribute("data-acento");
     let brillo = boton.getAttribute("data-brillo");
     let oscuro = boton.getAttribute("data-oscuro");
@@ -94,13 +95,13 @@ function aplicarColorPaleta(boton){
     document.documentElement.style.setProperty("--tm-acento", acento);
     document.documentElement.style.setProperty("--tm-acento-brillo", brillo);
     document.documentElement.style.setProperty("--tm-acento-oscuro", oscuro);
-    
+
     let botones = document.querySelectorAll(".btn-color");
-    for(let i = 0; i < botones.length; i++){
+    for (let i = 0; i < botones.length; i++) {
         botones[i].classList.remove("activo");
     }
     boton.classList.add("activo");
-    
+
     localStorage.setItem("colorPaleta", JSON.stringify({
         acento: acento,
         brillo: brillo,
@@ -110,9 +111,9 @@ function aplicarColorPaleta(boton){
     document.getElementById("menuColores").classList.add("oculto");
 }
 
-function recuperarPaleta(){
+function recuperarPaleta() {
     let guardado = localStorage.getItem("colorPaleta");
-    if (guardado){
+    if (guardado) {
         let datos = JSON.parse(guardado);
         document.documentElement.style.setProperty("--tm-acento", datos.acento);
         document.documentElement.style.setProperty("--tm-acento-brillo", datos.brillo);
@@ -231,6 +232,7 @@ window.onload = function () {
     pintarEvaluaciones();
     temaSeleccionado();
     recuperarPaleta();
+    pintarClientes();
 }
 
 function recuperarTxtAFloat(idComponente) {
@@ -402,11 +404,18 @@ function renderizarProductos(productosRender) {
         li.onclick = function () {
             seleccionarProducto(producto);
         }
-        li.innerHTML = `<span class = "producto-icono">${producto.icono}</span>
-                        <div class = "producto-info">
-                            <div class = "producto-nombre">${producto.nombre}</div>
-                            <div class = "producto-categoria">${producto.categoria}</div>
-                        </div>`;
+        li.innerHTML = `<span class="producto-icono">${producto.icono}</span>
+                <div class="producto-info">
+                    <div class="producto-nombre">${producto.nombre}</div>
+                    <div class="producto-categoria">${producto.categoria}</div>
+                </div>
+                <button type="button"
+                    style="background:transparent; border:1px solid var(--tm-acento);
+                           color:var(--tm-acento); border-radius:6px; padding:4px 10px;
+                           font-size:0.75rem; cursor:pointer; flex-shrink:0;"
+                    onclick="event.stopPropagation(); prepararEdicionProducto(${producto.id})">
+                    Editar
+                </button>`;
         lista.appendChild(li);
     }
 }
@@ -645,36 +654,366 @@ function pintarEvaluaciones() {
     }
 }
 
-function cambiarTema(){
+function cambiarTema() {
     temaClaro = !temaClaro
 
-    for(let i = 0; i < configuracionTema.length; i++){
+    for (let i = 0; i < configuracionTema.length; i++) {
         let entrada = configuracionTema[i];
 
         let valorElegido;
-        if(temaClaro){
+        if (temaClaro) {
             valorElegido = entrada.claro
-        }else{
+        } else {
             valorElegido = entrada.oscuro
         }
         document.documentElement.style.setProperty(entrada.variable, valorElegido);
     }
     let boton = document.getElementById("btnTema");
-    if(temaClaro){
+    if (temaClaro) {
         boton.innerHTML = '&#9728;';
-    }else{
+    } else {
         boton.innerHTML = '&#9790;';
     }
-    if(temaClaro){
-        localStorage.setItem('temaPreferido','claro');
-    }else{
-        localStorage.setItem('temaPreferido','oscuro');
+    if (temaClaro) {
+        localStorage.setItem('temaPreferido', 'claro');
+    } else {
+        localStorage.setItem('temaPreferido', 'oscuro');
     }
 }
 
-function temaSeleccionado(){
+function temaSeleccionado() {
     let temaEscogido = localStorage.getItem('temaPreferido');
-    if(temaEscogido === 'claro'){
+    if (temaEscogido === 'claro') {
         cambiarTema();
     }
+}
+
+function guardarProducto() {
+    ocultarError("errProducto");
+
+    let nombre = document.getElementById("txtNombreProducto").value.trim();
+    let iva = parseFloat(document.getElementById("selIvaProducto").value);
+
+    if (nombre === "") {
+        mostrarError("errProducto", "Por favor, ingrese el nombre del producto.");
+        return;
+    }
+
+    // Validación de nombre duplicado
+    for (let i = 0; i < productos.length; i++) {
+        if (productos[i].nombre.toLowerCase() === nombre.toLowerCase()) {
+            // Si estamos editando ese mismo producto, no es duplicado
+            if (productos[i].id !== productoEditandoId) {
+                mostrarError("errProducto", "Ya existe un producto con ese nombre.");
+                return;
+            }
+        }
+    }
+
+    if (productoEditandoId !== null) {
+        // MODO EDITAR: solo cambia el IVA
+        for (let i = 0; i < productos.length; i++) {
+            if (productos[i].id === productoEditandoId) {
+                productos[i].iva = iva;
+            }
+        }
+        productoEditandoId = null;
+    } else {
+        // MODO AGREGAR: buscar el id más alto
+        let maxId = 0;
+        for (let i = 0; i < productos.length; i++) {
+            if (productos[i].id > maxId) {
+                maxId = productos[i].id;
+            }
+        }
+        let nuevoProducto = {
+            id: maxId + 1,
+            nombre: nombre,
+            categoria: "Personalizado",
+            icono: "·",
+            iva: iva,
+            descripcion: "Producto agregado manualmente al catálogo."
+        };
+        productos.push(nuevoProducto);
+    }
+
+    document.getElementById("txtNombreProducto").value = "";
+    document.getElementById("selIvaProducto").value = "0";
+
+    renderizarProductos(productos);
+}
+
+function prepararEdicionProducto(id) {
+    for (let i = 0; i < productos.length; i++) {
+        if (productos[i].id === id) {
+            document.getElementById("txtNombreProducto").value = productos[i].nombre;
+            document.getElementById("selIvaProducto").value = productos[i].iva;
+            productoEditandoId = id;
+        }
+    }
+}
+
+function actualizarClienteEnFactura() {
+    let nombre = document.getElementById("txtClienteNombreDetalle").value.trim();
+    let correo = document.getElementById("txtClienteCorreoDetalle").value.trim();
+    let cedula = document.getElementById("txtClienteCedulaDetalle").value.trim();
+
+    let spanNombre = document.getElementById("facClienteNombre");
+    let spanCorreo = document.getElementById("facClienteCorreo");
+    let spanCedula = document.getElementById("facClienteCedula");
+
+    if (spanNombre === "") {
+        spanNombre.textContent = "—";
+    } else {
+        spanNombre.textContent = nombre;
+    }
+
+    if (spanCorreo === "") {
+        spanCorreo.textContent = "—";
+    } else {
+        spanCorreo.textContent = correo;
+    }
+
+    if (spanCedula === "") {
+        spanCedula.textContent = "—";
+    } else {
+        spanCedula.textContent = cedula
+    }
+
+    if (nombre !== "" && cedula !== "") {
+        clienteActual = {
+            nombre: nombre,
+            correo: correo,
+            cedula: cedula
+        };
+    } else {
+        clienteActual = null
+    }
+}
+
+function guardarFacturaCliente() {
+    ocultarError("errGuardarFactura");
+
+    if (clienteActual === null) {
+        mostrarError("errGuardarFactura", "Ingresa el nombre y cédula del cliente antes de guardar");
+        return;
+    }
+    if (carritoFactura.length === 0) {
+        mostrarError("errGuardarFactura", "La factura está vacía. Agregar productos primero");
+        return;
+    }
+
+    let texto = localStorage.getItem("datosClientes");
+    let lista = [];
+
+    if (texto) {
+        lista = JSON.parse(texto);
+    }
+
+    let indiceCliente = -1;
+
+    for (let i = 0; i < lista.length; i++) {
+        if (lista[i].cedula === clienteActual.cedula) {
+            indiceCliente = i;
+        }
+    }
+
+    let sub15 = 0;
+    let sub0 = 0;
+
+    for (let j = 0; j < carritoFactura.length; j++) {
+        if (carritoFactura[j].tasaIva > 0) {
+            sub15 += carritoFactura[j].subtotal;
+        } else {
+            sub0 += carritoFactura[j].subtotal;
+        }
+    }
+    let ivaCalc = parseFloat((sub15 * 0.15).toFixed(2));
+    let totalCalc = parseFloat((sub15 + sub0 + ivaCalc).toFixed(2));
+
+    if (indiceCliente === -1) {
+        let maxId = 0;
+        for (let k = 0; k < lista.length; k++) {
+            if (lista[k].idCliente > maxId) {
+                maxId = lista[k].idCliente;
+            }
+        }
+        let nuevoCliente = {
+            idCliente: maxId + 1,
+            nombre: clienteActual.nombre,
+            correo: clienteActual.correo,
+            cedula: clienteActual.cedula,
+            facturas: []
+        };
+        lista.push(nuevoCliente);
+        indiceCliente = lista.length - 1;
+    }
+    let maxIdFac = 0;
+    //validación defensiva para evitar posible error
+    if (!lista[indiceCliente].facturas) {
+        lista[indiceCliente].facturas = [];
+    }
+
+    for (let m = 0; m < lista[indiceCliente].facturas.length; m++) {
+        if (lista[indiceCliente].facturas[m].idFactura > maxIdFac) {
+            maxIdFac = lista[indiceCliente].facturas[m].idFactura;
+        }
+    }
+    let nuevaFactura = {
+        idFactura: maxIdFac + 1,
+        items: carritoFactura,
+        subtotal15: sub15,
+        subtotal0: sub0,
+        iva: ivaCalc,
+        total: totalCalc
+    };
+
+    lista[indiceCliente].facturas.push(nuevaFactura);
+    localStorage.setItem("datosClientes", JSON.stringify(lista));
+
+    carritoFactura = [];
+    clienteActual = null;
+    renderizarFactura();
+
+    document.getElementById("txtClienteNombreDetalle").value = "";
+    document.getElementById("txtClienteCorreoDetalle").value = "";
+    document.getElementById("txtClienteCedulaDetalle").value = "";
+    document.getElementById('facClienteNombre').textContent = '—';
+    document.getElementById('facClienteCorreo').textContent = '—';
+    document.getElementById('facClienteCedula').textContent = '—';
+
+    pintarClientes();
+}
+
+function pintarClientes() {
+    let texto = localStorage.getItem("datosClientes");
+    let lista = [];
+    if (texto) {
+        lista = JSON.parse(texto);
+    }
+    let cuerpo = document.getElementById("cuerpoClientes");
+    if (!cuerpo) {
+        return;
+    }
+
+    let filasHTML = "";
+    for (let i = 0; i < lista.length; i++) {
+        let c = lista[i];
+        filasHTML += '<tr>';
+        filasHTML += '<td>' + c.idCliente + '</td>';
+        filasHTML += '<td>' + c.cedula + '</td>';
+        filasHTML += '<td>' + c.nombre + '</td>';
+        filasHTML += '<td>';
+        filasHTML += '<button type="button" class="boton-primario"';
+        filasHTML += ' style="padding:6px 18px;font-size:0.82rem;width:auto;"';
+        filasHTML += ' onclick="verFacturasCliente(' + c.idCliente + ')">';
+        filasHTML += 'Ver Detalles</button>';
+        filasHTML += '</td>';
+        filasHTML += '</tr>';
+    }
+    cuerpo.innerHTML = filasHTML;
+}
+
+function verFacturasCliente(idCliente) {
+    let texto = localStorage.getItem("datosClientes");
+    let lista = [];
+    if (texto) {
+        lista = JSON.parse(texto);
+    }
+
+    let cliente = null;
+    for (let i = 0; i < lista.length; i++) {
+        if (lista[i].idCliente === idCliente) {
+            cliente = lista[i]
+        }
+    }
+    if (!cliente) {
+        return;
+    }
+    let html = '<p><strong>Nombre:</strong> ' + cliente.nombre + '</p>';
+    html += '<p><strong>Cédula:</strong> ' + cliente.cedula + '</p>';
+    html += '<hr style="margin:15px 0; border-color:rgba(0,200,215,0.3);">';
+
+    if (cliente.facturas.length === 0) {
+        html += '<p>Este cliente no tiene facturas guardadas.</p>';
+    } else {
+        html += '<table style="width:100%; border-collapse:collapse;">';
+        html += '<tr>';
+        html += '<th style="text-align:left; padding:8px; color:var(--tm-acento);">Num. Factura</th>';
+        html += '<th style="text-align:left; padding:8px; color:var(--tm-acento);">Acciones</th>';
+        html += '</tr>';
+        for (let i = 0; i < cliente.facturas.length; i++) {
+            let f = cliente.facturas[i];
+            html += '<tr>';
+            html += '<td style="padding:8px;">' + f.idFactura + '</td>';
+            html += '<td style="padding:8px;">';
+            html += '<button type="button" class="boton-primario"';
+            html += ' style="padding:6px 14px; font-size:0.8rem; width:auto;"';
+            html += ' onclick="abrirDetalleFactura(' + idCliente + ',' + i + ')">';
+            html += 'Ver Detalles</button>';
+            html += '</td>';
+            html += '</tr>';
+        }
+        html += '</table>';
+    }
+    document.getElementById("contenidoModalFacturas").innerHTML = html;
+    document.getElementById("modalFacturasCliente").classList.add("visible")
+}
+
+function cerrarModalFacturasCliente() {
+    document.getElementById("modalFacturasCliente").classList.remove("visible");
+}
+
+function abrirDetalleFactura(idCliente, indice) {
+    let texto = localStorage.getItem("datosClientes");
+    let lista = [];
+    if (texto) {
+        lista = JSON.parse(texto);
+    }
+
+    let cliente = null;
+    for (let i = 0; i < lista.length; i++) {
+        if (lista[i].idCliente === idCliente) {
+            cliente = lista[i];
+        }
+    }
+    if (!cliente) {
+        return;
+    }
+    let factura = cliente.facturas[indice];
+    if (!factura) {
+        return;
+    }
+    document.getElementById("tituloModalDetalle").textContent = "Factura " + factura.idFactura;
+
+    let html = '<table style="width:100%; border-collapse:collapse; font-size:0.9rem;">';
+    html += '<tr>';
+    html += '<th style="text-align:left; padding:8px; color:var(--tm-acento);">Cant.</th>';
+    html += '<th style="text-align:left; padding:8px; color:var(--tm-acento);">Detalle</th>';
+    html += '<th style="text-align:left; padding:8px; color:var(--tm-acento);">V. Unit</th>';
+    html += '<th style="text-align:left; padding:8px; color:var(--tm-acento);">V. Total</th>';
+    html += '</tr>';
+
+    for (let i = 0; i < factura.items.length; i++) {
+        let item = factura.items[i];
+        html += '<tr>';
+        html += '<td style="padding:8px;">' + item.cantidad + '</td>';
+        html += '<td style="padding:8px;">' + item.nombre + '</td>';
+        html += '<td style="padding:8px;">$' + item.precio.toFixed(2) + '</td>';
+        html += '<td style="padding:8px;">$' + item.subtotal.toFixed(2) + '</td>';
+        html += '</tr>';
+    }
+    html += '</table>';
+    html += '<hr style="margin:12px 0; border-color:rgba(0,200,215,0.3);">';
+    html += '<p style="text-align:right;">Subtotal Gravado (15%): $' + factura.subtotal15.toFixed(2) + '</p>';
+    html += '<p style="text-align:right;">Subtotal Exento (0%): $' + factura.subtotal0.toFixed(2) + '</p>';
+    html += '<p style="text-align:right;">IVA Calculado (15%): $' + factura.iva.toFixed(2) + '</p>';
+    html += '<p style="text-align:right; font-weight:700; color:var(--tm-acento);" > TOTAL GENERAL: $' + factura.total.toFixed(2) + '</p > ';
+
+    document.getElementById("contenidoModalDetalle").innerHTML = html;
+    document.getElementById("modalDetalleFactura").classList.add("visible");
+}
+
+function cerrarModalDetalleFactura(){
+    document.getElementById("modalDetalleFactura").classList.remove("visible")
 }

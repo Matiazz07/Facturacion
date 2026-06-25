@@ -828,3 +828,11 @@ textarea.entrada-neon { resize: vertical; min-height: 100px; font-family: inheri
     transform: scale(1.15);
     box-shadow: 0 0 12px rgba(255,255,255,0.5);
 }
+
+#modalFacturasCliente{
+    z-index:2100;
+}
+
+#modalDetalleFactura{
+    z-index: 2200;
+}

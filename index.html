@@ -232,6 +232,26 @@
             <div class="layout-tabla-iva">
 
                 <div class="tarjeta-cristal tarjeta-productos">
+                    <div class="cabecera-formulario" style="margin-bottom:15px;">
+                        <h2>Guardar Productos</h2>
+                    </div>
+                    <div class="grupo-entrada">
+                        <input type="text" id="txtNombreProducto" class="entrada-neon"
+                            placeholder="Nombre del producto">
+                    </div>
+                    <div class="grupo-entrada">
+                        <select id="selIvaProducto" class="entrada-neon">
+                            <option value="0">0% — Exento</option>
+                            <option value="0.15">15% — Tarifa General</option>
+                        </select>
+                    </div>
+                    <div id="errProducto" class="mensaje-error"></div>
+                    <button type="button" class="boton-primario" style="margin-bottom:20px;"
+                        onclick="guardarProducto()">
+                        GUARDAR PRODUCTO
+                    </button>
+                    <div class="separador-neon" style="margin-bottom:15px;"></div>
+
                     <div class="cabecera-formulario">
                         <h2>Catálogo</h2>
                         <p>Base de datos tributaria.</p>
@@ -267,10 +287,25 @@
                                 <span id="detalleTarifa" class="stat-valor"></span>
                             </div>
                         </div>
-
+                        <h4 class="subtitulo-detalle">Detalles de Cliente</h4>
+                        <div id="panelDatosCliente">
+                            <div class="grupo-entrada">
+                                <input type="text" id="txtClienteNombreDetalle" class="entrada-neon"
+                                    placeholder="Nombre y Apellido" oninput="actualizarClienteEnFactura()">
+                            </div>
+                            <div class="grupo-entrada">
+                                <input type="email" id="txtClienteCorreoDetalle" class="entrada-neon"
+                                    placeholder="Correo" oninput="actualizarClienteEnFactura()">
+                            </div>
+                            <div class="grupo-entrada">
+                                <input type="text" id="txtClienteCedulaDetalle" class="entrada-neon"
+                                    placeholder="Cédula" oninput="actualizarClienteEnFactura()">
+                            </div>
+                        </div>
                         <div class="separador-neon"></div>
 
                         <h4 class="subtitulo-detalle">Detalles de Inserción</h4>
+
                         <div class="grupo-entrada">
                             <label>Precio unitario ($)</label>
                             <input type="number" id="detallePrecio" class="entrada-neon" placeholder="Ej: 100.00"
@@ -310,8 +345,27 @@
                 <div class="tarjeta-cristal tarjeta-factura">
                     <div class="cabecera-formulario">
                         <h2>Factura en Curso</h2>
+
                         <p>Constructor dinámico de comprobante.</p>
                     </div>
+                    <div id="panelClienteFactura" style="margin-bottom:15px;">
+                        <h4 class="subtitulo-detalle" style="margin-bottom:10px;">Datos del cliente</h4>
+                        <div class="mini-resultado">
+                            <div class="mini-fila">
+                                <span>Nombre y Apellido</span>
+                                <span id="facClienteNombre" style="color:var(--tm-acento);">—</span>
+                            </div>
+                            <div class="mini-fila">
+                                <span>Correo</span>
+                                <span id="facClienteCorreo" style="color:var(--tm-acento);">—</span>
+                            </div>
+                            <div class="mini-fila">
+                                <span>Cédula</span>
+                                <span id="facClienteCedula" style="color:var(--tm-acento);">—</span>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="lista-factura-contenedor">
                         <table class="tabla-cristal tabla-factura">
                             <thead>
@@ -322,7 +376,7 @@
                                     <th class="col-vtot">V. Total</th>
                                     <th class="col-btn"></th>
                                 </tr>
-                            </tbody>
+                                </tbody>
                             <tbody id="cuerpoFactura">
                             </tbody>
                         </table>
@@ -335,9 +389,32 @@
                         <div class="mini-fila"><span>IVA Calculado (15%):</span><span id="facIva">$0.00</span></div>
                         <div class="mini-fila mini-total"><span>TOTAL GENERAL:</span><span id="facTotal">$0.00</span>
                         </div>
+                        <div id="errGuardarFactura" class="mensaje-error"></div>
+                        <button type="button" class="boton-primario" style="margin-top:15px;"
+                            onclick="guardarFacturaCliente()">
+                            Guardar Factura
+                        </button>
+
                     </div>
                 </div>
             </div>
+            <div class="contenedor-historial" style="width:90%; max-width:1250px; margin:40px auto;">
+                <h2 class="subtitulo-seccion">Historial de Clientes</h2>
+                <div style="overflow-x:auto;">
+                    <table class="tabla-cristal">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Num cédula</th>
+                                <th>Nombre y apellido</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cuerpoClientes"></tbody>
+                    </table>
+                </div>
+            </div>
+
         </section>
 
         <section id="sec-fundamentos" class="seccion-pagina">
@@ -500,24 +577,51 @@
             <button type="button" class="boton-cerrar-modal" onclick="cerrarModalInformacion()">Entendido</button>
         </div>
     </div>
+    <div id="modalFacturasCliente" class="capa-modal">
+        <div class="caja-modal">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h2 class="texto-brillante" style="font-size:1.4rem;">Detalles del cliente</h2>
+                <button type="button" style="background:transparent; border:none; color:var(--tm-acento);
+                           font-size:1.5rem; cursor:pointer; padding:4px 10px;"
+                    onclick="cerrarModalFacturasCliente()">&#8592;</button>
+            </div>
+            <div id="contenidoModalFacturas" class="cuerpo-modal">
+                <!-- Se llena con verFacturasCliente() -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: Detalle de una factura específica -->
+    <div id="modalDetalleFactura" class="capa-modal">
+        <div class="caja-modal">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h2 id="tituloModalDetalle" class="texto-brillante" style="font-size:1.4rem;">
+                    Factura
+                </h2>
+                <button type="button" style="background:transparent; border:none; color:var(--tm-acento);
+                           font-size:1.5rem; cursor:pointer; padding:4px 10px;"
+                    onclick="cerrarModalDetalleFactura()">&#8592;</button>
+            </div>
+            <div id="contenidoModalDetalle" class="cuerpo-modal">
+                <!-- Se llena con abrirDetalleFactura() -->
+            </div>
+        </div>
+    </div>
+
 
     <div id="contenedorPaleta">
         <div id="menuColores" class="menu-colores oculto">
-            <button class="btn-color" data-acento="#00c8d7" data-brillo="#00f0ff"
-                    data-oscuro="#0080ff" style="background:#00c8d7"
-                    title="Celeste (original)" onclick="aplicarColorPaleta(this)"></button>
+            <button class="btn-color" data-acento="#00c8d7" data-brillo="#00f0ff" data-oscuro="#0080ff"
+                style="background:#00c8d7" title="Celeste (original)" onclick="aplicarColorPaleta(this)"></button>
 
-            <button class="btn-color" data-acento="#ef4444" data-brillo="#ff6b6b"
-                    data-oscuro="#991b1b" style="background:#ef4444"
-                    title="Rojo" onclick="aplicarColorPaleta(this)"></button>
+            <button class="btn-color" data-acento="#ef4444" data-brillo="#ff6b6b" data-oscuro="#991b1b"
+                style="background:#ef4444" title="Rojo" onclick="aplicarColorPaleta(this)"></button>
 
-            <button class="btn-color" data-acento="#eab308" data-brillo="#fde047"
-                    data-oscuro="#ca8a04" style="background:#eab308"
-                    title="Amarillo" onclick="aplicarColorPaleta(this)"></button>
+            <button class="btn-color" data-acento="#eab308" data-brillo="#fde047" data-oscuro="#ca8a04"
+                style="background:#eab308" title="Amarillo" onclick="aplicarColorPaleta(this)"></button>
 
-            <button class="btn-color" data-acento="#22c55e" data-brillo="#4ade80"
-                    data-oscuro="#16a34a" style="background:#22c55e"
-                    title="Verde" onclick="aplicarColorPaleta(this)"></button>
+            <button class="btn-color" data-acento="#22c55e" data-brillo="#4ade80" data-oscuro="#16a34a"
+                style="background:#22c55e" title="Verde" onclick="aplicarColorPaleta(this)"></button>
         </div>
 
         <button id="btnPaleta" onclick="toggleMenuColores()" title="Cambiar color">
