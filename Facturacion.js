@@ -48,32 +48,32 @@ const productos = [
 ];
 
 let configuracionTema = [
-    { variable: '--tm-fondo-body',    oscuro: '#0b1121',                   claro: '#f1f5f9' },
-    { variable: '--tm-fondo-punto',   oscuro: 'rgba(0, 240, 255, 0.1)',    claro: 'rgba(99, 102, 241, 0.06)' },
-    { variable: '--tm-color-texto',   oscuro: '#ffffff',                   claro: '#0f172a' },
-    { variable: '--tm-color-gris',    oscuro: '#94a3b8',                   claro: '#334155' },
+    { variable: '--tm-fondo-body', oscuro: '#0b1121', claro: '#f1f5f9' },
+    { variable: '--tm-fondo-punto', oscuro: 'rgba(0, 240, 255, 0.1)', claro: 'rgba(99, 102, 241, 0.06)' },
+    { variable: '--tm-color-texto', oscuro: '#ffffff', claro: '#0f172a' },
+    { variable: '--tm-color-gris', oscuro: '#94a3b8', claro: '#334155' },
     { variable: '--tm-tarjeta-fondo', oscuro: 'rgba(255, 255, 255, 0.03)', claro: '#ffffff' },
     { variable: '--tm-tarjeta-borde', oscuro: 'rgba(255, 255, 255, 0.08)', claro: 'rgba(0, 0, 0, 0.08)' },
-    { variable: '--tm-entrada-fondo', oscuro: 'rgba(0, 0, 0, 0.4)',        claro: '#ffffff' },
-    { variable: '--tm-entrada-borde', oscuro: 'rgba(255, 255, 255, 0.1)',  claro: '#cbd5e1' },
-    { variable: '--tm-entrada-color', oscuro: '#ffffff',                   claro: '#0f172a' },
-    { variable: '--tm-modal-fondo',   oscuro: '#0f172a',                   claro: '#ffffff' },
-    { variable: '--tm-nav-texto',     oscuro: '#a0aec0',                   claro: '#475569' },
-    { variable: '--tm-nav-activo',    oscuro: '#ffffff',                   claro: '#0f172a' },
-    { variable: '--tm-label-color',   oscuro: '#cbd5e1',                   claro: '#334155' },
-    { variable: '--tm-radio-bg',      oscuro: 'rgba(0, 0, 0, 0.2)',        claro: '#f8fafc' },
-    { variable: '--tm-radio-borde',   oscuro: 'rgba(255, 255, 255, 0.05)', claro: '#e2e8f0' },
-    { variable: '--tm-radio-texto',   oscuro: '#a0aec0',                   claro: '#1e293b' },
-    { variable: '--tm-formula-bg',    oscuro: 'rgba(0, 0, 0, 0.4)',        claro: '#f8fafc' },
-    { variable: '--tm-formula-texto', oscuro: '#cbd5e1',                   claro: '#1e293b' },
-    { variable: '--tm-resumen-bg',    oscuro: 'rgba(0, 0, 0, 0.3)',        claro: '#f1f5f9' },
-    { variable: '--tm-tabla-texto',   oscuro: '#a0aec0',                   claro: '#334155' },
-    { variable: '--tm-h1-color',      oscuro: '#ffffff',                   claro: '#0f172a' },
-    { variable: '--tm-subtitulo',     oscuro: '#ffffff',                   claro: '#0f172a' },
-    { variable: '--tm-alternador-bg', oscuro: 'rgba(0, 0, 0, 0.3)',        claro: '#e2e8f0' },
-    { variable: '--tm-modal-texto',   oscuro: '#cbd5e1',                   claro: '#334155' },
-    { variable: '--tm-panel-vacio-h', oscuro: '#475569',                   claro: '#64748b' },
-    { variable: '--tm-panel-vacio-p', oscuro: '#334155',                   claro: '#94a3b8' },
+    { variable: '--tm-entrada-fondo', oscuro: 'rgba(0, 0, 0, 0.4)', claro: '#ffffff' },
+    { variable: '--tm-entrada-borde', oscuro: 'rgba(255, 255, 255, 0.1)', claro: '#cbd5e1' },
+    { variable: '--tm-entrada-color', oscuro: '#ffffff', claro: '#0f172a' },
+    { variable: '--tm-modal-fondo', oscuro: '#0f172a', claro: '#ffffff' },
+    { variable: '--tm-nav-texto', oscuro: '#a0aec0', claro: '#475569' },
+    { variable: '--tm-nav-activo', oscuro: '#ffffff', claro: '#0f172a' },
+    { variable: '--tm-label-color', oscuro: '#cbd5e1', claro: '#334155' },
+    { variable: '--tm-radio-bg', oscuro: 'rgba(0, 0, 0, 0.2)', claro: '#f8fafc' },
+    { variable: '--tm-radio-borde', oscuro: 'rgba(255, 255, 255, 0.05)', claro: '#e2e8f0' },
+    { variable: '--tm-radio-texto', oscuro: '#a0aec0', claro: '#1e293b' },
+    { variable: '--tm-formula-bg', oscuro: 'rgba(0, 0, 0, 0.4)', claro: '#f8fafc' },
+    { variable: '--tm-formula-texto', oscuro: '#cbd5e1', claro: '#1e293b' },
+    { variable: '--tm-resumen-bg', oscuro: 'rgba(0, 0, 0, 0.3)', claro: '#f1f5f9' },
+    { variable: '--tm-tabla-texto', oscuro: '#a0aec0', claro: '#334155' },
+    { variable: '--tm-h1-color', oscuro: '#ffffff', claro: '#0f172a' },
+    { variable: '--tm-subtitulo', oscuro: '#ffffff', claro: '#0f172a' },
+    { variable: '--tm-alternador-bg', oscuro: 'rgba(0, 0, 0, 0.3)', claro: '#e2e8f0' },
+    { variable: '--tm-modal-texto', oscuro: '#cbd5e1', claro: '#334155' },
+    { variable: '--tm-panel-vacio-h', oscuro: '#475569', claro: '#64748b' },
+    { variable: '--tm-panel-vacio-p', oscuro: '#334155', claro: '#94a3b8' },
 ];
 
 let productoEditandoId = null;
@@ -82,12 +82,12 @@ let temaClaro = false;
 let productoSeleccionado = null;
 let carritoFactura = [];
 
-function toggleMenuColores(){
+function toggleMenuColores() {
     let menu = document.getElementById("menuColores")
     menu.classList.toggle("oculto")
 }
 
-function aplicarColorPaleta(boton){
+function aplicarColorPaleta(boton) {
     let acento = boton.getAttribute("data-acento");
     let brillo = boton.getAttribute("data-brillo");
     let oscuro = boton.getAttribute("data-oscuro");
@@ -95,13 +95,13 @@ function aplicarColorPaleta(boton){
     document.documentElement.style.setProperty("--tm-acento", acento);
     document.documentElement.style.setProperty("--tm-acento-brillo", brillo);
     document.documentElement.style.setProperty("--tm-acento-oscuro", oscuro);
-    
+
     let botones = document.querySelectorAll(".btn-color");
-    for(let i = 0; i < botones.length; i++){
+    for (let i = 0; i < botones.length; i++) {
         botones[i].classList.remove("activo");
     }
     boton.classList.add("activo");
-    
+
     localStorage.setItem("colorPaleta", JSON.stringify({
         acento: acento,
         brillo: brillo,
@@ -111,9 +111,9 @@ function aplicarColorPaleta(boton){
     document.getElementById("menuColores").classList.add("oculto");
 }
 
-function recuperarPaleta(){
+function recuperarPaleta() {
     let guardado = localStorage.getItem("colorPaleta");
-    if (guardado){
+    if (guardado) {
         let datos = JSON.parse(guardado);
         document.documentElement.style.setProperty("--tm-acento", datos.acento);
         document.documentElement.style.setProperty("--tm-acento-brillo", datos.brillo);
@@ -653,36 +653,36 @@ function pintarEvaluaciones() {
     }
 }
 
-function cambiarTema(){
+function cambiarTema() {
     temaClaro = !temaClaro
 
-    for(let i = 0; i < configuracionTema.length; i++){
+    for (let i = 0; i < configuracionTema.length; i++) {
         let entrada = configuracionTema[i];
 
         let valorElegido;
-        if(temaClaro){
+        if (temaClaro) {
             valorElegido = entrada.claro
-        }else{
+        } else {
             valorElegido = entrada.oscuro
         }
         document.documentElement.style.setProperty(entrada.variable, valorElegido);
     }
     let boton = document.getElementById("btnTema");
-    if(temaClaro){
+    if (temaClaro) {
         boton.innerHTML = '&#9728;';
-    }else{
+    } else {
         boton.innerHTML = '&#9790;';
     }
-    if(temaClaro){
-        localStorage.setItem('temaPreferido','claro');
-    }else{
-        localStorage.setItem('temaPreferido','oscuro');
+    if (temaClaro) {
+        localStorage.setItem('temaPreferido', 'claro');
+    } else {
+        localStorage.setItem('temaPreferido', 'oscuro');
     }
 }
 
-function temaSeleccionado(){
+function temaSeleccionado() {
     let temaEscogido = localStorage.getItem('temaPreferido');
-    if(temaEscogido === 'claro'){
+    if (temaEscogido === 'claro') {
         cambiarTema();
     }
 }
@@ -749,5 +749,43 @@ function prepararEdicionProducto(id) {
             document.getElementById("selIvaProducto").value = productos[i].iva;
             productoEditandoId = id;
         }
+    }
+}
+
+function actualizarClienteEnFactura() {
+    let nombre = document.getElementById("txtClienteNombreDetalle").value.trim();
+    let correo = document.getElementById("txtClienteCorreoDetalle").value.trim();
+    let cedula = document.getElementById("txtClienteCedulaDetalle").value.trim();
+
+    let spanNombre = document.getElementById("facClienteNombre");
+    let spanCorreo = document.getElementById("facClienteCorreo");
+    let spanCedula = document.getElementById("facClienteCedula");
+
+    if (spanNombre === "") {
+        spanNombre.textContent = "—";
+    } else {
+        spanNombre.textContent = nombre;
+    }
+
+    if (spanCorreo === "") {
+        spanCorreo.textContent = "—";
+    } else {
+        spanCorreo.textContent = correo;
+    }
+
+    if (spanCedula === "") {
+        spanCedula.textContent = "—";
+    } else {
+        spanCedula.textContent = cedula
+    }
+
+    if (nombre !== "" && cedula !== "") {
+        clienteActual = {
+            nombre: nombre,
+            correo: correo,
+            cedula: cedula
+        };
+    } else {
+        clienteActual = null
     }
 }
