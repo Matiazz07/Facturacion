@@ -298,7 +298,7 @@
                                     placeholder="Correo" oninput="actualizarClienteEnFactura()">
                             </div>
                             <div class="grupo-entrada">
-                                <input type="text" id="txtClienteCedulaDetalle" class="entrada-neon"
+                                <input type="number" id="txtClienteCedulaDetalle" class="entrada-neon"
                                     placeholder="Cédula" oninput="actualizarClienteEnFactura()">
                             </div>
                         </div>
@@ -363,6 +363,19 @@
                                 <span>Cédula</span>
                                 <span id="facClienteCedula" style="color:var(--tm-acento);">—</span>
                             </div>
+                        </div>
+                    </div>
+                    <div class="tarjeta-cristal tarjeta-factura">
+                        <div id="facturaImprimible">
+                            <div
+                                style="border-bottom: 2px solid var(--tm-acento); margin-bottom: 15px; padding-bottom: 10px;">
+                                <h2 id="facEmpresa" style="color:var(--tm-acento);">NOMBRE DE EMPRESA</h2>
+                                <p>RUC: <span id="facRuc">1234567890001</span></p>
+                                <p>Dirección: Av. Principal y Calle Secundaria</p>
+                                <p>Factura N°: <span id="facSecuencial">001-001-000000001</span></p>
+                                <p>Fecha: <span id="facFecha"></span></p>
+                            </div>
+
                         </div>
                     </div>
 
@@ -633,6 +646,7 @@
         &#9790;
     </button>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="Facturacion.js"></script>
 </body>
 

@@ -25,6 +25,12 @@ let baseDatosConceptos = {
     }
 };
 
+let clienteActual = {
+    nombre: "",
+    correo: "",
+    cedula: ""
+}
+
 const productos = [
     { id: 1, nombre: "Arroz", categoria: "Alimentos básicos", icono: "·", iva: 0, descripcion: "Alimento de la canasta básica familiar." },
     { id: 2, nombre: "Pan", categoria: "Alimentos básicos", icono: "·", iva: 0, descripcion: "Alimento de la canasta básica familiar." },
@@ -1093,25 +1099,25 @@ function abrirDetalleFactura(idCliente, indice) {
     document.getElementById("modalDetalleFactura").classList.add("visible");
 }
 
-function cerrarModalDetalleFactura(){
+function cerrarModalDetalleFactura() {
     document.getElementById("modalDetalleFactura").classList.remove("visible")
 }
 
-function eliminarFacturaCliente(idCliente,indice){
+function eliminarFacturaCliente(idCliente, indice) {
     let confirmar = confirm("¿Seguro que quiere eliminar esta factura?");
-    if(!confirmar){
+    if (!confirmar) {
         return;
     }
 
     let texto = localStorage.getItem("datosClientes");
     let lista = [];
 
-    if(texto){
+    if (texto) {
         lista = JSON.parse(texto)
     }
 
-    for(let i = 0; i < lista.length; i++){
-        if(lista[i].idCliente === idCliente){
+    for (let i = 0; i < lista.length; i++) {
+        if (lista[i].idCliente === idCliente) {
             lista[i].facturas.splice(indice, 1);
             break;
         }
@@ -1119,4 +1125,31 @@ function eliminarFacturaCliente(idCliente,indice){
 
     localStorage.setItem("datosClientes", JSON.stringify(lista));
     verFacturasCliente(idCliente)
+}
+
+function exportarFacturaPDF() {
+    if (carritoFactura.length === 0) {
+        alert("Factura vacía.");
+        return;
+    }
+
+    // Fecha actual para la factura
+    document.getElementById("facFecha").textContent = new Date().toLocaleDateString();
+
+    const element = document.getElementById('facturaImprimible');
+    const opt = {
+        margin: 10,
+        filename: 'Factura_SRI.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf().set(opt).from(element).save();
+}
+
+// Para personalizar el nombre de la empresa al iniciar
+function setearDatosEmpresa(nombre, ruc) {
+    document.getElementById("facEmpresa").textContent = nombre;
+    document.getElementById("facRuc").textContent = ruc;
 }
