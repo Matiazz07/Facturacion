@@ -404,8 +404,8 @@
                         </div>
                         <div id="errGuardarFactura" class="mensaje-error"></div>
                         <button type="button" class="boton-primario" style="margin-top:15px;"
-                            onclick="guardarFacturaCliente()">
-                            Guardar Factura
+                            onclick="generarFacturaCliente()">
+                            Generar Factura
                         </button>
 
                     </div>
@@ -618,6 +618,23 @@
             <div id="contenidoModalDetalle" class="cuerpo-modal">
                 <!-- Se llena con abrirDetalleFactura() -->
             </div>
+        </div>
+    </div>
+    <div id="modalDescargarFactura" class="capa-modal">
+        <div class="caja-modal">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h2 id="tituloModalDescargarFactura" class="texto-brillante" style="font-size:1.4rem;">
+                    Descargar Factura
+                </h2>
+                <button type="button" style="background:transparent; border:none; color:var(--tm-acento);
+                           font-size:1.5rem; cursor:pointer; padding:4px 10px;"
+                    onclick="cerrarModalDescargarFactura()">&#8592;</button>
+            </div>
+            <p style="text-align: center;">Factura Creada con exito</p>
+            <button class="boton-primario" style="margin-top:15px; width:200px; display:block; margin-left:auto;
+            margin-right:auto;">Imprimir Factura</button>
+            <button onclick="exportarFacturaPDF();" class="boton-primario" style="margin-top:15px; width:200px; display:block; margin-left:auto;
+            margin-right:auto;">Descargar PDF</button>
         </div>
     </div>
 

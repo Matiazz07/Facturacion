@@ -6,35 +6,35 @@
 }
 
 :root {
-    --tm-fondo-body:     #0b1121;
-    --tm-fondo-punto:    color-mix(in srgb, var(--tm-acento-brillo) 10%, transparent);
-    --tm-color-texto:    #ffffff;
-    --tm-color-gris:     #94a3b8;
-    --tm-tarjeta-fondo:  rgba(255, 255, 255, 0.03);
-    --tm-tarjeta-borde:  rgba(255, 255, 255, 0.08);
-    --tm-entrada-fondo:  rgba(0, 0, 0, 0.4);
-    --tm-entrada-borde:  rgba(255, 255, 255, 0.1);
-    --tm-entrada-color:  #ffffff;
-    --tm-modal-fondo:    #0f172a;
-    --tm-nav-texto:      #a0aec0;
-    --tm-nav-activo:     #ffffff;
-    --tm-label-color:    #cbd5e1;
-    --tm-radio-bg:       rgba(0, 0, 0, 0.2);
-    --tm-radio-borde:    rgba(255, 255, 255, 0.05);
-    --tm-radio-texto:    #a0aec0;
-    --tm-formula-bg:     rgba(0, 0, 0, 0.4);
-    --tm-formula-texto:  #cbd5e1;
-    --tm-resumen-bg:     rgba(0, 0, 0, 0.3);
-    --tm-tabla-texto:    #a0aec0;
-    --tm-h1-color:       #ffffff;
-    --tm-subtitulo:      #ffffff;
-    --tm-alternador-bg:  rgba(0, 0, 0, 0.3);
-    --tm-modal-texto:    #cbd5e1;
-    --tm-panel-vacio-h:  #475569;
-    --tm-panel-vacio-p:  #334155;
-    --tm-acento:         #00c8d7;
-    --tm-acento-brillo:  #00f0ff;
-    --tm-acento-oscuro:  #0080ff;
+    --tm-fondo-body: #0b1121;
+    --tm-fondo-punto: color-mix(in srgb, var(--tm-acento-brillo) 10%, transparent);
+    --tm-color-texto: #ffffff;
+    --tm-color-gris: #94a3b8;
+    --tm-tarjeta-fondo: rgba(255, 255, 255, 0.03);
+    --tm-tarjeta-borde: rgba(255, 255, 255, 0.08);
+    --tm-entrada-fondo: rgba(0, 0, 0, 0.4);
+    --tm-entrada-borde: rgba(255, 255, 255, 0.1);
+    --tm-entrada-color: #ffffff;
+    --tm-modal-fondo: #0f172a;
+    --tm-nav-texto: #a0aec0;
+    --tm-nav-activo: #ffffff;
+    --tm-label-color: #cbd5e1;
+    --tm-radio-bg: rgba(0, 0, 0, 0.2);
+    --tm-radio-borde: rgba(255, 255, 255, 0.05);
+    --tm-radio-texto: #a0aec0;
+    --tm-formula-bg: rgba(0, 0, 0, 0.4);
+    --tm-formula-texto: #cbd5e1;
+    --tm-resumen-bg: rgba(0, 0, 0, 0.3);
+    --tm-tabla-texto: #a0aec0;
+    --tm-h1-color: #ffffff;
+    --tm-subtitulo: #ffffff;
+    --tm-alternador-bg: rgba(0, 0, 0, 0.3);
+    --tm-modal-texto: #cbd5e1;
+    --tm-panel-vacio-h: #475569;
+    --tm-panel-vacio-p: #334155;
+    --tm-acento: #00c8d7;
+    --tm-acento-brillo: #00f0ff;
+    --tm-acento-oscuro: #0080ff;
 }
 
 body {
@@ -188,10 +188,12 @@ body {
     border: 1px solid var(--tm-tarjeta-borde);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s ease, border-color 0.3s ease,
-                box-shadow 0.3s ease, background 0.4s ease;
+        box-shadow 0.3s ease, background 0.4s ease;
 }
 
-.tarjeta-cristal.interactiva { cursor: pointer; }
+.tarjeta-cristal.interactiva {
+    cursor: pointer;
+}
 
 .tarjeta-cristal.interactiva:hover {
     transform: translateY(-5px);
@@ -273,8 +275,13 @@ body {
     border: 1px solid color-mix(in srgb, var(--tm-acento) 30%, transparent);
 }
 
-.formulario-simulador { display: none; }
-.formulario-simulador.activa-modulo { display: block; }
+.formulario-simulador {
+    display: none;
+}
+
+.formulario-simulador.activa-modulo {
+    display: block;
+}
 
 .grupo-entrada {
     display: flex;
@@ -391,8 +398,10 @@ select.entrada-neon option {
 .capa-modal {
     display: none;
     position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background: rgba(0, 0, 0, 0.55);
     backdrop-filter: blur(8px);
     z-index: 2000;
@@ -400,7 +409,9 @@ select.entrada-neon option {
     align-items: center;
 }
 
-.capa-modal.visible { display: flex; }
+.capa-modal.visible {
+    display: flex;
+}
 
 .caja-modal {
     background: var(--tm-modal-fondo);
@@ -418,7 +429,11 @@ select.entrada-neon option {
     animation: aparecerModal 0.3s forwards ease-out;
 }
 
-@keyframes aparecerModal { to { transform: scale(1); } }
+@keyframes aparecerModal {
+    to {
+        transform: scale(1);
+    }
+}
 
 .cuerpo-modal {
     margin-top: 20px;
@@ -430,16 +445,47 @@ select.entrada-neon option {
     padding-right: 15px;
 }
 
-.cuerpo-modal::-webkit-scrollbar { width: 6px; }
-.cuerpo-modal::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 10px; }
-/* Modificados con color-mix dinámico */
-.cuerpo-modal::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--tm-acento) 30%, transparent); border-radius: 10px; }
-.cuerpo-modal::-webkit-scrollbar-thumb:hover { background: color-mix(in srgb, var(--tm-acento) 60%, transparent); }
+.cuerpo-modal::-webkit-scrollbar {
+    width: 6px;
+}
 
-.cuerpo-modal h3 { color: var(--tm-acento); margin-top: 10px; margin-bottom: 10px; font-size: 1.2rem; }
-.cuerpo-modal h4 { color: var(--tm-color-texto); margin-top: 20px; margin-bottom: 10px; font-size: 1.1rem; }
-.cuerpo-modal ul { margin-left: 20px; margin-top: 10px; }
-.cuerpo-modal li { margin-bottom: 10px; }
+.cuerpo-modal::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+
+/* Modificados con color-mix dinámico */
+.cuerpo-modal::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--tm-acento) 30%, transparent);
+    border-radius: 10px;
+}
+
+.cuerpo-modal::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in srgb, var(--tm-acento) 60%, transparent);
+}
+
+.cuerpo-modal h3 {
+    color: var(--tm-acento);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.cuerpo-modal h4 {
+    color: var(--tm-color-texto);
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.cuerpo-modal ul {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.cuerpo-modal li {
+    margin-bottom: 10px;
+}
 
 .boton-cerrar-modal {
     width: 100%;
@@ -473,7 +519,9 @@ select.entrada-neon option {
 }
 
 @media (max-width: 1024px) {
-    .layout-tabla-iva { grid-template-columns: 1fr; }
+    .layout-tabla-iva {
+        grid-template-columns: 1fr;
+    }
 }
 
 .tarjeta-productos {
@@ -493,10 +541,20 @@ select.entrada-neon option {
     flex: 1;
 }
 
-.lista-productos::-webkit-scrollbar { width: 5px; }
-.lista-productos::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 10px; }
+.lista-productos::-webkit-scrollbar {
+    width: 5px;
+}
+
+.lista-productos::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+}
+
 /* Modificado con color-mix dinámico */
-.lista-productos::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--tm-acento) 25%, transparent); border-radius: 10px; }
+.lista-productos::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--tm-acento) 25%, transparent);
+    border-radius: 10px;
+}
 
 .item-producto {
     display: flex;
@@ -517,8 +575,16 @@ select.entrada-neon option {
     transform: translateX(4px);
 }
 
-.producto-icono { font-size: 1.4rem; width: 36px; text-align: center; flex-shrink: 0; }
-.producto-info { flex: 1; }
+.producto-icono {
+    font-size: 1.4rem;
+    width: 36px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.producto-info {
+    flex: 1;
+}
 
 .producto-nombre {
     font-size: 0.92rem;
@@ -549,23 +615,69 @@ select.entrada-neon option {
     gap: 15px;
 }
 
-.icono-vacio { opacity: 0.3; }
+.icono-vacio {
+    opacity: 0.3;
+}
 
-.panel-vacio h3 { color: var(--tm-panel-vacio-h); font-size: 1.2rem; }
-.panel-vacio p  { color: var(--tm-panel-vacio-p); font-size: 0.9rem; max-width: 260px; }
+.panel-vacio h3 {
+    color: var(--tm-panel-vacio-h);
+    font-size: 1.2rem;
+}
 
-.panel-detalle { display: flex; flex-direction: column; gap: 18px; }
-.detalle-encabezado { display: flex; flex-direction: column; gap: 6px; }
+.panel-vacio p {
+    color: var(--tm-panel-vacio-p);
+    font-size: 0.9rem;
+    max-width: 260px;
+}
 
-.badge-iva { align-self: flex-start; font-size: 0.78rem; font-weight: 700; padding: 4px 12px; border-radius: 20px; }
+.panel-detalle {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.detalle-encabezado {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.badge-iva {
+    align-self: flex-start;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
 /* Modificado con color-mix dinámico */
-.badge-15 { background: color-mix(in srgb, var(--tm-acento) 12%, transparent); color: var(--tm-acento); border: 1px solid color-mix(in srgb, var(--tm-acento) 25%, transparent); }
-.badge-0  { background: rgba(100,220,100,0.1); color: #34d399; border: 1px solid rgba(52,211,153,0.25); }
+.badge-15 {
+    background: color-mix(in srgb, var(--tm-acento) 12%, transparent);
+    color: var(--tm-acento);
+    border: 1px solid color-mix(in srgb, var(--tm-acento) 25%, transparent);
+}
 
-.detalle-encabezado h2 { font-size: 1.6rem; font-weight: 700; }
-.detalle-categoria { font-size: 0.88rem; color: var(--tm-color-gris); }
+.badge-0 {
+    background: rgba(100, 220, 100, 0.1);
+    color: #34d399;
+    border: 1px solid rgba(52, 211, 153, 0.25);
+}
 
-.detalle-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+.detalle-encabezado h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.detalle-categoria {
+    font-size: 0.88rem;
+    color: var(--tm-color-gris);
+}
+
+.detalle-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+}
 
 .detalle-stat {
     background: var(--tm-entrada-fondo);
@@ -577,8 +689,18 @@ select.entrada-neon option {
     gap: 6px;
 }
 
-.stat-label { font-size: 0.75rem; color: var(--tm-color-gris); text-transform: uppercase; letter-spacing: 0.5px; }
-.stat-valor { font-size: 1.1rem; font-weight: 700; color: var(--tm-acento); }
+.stat-label {
+    font-size: 0.75rem;
+    color: var(--tm-color-gris);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-valor {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--tm-acento);
+}
 
 .separador-neon {
     height: 1px;
@@ -586,7 +708,12 @@ select.entrada-neon option {
     background: linear-gradient(90deg, color-mix(in srgb, var(--tm-acento) 40%, transparent), transparent);
 }
 
-.subtitulo-detalle { font-size: 0.95rem; font-weight: 600; color: var(--tm-label-color); letter-spacing: 0.3px; }
+.subtitulo-detalle {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--tm-label-color);
+    letter-spacing: 0.3px;
+}
 
 .mini-resultado {
     /* Modificado con color-mix dinámico */
@@ -599,7 +726,12 @@ select.entrada-neon option {
     gap: 10px;
 }
 
-.mini-fila { display: flex; justify-content: space-between; font-size: 0.92rem; color: var(--tm-color-gris); }
+.mini-fila {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.92rem;
+    color: var(--tm-color-gris);
+}
 
 .mini-total {
     border-top: 1px solid var(--tm-tarjeta-borde);
@@ -610,9 +742,17 @@ select.entrada-neon option {
     color: var(--tm-acento) !important;
 }
 
-.texto-descripcion { font-size: 0.9rem; color: var(--tm-color-gris); line-height: 1.7; }
+.texto-descripcion {
+    font-size: 0.9rem;
+    color: var(--tm-color-gris);
+    line-height: 1.7;
+}
 
-.tarjeta-factura { display: flex; flex-direction: column; min-height: 400px; }
+.tarjeta-factura {
+    display: flex;
+    flex-direction: column;
+    min-height: 400px;
+}
 
 .lista-factura-contenedor {
     flex: 1;
@@ -621,18 +761,51 @@ select.entrada-neon option {
     max-height: 300px;
 }
 
-.lista-factura-contenedor::-webkit-scrollbar { width: 5px; }
-.lista-factura-contenedor::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 10px; }
-/* Modificado con color-mix dinámico */
-.lista-factura-contenedor::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--tm-acento) 25%, transparent); border-radius: 10px; }
+.lista-factura-contenedor::-webkit-scrollbar {
+    width: 5px;
+}
 
-.tabla-factura { font-size: 0.85rem; width: 100%; }
-.tabla-factura th, .tabla-factura td { padding: 10px 5px; }
-.col-cant { width: 12%; }
-.col-det  { width: 40%; }
-.col-vunit{ width: 20%; }
-.col-vtot { width: 20%; }
-.col-btn  { width: 8%; text-align: right; }
+.lista-factura-contenedor::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+}
+
+/* Modificado con color-mix dinámico */
+.lista-factura-contenedor::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--tm-acento) 25%, transparent);
+    border-radius: 10px;
+}
+
+.tabla-factura {
+    font-size: 0.85rem;
+    width: 100%;
+}
+
+.tabla-factura th,
+.tabla-factura td {
+    padding: 10px 5px;
+}
+
+.col-cant {
+    width: 12%;
+}
+
+.col-det {
+    width: 40%;
+}
+
+.col-vunit {
+    width: 20%;
+}
+
+.col-vtot {
+    width: 20%;
+}
+
+.col-btn {
+    width: 8%;
+    text-align: right;
+}
 
 .resumen-factura {
     background: var(--tm-resumen-bg);
@@ -651,13 +824,20 @@ select.entrada-neon option {
     border: 1px solid #ef4444;
     border-radius: 4px;
     cursor: pointer;
-    width: 24px; height: 24px;
-    display: flex; align-items: center; justify-content: center;
-    font-weight: bold; font-size: 0.75rem;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.75rem;
     transition: all 0.2s ease;
 }
 
-.btn-eliminar-item:hover { background: #ef4444; color: #fff; }
+.btn-eliminar-item:hover {
+    background: #ef4444;
+    color: #fff;
+}
 
 /* ── FÓRMULAS ── */
 .caja-formula {
@@ -668,7 +848,11 @@ select.entrada-neon option {
     border-radius: 8px;
 }
 
-.caja-formula h3 { color: var(--tm-acento); margin-bottom: 10px; font-size: 1.2rem; }
+.caja-formula h3 {
+    color: var(--tm-acento);
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
 
 .caja-formula p {
     font-family: monospace;
@@ -678,9 +862,18 @@ select.entrada-neon option {
 }
 
 /* ── HISTORIAL / TABLAS ── */
-.contenedor-historial { margin-top: 40px; width: 100%; overflow-x: auto; }
+.contenedor-historial {
+    margin-top: 40px;
+    width: 100%;
+    overflow-x: auto;
+}
 
-.tabla-cristal { width: 100%; border-collapse: collapse; margin-top: 15px; text-align: left; }
+.tabla-cristal {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    text-align: left;
+}
 
 .tabla-cristal th {
     padding: 12px;
@@ -711,7 +904,10 @@ select.entrada-neon option {
     margin-top: 20px;
 }
 
-.boton-limpiar:hover { background: rgba(239,68,68,0.08); transform: scale(1.02); }
+.boton-limpiar:hover {
+    background: rgba(239, 68, 68, 0.08);
+    transform: scale(1.02);
+}
 
 /* ── EVALUACIÓN ── */
 .radio-grupo {
@@ -735,22 +931,30 @@ select.entrada-neon option {
     transition: color 0.3s ease;
 }
 
-.radio-opcion:hover { color: var(--tm-acento); }
+.radio-opcion:hover {
+    color: var(--tm-acento);
+}
 
 .radio-opcion input[type="radio"] {
     cursor: pointer;
     accent-color: var(--tm-acento);
-    width: 16px; height: 16px;
+    width: 16px;
+    height: 16px;
 }
 
-textarea.entrada-neon { resize: vertical; min-height: 100px; font-family: inherit; }
+textarea.entrada-neon {
+    resize: vertical;
+    min-height: 100px;
+    font-family: inherit;
+}
 
 /* ── BOTÓN TEMA ── */
 #btnTema {
     position: fixed;
     bottom: 30px;
     right: 30px;
-    width: 52px; height: 52px;
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--tm-acento), var(--tm-acento-oscuro));
     border: none;
@@ -812,27 +1016,27 @@ textarea.entrada-neon { resize: vertical; min-height: 100px; font-family: inheri
     width: 38px;
     height: 38px;
     border-radius: 50%;
-    border: 3px solid rgba(255,255,255,0.3);
+    border: 3px solid rgba(255, 255, 255, 0.3);
     cursor: pointer;
     transition: transform 0.2s ease, border-color 0.2s ease;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .btn-color:hover {
     transform: scale(1.2);
-    border-color: rgba(255,255,255,0.9);
+    border-color: rgba(255, 255, 255, 0.9);
 }
 
 .btn-color.activo {
     border-color: white;
     transform: scale(1.15);
-    box-shadow: 0 0 12px rgba(255,255,255,0.5);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
 }
 
-#modalFacturasCliente{
-    z-index:2100;
+#modalFacturasCliente {
+    z-index: 2100;
 }
 
-#modalDetalleFactura{
+#modalDetalleFactura {
     z-index: 2200;
 }
