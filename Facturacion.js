@@ -843,7 +843,7 @@ function actualizarClienteEnFactura() {
     }
 }
 
-function guardarFacturaCliente() {
+function generarFacturaCliente() {
     ocultarError("errGuardarFactura");
 
     if (clienteActual === null) {
@@ -935,6 +935,7 @@ function guardarFacturaCliente() {
     document.getElementById('facClienteCedula').textContent = '—';
 
     pintarClientes();
+    abrirModalDescargarFactura();
 }
 
 function pintarClientes() {
@@ -1094,6 +1095,7 @@ function abrirDetalleFactura(idCliente, indice) {
     html += '<p style="text-align:right;">Subtotal Exento (0%): $' + factura.subtotal0.toFixed(2) + '</p>';
     html += '<p style="text-align:right;">IVA Calculado (15%): $' + factura.iva.toFixed(2) + '</p>';
     html += '<p style="text-align:right; font-weight:700; color:var(--tm-acento);" > TOTAL GENERAL: $' + factura.total.toFixed(2) + '</p > ';
+    html += '<button class="boton-primario" onclick="exportarFacturaPDF()">Exportar</button>'
 
     document.getElementById("contenidoModalDetalle").innerHTML = html;
     document.getElementById("modalDetalleFactura").classList.add("visible");
@@ -1152,4 +1154,12 @@ function exportarFacturaPDF() {
 function setearDatosEmpresa(nombre, ruc) {
     document.getElementById("facEmpresa").textContent = nombre;
     document.getElementById("facRuc").textContent = ruc;
+}
+
+function cerrarModalDescargarFactura() {
+    document.getElementById("modalDescargarFactura").classList.remove("visible")
+}
+
+function abrirModalDescargarFactura() {
+    document.getElementById("modalDescargarFactura").classList.add("visible")
 }
