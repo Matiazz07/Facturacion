@@ -375,39 +375,40 @@
                                 <p>Factura N°: <span id="facSecuencial">001-001-000000001</span></p>
                                 <p>Fecha: <span id="facFecha"></span></p>
                             </div>
-
+                            <div class="lista-factura-contenedor">
+                                <table class="tabla-cristal tabla-factura">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-cant">Cant.</th>
+                                            <th class="col-det">Detalle</th>
+                                            <th class="col-vunit">V. Unit</th>
+                                            <th class="col-vtot">V. Total</th>
+                                            <th class="col-btn"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="cuerpoFactura">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="resumen-factura">
+                                <div class="mini-fila"><span>Subtotal Gravado (15%):</span><span
+                                        id="facSubtotal15">$0.00</span>
+                                </div>
+                                <div class="mini-fila"><span>Subtotal Exento (0%):</span><span
+                                        id="facSubtotal0">$0.00</span>
+                                </div>
+                                <div class="mini-fila"><span>IVA Calculado (15%):</span><span id="facIva">$0.00</span>
+                                </div>
+                                <div class="mini-fila mini-total"><span>TOTAL GENERAL:</span><span
+                                        id="facTotal">$0.00</span>
+                                </div>
+                                <div id="errGuardarFactura" class="mensaje-error"></div>
+                                <button type="button" class="boton-primario" style="margin-top:15px;"
+                                    onclick="generarFacturaCliente()">
+                                    Generar Factura
+                                </button>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="lista-factura-contenedor">
-                        <table class="tabla-cristal tabla-factura">
-                            <thead>
-                                <tr>
-                                    <th class="col-cant">Cant.</th>
-                                    <th class="col-det">Detalle</th>
-                                    <th class="col-vunit">V. Unit</th>
-                                    <th class="col-vtot">V. Total</th>
-                                    <th class="col-btn"></th>
-                                </tr>
-                                </tbody>
-                            <tbody id="cuerpoFactura">
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="resumen-factura">
-                        <div class="mini-fila"><span>Subtotal Gravado (15%):</span><span id="facSubtotal15">$0.00</span>
-                        </div>
-                        <div class="mini-fila"><span>Subtotal Exento (0%):</span><span id="facSubtotal0">$0.00</span>
-                        </div>
-                        <div class="mini-fila"><span>IVA Calculado (15%):</span><span id="facIva">$0.00</span></div>
-                        <div class="mini-fila mini-total"><span>TOTAL GENERAL:</span><span id="facTotal">$0.00</span>
-                        </div>
-                        <div id="errGuardarFactura" class="mensaje-error"></div>
-                        <button type="button" class="boton-primario" style="margin-top:15px;"
-                            onclick="generarFacturaCliente()">
-                            Generar Factura
-                        </button>
-
                     </div>
                 </div>
             </div>

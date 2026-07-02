@@ -87,6 +87,7 @@ let productoEditandoId = null;
 let temaClaro = false;
 let productoSeleccionado = null;
 let carritoFactura = [];
+let facturaActualPDF = null;
 
 function toggleMenuColores() {
     let menu = document.getElementById("menuColores")
@@ -913,12 +914,14 @@ function generarFacturaCliente() {
     }
     let nuevaFactura = {
         idFactura: maxIdFac + 1,
-        items: carritoFactura,
+        items: [...carritoFactura],
         subtotal15: sub15,
         subtotal0: sub0,
         iva: ivaCalc,
         total: totalCalc
     };
+
+    facturaActualPDF = nuevaFactura;
 
     lista[indiceCliente].facturas.push(nuevaFactura);
     localStorage.setItem("datosClientes", JSON.stringify(lista));
@@ -1067,9 +1070,12 @@ function abrirDetalleFactura(idCliente, indice) {
         return;
     }
     let factura = cliente.facturas[indice];
+
     if (!factura) {
         return;
     }
+
+    facturaActualPDF = factura;
     document.getElementById("tituloModalDetalle").textContent = "Factura " + factura.idFactura;
 
     let html = '<table style="width:100%; border-collapse:collapse; font-size:0.9rem;">';
@@ -1130,21 +1136,60 @@ function eliminarFacturaCliente(idCliente, indice) {
 }
 
 function exportarFacturaPDF() {
-    if (carritoFactura.length === 0) {
-        alert("Factura vacía.");
+
+    if (facturaActualPDF == null) {
+        alert("No existe una factura para exportar.");
         return;
     }
 
-    // Fecha actual para la factura
     document.getElementById("facFecha").textContent = new Date().toLocaleDateString();
 
-    const element = document.getElementById('facturaImprimible');
+    document.getElementById("cuerpoFactura").innerHTML = "";
+
+    for (let i = 0; i < facturaActualPDF.items.length; i++) {
+
+        let item = facturaActualPDF.items[i];
+
+        document.getElementById("cuerpoFactura").innerHTML += `
+            <tr>
+                <td>${item.cantidad}</td>
+                <td>${item.nombre}</td>
+                <td>$${item.precio.toFixed(2)}</td>
+                <td>$${item.subtotal.toFixed(2)}</td>
+                <td></td>
+            </tr>
+        `;
+    }
+
+    document.getElementById("facSubtotal15").textContent =
+        "$" + facturaActualPDF.subtotal15.toFixed(2);
+
+    document.getElementById("facSubtotal0").textContent =
+        "$" + facturaActualPDF.subtotal0.toFixed(2);
+
+    document.getElementById("facIva").textContent =
+        "$" + facturaActualPDF.iva.toFixed(2);
+
+    document.getElementById("facTotal").textContent =
+        "$" + facturaActualPDF.total.toFixed(2);
+
+    const element = document.querySelector(".tarjeta-factura");
+
     const opt = {
         margin: 10,
-        filename: 'Factura_SRI.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        filename: "Factura_SRI.pdf",
+        image: {
+            type: "jpeg",
+            quality: 0.98
+        },
+        html2canvas: {
+            scale: 2
+        },
+        jsPDF: {
+            unit: "mm",
+            format: "a4",
+            orientation: "portrait"
+        }
     };
 
     html2pdf().set(opt).from(element).save();
