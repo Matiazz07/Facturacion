@@ -147,6 +147,8 @@ function iniciarSesion() {
     ocultarError("errLogin");
     let nombre = document.getElementById("txtNombreLogin").value.trim();
     let validacionLetras = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
+    let nombreEmpresa = document.getElementById("txtNombreEmpresa").value.trim();
+    let rucEmpresa = document.getElementById("txtRucEmpresa").value.trim();
 
     if (nombre === "" || !validacionLetras.test(nombre)) {
         mostrarError("errLogin", "Por favor, ingresa un nombre válido usando solo letras.");
@@ -154,6 +156,8 @@ function iniciarSesion() {
     }
 
     localStorage.setItem("usuarioActual", nombre);
+    localStorage.setItem("nombreEmpresa", nombreEmpresa);
+    localStorage.setItem("rucEmpresa", rucEmpresa);
     document.getElementById("overlayLogin").classList.remove("visible");
     mostrarSeccion('sec-inicio', document.getElementById('btnInicio'));
 }
@@ -1207,4 +1211,15 @@ function cerrarModalDescargarFactura() {
 
 function abrirModalDescargarFactura() {
     document.getElementById("modalDescargarFactura").classList.add("visible")
+}
+
+function toggleSectionEmpresaLogin() {
+    let checkEmpresa = document.getElementById("esEmpresa");
+    let sectionEmpresa = document.getElementById("sectionEmpresaLogin");
+
+    if (checkEmpresa.checked) {
+        sectionEmpresa.style.display = "block";
+    } else {
+        sectionEmpresa.style.display = "none";
+    }
 }

@@ -576,6 +576,26 @@
             <div class="grupo-entrada">
                 <label>Nombre y Apellido</label>
                 <input type="text" id="txtNombreLogin" class="entrada-neon" placeholder="Escribe tu nombre completo...">
+                <div class="switch-container" id="switchContainer">
+                    <span>¿Eres una empresa?</span>
+                    <label class="switch">
+                        <input type="checkbox" id="esEmpresa" onchange="toggleSectionEmpresaLogin()">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <section id="sectionEmpresaLogin" style="display:none;">
+                    <label>Nombre de la Empresa</label>
+                    <input type="text" id="txtNombreEmpresa" class="entrada-neon" placeholder="Nombre de la empresa...">
+                    <label>RUC de la Empresa</label>
+                    <input type="number" id="txtRucEmpresa" class="entrada-neon" placeholder="RUC de la empresa...">
+                    <label>Correo Electrónico</label>
+                    <input type="email" id="txtCorreoElectronico" class="entrada-neon"
+                        placeholder="Correo electrónico de la empresa...">
+                    <label>Teléfono</label>
+                    <input type="tel" id="txtTelefono" class="entrada-neon" placeholder="Teléfono de la empresa...">
+                    <label>Dirección</label>
+                    <input type="text" id="txtDireccion" class="entrada-neon" placeholder="Dirección de la empresa...">
+                </section>
             </div>
 
             <div id="errLogin" class="mensaje-error"></div>
